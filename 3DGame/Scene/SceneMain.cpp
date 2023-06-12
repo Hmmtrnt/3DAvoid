@@ -42,6 +42,7 @@ SceneBase* SceneMain::Update()
 {
 	m_pPlayer->Update();
 	
+
 	return this;
 }
 
