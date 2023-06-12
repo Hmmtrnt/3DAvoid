@@ -12,6 +12,5 @@ public:
 	void End();
 	SceneBase* Update();
 	void Draw();
-
 };
 

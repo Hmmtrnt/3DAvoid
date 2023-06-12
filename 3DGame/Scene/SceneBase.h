@@ -2,7 +2,7 @@
 class SceneBase
 {
 public:
-	SceneBase() {}
+	SceneBase(){}
 	virtual ~SceneBase() {}
 
 	virtual void Init() = 0;// ‰Šú‰»

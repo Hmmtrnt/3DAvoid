@@ -15,6 +15,7 @@ namespace Pad
 		// Œ»İ‚Ìƒpƒbƒh‚Ìó‘Ô‚ğæ“¾
 #if _DEBUG
 		int padState = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+		//DINPUT_JOYSTATE padState = GetJoypadDirectInputState(DX_INPUT_PAD1, );
 #else
 		int padState = GetJoypadInputState(DX_INPUT_PAD1);
 #endif

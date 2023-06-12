@@ -29,5 +29,5 @@ SceneBase* SceneTitle::Update()
 
 void SceneTitle::Draw()
 {
-	DrawString(0, 0, "Title", Color::kWhite);
+	DrawString(0, 0, "Title", 0xffffff);
 }

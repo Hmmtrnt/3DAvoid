@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{f66d98c8-6ed2-4400-bced-77c701ddb9ec}</ProjectGuid>
-    <RootNamespace>DxLibGame1</RootNamespace>
+    <ProjectGuid>{b5b078b9-f626-4464-a3ae-45af2392f5f2}</ProjectGuid>
+    <RootNamespace>_3DGame</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -151,21 +151,29 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Char\Player\Player.cpp" />
+    <ClCompile Include="Char\Model.cpp" />
+    <ClCompile Include="Stage\Field.cpp" />
+    <ClCompile Include="Util\GameSetting.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Util\Pad.cpp" />
-    <ClCompile Include="Scene\SceneTitle.cpp" />
     <ClCompile Include="Scene\SceneMain.cpp" />
-    <ClCompile Include="Scene\SceneBase.cpp" />
+    <ClCompile Include="Scene\SceneTitle.cpp" />
+    <ClCompile Include="Util\Pad.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\SceneBase.cpp" />
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Char\Player\Player.h" />
+    <ClInclude Include="Char\Model.h" />
+    <ClInclude Include="Stage\Field.h" />
+    <ClInclude Include="Util\GameSetting.h" />
+    <ClInclude Include="Scene\SceneMain.h" />
+    <ClInclude Include="Scene\SceneTitle.h" />
     <ClInclude Include="Util\common.h" />
     <ClInclude Include="Util\Pad.h" />
-    <ClInclude Include="Scene\SceneTitle.h" />
-    <ClInclude Include="Scene\SceneMain.h" />
-    <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="Util\game.h" />
     <ClInclude Include="Util\Vec2.h" />
   </ItemGroup>
