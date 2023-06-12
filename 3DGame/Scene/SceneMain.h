@@ -23,6 +23,5 @@ private:
 	Player* m_pPlayer;
 	Field* m_pField;
 
-	DINPUT_JOYSTATE test;
 
 };

@@ -7,8 +7,8 @@ namespace
 	// モデルのファイル名
 	const char* const kFileName = "Data/Field/Field1.mv1";
 	// 地面に敷き詰めるブロックの数
-	constexpr int kBlockNumX = 16;
-	constexpr int kBlockNumZ = 16;
+	constexpr int kBlockNumX = 10;
+	constexpr int kBlockNumZ = 10;
 
 	constexpr int kBlockNum = kBlockNumX * kBlockNumZ;
 
