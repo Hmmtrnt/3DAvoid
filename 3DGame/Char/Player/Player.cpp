@@ -32,6 +32,10 @@ namespace
 	constexpr float kAngleDown = 0.0f;// 下
 	constexpr float kAngleLeft = DX_PI_F / 2;// 左
 	constexpr float kAngleRight = DX_PI_F / -2;// 右
+	constexpr float kAngleUpLeft = DX_PI_F / 1.3f;// 上左
+	constexpr float kAngleUpRight = DX_PI_F / -1.3f;// 上右
+	constexpr float kAngleDownLeft = DX_PI_F / 3.5f;// 下左
+	constexpr float kAngleDownRight = DX_PI_F / -3.5f;// 下右
 
 	// プレイヤーのジャンプ
 	// ジャンプ力
@@ -325,45 +329,64 @@ void Player::TestMove()
 	// 上下キー
 	if (Pad::IsPress(PAD_INPUT_UP))
 	{
-		m_playerPos.z += kTopSpeed;
-		m_isMove = true;
-		m_playerAngleY = kAngleUp;
+		if (m_playerPos.z <= 1000)
+		{
+			m_playerPos.z += kTopSpeed;
+			m_isMove = true;
+			m_playerAngleY = kAngleUp;
+		}
+		
 	}
 	if (Pad::IsPress(PAD_INPUT_DOWN))
 	{
-		m_playerPos.z -= kTopSpeed;
-		m_isMove = true;
-		m_playerAngleY = kAngleDown;
+		if (m_playerPos.z >= -1000)
+		{
+			m_playerPos.z -= kTopSpeed;
+			m_isMove = true;
+			m_playerAngleY = kAngleDown;
+		}
 	}
 	// 左右キー
 	if (Pad::IsPress(PAD_INPUT_LEFT))
 	{
-		m_playerPos.x -= kTopSpeed;
-		m_isMove = true;
-		m_playerAngleY = kAngleLeft;
+		if (m_playerPos.x >= -1000)
+		{
+			m_playerPos.x -= kTopSpeed;
+			m_isMove = true;
+			m_playerAngleY = kAngleLeft;
+		}
 	}
 	if (Pad::IsPress(PAD_INPUT_RIGHT))
 	{
-		m_playerPos.x += kTopSpeed;
-		m_isMove = true;
-		m_playerAngleY = kAngleRight;
+		if (m_playerPos.x <= 1000)
+		{
+			m_playerPos.x += kTopSpeed;
+			m_isMove = true;
+			m_playerAngleY = kAngleRight;
+		}
+		
 	}
 	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
 	{
-		m_playerAngleY = DX_PI_F / 1.5f;
+		m_playerAngleY = kAngleUpLeft;
 	}
 	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_RIGHT))
 	{
-		m_playerAngleY = DX_PI_F / -1.5f;
+		m_playerAngleY = kAngleUpRight;
 	}
 	if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_LEFT))
 	{
-		//m_playerAngleY = DX_PI_F / -1.5f;
+		m_playerAngleY = kAngleDownLeft;
 	}
 	if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_RIGHT))
 	{
-		//m_playerAngleY = DX_PI_F / -1.5f;
+		m_playerAngleY = kAngleDownRight;
 	}
+
+	printfDx("m_playerPos.z;%f\n", m_playerPos.z);
+	printfDx("m_playerPos.x:%f\n", m_playerPos.x);
+	
+	
 
 	if (m_isMove)
 	{

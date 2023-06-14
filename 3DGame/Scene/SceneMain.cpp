@@ -49,7 +49,7 @@ SceneBase* SceneMain::Update()
 void SceneMain::Draw()
 {
 	// -500~500の範囲にグリッドを表示
-	for (float x = -500.0f; x <= 500.0f; x += 100.0f)
+	/*for (float x = -500.0f; x <= 500.0f; x += 100.0f)
 	{
 		VECTOR start = VGet(x, 0.0f, -500.0f);
 		VECTOR end = VGet(x, 0.0f, 500.0f);
@@ -60,7 +60,7 @@ void SceneMain::Draw()
 		VECTOR start = VGet(-500.0f, 0.0f, z);
 		VECTOR end = VGet(500.0f, 0.0f, z);
 		DrawLine3D(start, end, GetColor(255, 0, 0));
-	}
+	}*/
 
 	m_pPlayer->Draw();
 
