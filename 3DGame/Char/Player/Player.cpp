@@ -22,11 +22,16 @@ namespace
 	// 減速
 	constexpr float kDeceleration = 0.5f;
 	// 最高速度
-	constexpr float kTopSpeed = 5.0f;
+	constexpr float kTopSpeed = 15.0f;
 
 	// テスト：プレイヤーの移動
 	constexpr VECTOR kPlayerVec{ 0.0f,0.0f,-10.0f };
 
+	// プレイヤーのアングル
+	constexpr float kAngleUp = DX_PI_F;// 上
+	constexpr float kAngleDown = 0.0f;// 下
+	constexpr float kAngleLeft = DX_PI_F / 2;// 左
+	constexpr float kAngleRight = DX_PI_F / -2;// 右
 
 	// プレイヤーのジャンプ
 	// ジャンプ力
@@ -37,7 +42,7 @@ namespace
 }
 
 Player::Player() :
-	m_updateFunc(&Player::UpdateIdle),
+	m_updateFunc(&Player::TestMove),
 	m_playerPos(kZero),
 	m_playerAngle(kZero),
 	m_playerVec(kZero),
@@ -285,5 +290,101 @@ void Player::UpdateIdle()
 	m_pModel->SetRot(VGet(0.0f,m_playerAngleY,0.0f));
 
 	//UpdateCamera();
+}
+
+void Player::TestMove()
+{
+	m_pModel->Update();
+
+	// ジャンプ処理
+	m_isJump = true;
+
+	m_jumpAcc += kGravity;
+	m_playerPos.y += m_jumpAcc;
+	if (m_playerPos.y <= 0.0f)
+	{
+		m_playerPos.y = 0.0f;
+		m_jumpAcc = 0.0f;
+		m_isJump = false;
+	}
+
+	m_playerRotMtx = MGetRotY(m_playerAngleY);
+	m_playerMove = VTransform(kPlayerVec, m_playerRotMtx);
+
+	// ジャンプしていないとき
+	if (!m_isJump)
+	{
+		if (Pad::IsTrigger(PAD_INPUT_1) || Pad::IsTrigger(PAD_INPUT_2))
+		{
+			m_jumpAcc = kJumpPower;
+		}
+	}
+
+	// 移動処理
+	m_isMove = false;
+	// 上下キー
+	if (Pad::IsPress(PAD_INPUT_UP))
+	{
+		m_playerPos.z += kTopSpeed;
+		m_isMove = true;
+		m_playerAngleY = kAngleUp;
+	}
+	if (Pad::IsPress(PAD_INPUT_DOWN))
+	{
+		m_playerPos.z -= kTopSpeed;
+		m_isMove = true;
+		m_playerAngleY = kAngleDown;
+	}
+	// 左右キー
+	if (Pad::IsPress(PAD_INPUT_LEFT))
+	{
+		m_playerPos.x -= kTopSpeed;
+		m_isMove = true;
+		m_playerAngleY = kAngleLeft;
+	}
+	if (Pad::IsPress(PAD_INPUT_RIGHT))
+	{
+		m_playerPos.x += kTopSpeed;
+		m_isMove = true;
+		m_playerAngleY = kAngleRight;
+	}
+	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
+	{
+		m_playerAngleY = DX_PI_F / 1.5f;
+	}
+	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_RIGHT))
+	{
+		m_playerAngleY = DX_PI_F / -1.5f;
+	}
+	if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_LEFT))
+	{
+		//m_playerAngleY = DX_PI_F / -1.5f;
+	}
+	if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_RIGHT))
+	{
+		//m_playerAngleY = DX_PI_F / -1.5f;
+	}
+
+	if (m_isMove)
+	{
+		if (m_AnimNum == kAnimIdle)
+		{
+			// 移動アニメーション
+			m_AnimNum = kAnimRun;
+			m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
+		}
+	}
+	else
+	{
+		if (m_AnimNum == kAnimRun)
+		{
+			// 移動からアイドル状態
+			m_AnimNum = kAnimIdle;
+			m_pModel->ChangeAnimation(m_AnimNum, true, true, 20);
+		}
+	}
+
+	m_pModel->SetPos(m_playerPos);
+	m_pModel->SetRot(VGet(0.0f, m_playerAngleY, 0.0f));
 }
 

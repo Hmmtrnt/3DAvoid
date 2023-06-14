@@ -19,5 +19,5 @@ void GameSetting::InitCamera()
 	// カメラの視野角を設定（ラジアン）
 	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
 	// カメラの位置、どこを見ているかを設定する
-	SetCameraPositionAndTarget_UpVecY(VGet(0, 1500, -1400), VGet(0.0f, 0.0f, 0.0f));
+	SetCameraPositionAndTarget_UpVecY(VGet(0, 1600, -1400), VGet(0.0f, 0.0f, 0.0f));
 }
