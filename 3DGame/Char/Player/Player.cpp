@@ -329,7 +329,7 @@ void Player::TestMove()
 	// 上下キー
 	if (Pad::IsPress(PAD_INPUT_UP))
 	{
-		if (m_playerPos.z <= 1000)
+		if (m_playerPos.z <= 950)
 		{
 			m_playerPos.z += kTopSpeed;
 			m_isMove = true;
@@ -339,7 +339,7 @@ void Player::TestMove()
 	}
 	if (Pad::IsPress(PAD_INPUT_DOWN))
 	{
-		if (m_playerPos.z >= -1000)
+		if (m_playerPos.z >= -950)
 		{
 			m_playerPos.z -= kTopSpeed;
 			m_isMove = true;
@@ -349,7 +349,7 @@ void Player::TestMove()
 	// 左右キー
 	if (Pad::IsPress(PAD_INPUT_LEFT))
 	{
-		if (m_playerPos.x >= -1000)
+		if (m_playerPos.x >= -950)
 		{
 			m_playerPos.x -= kTopSpeed;
 			m_isMove = true;
@@ -358,7 +358,7 @@ void Player::TestMove()
 	}
 	if (Pad::IsPress(PAD_INPUT_RIGHT))
 	{
-		if (m_playerPos.x <= 1000)
+		if (m_playerPos.x <= 950)
 		{
 			m_playerPos.x += kTopSpeed;
 			m_isMove = true;
