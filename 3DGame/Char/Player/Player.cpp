@@ -143,22 +143,22 @@ void Player::UpdateVec()
 	if (m_pressUp)
 	{
 		m_playerVec.z -= kAcceleration;
-		printfDx("ボタン押したな;");
+		printfDx("ボタン押したな\n");
 	}
 	if (m_pressDown)
 	{
 		m_playerVec.z += kAcceleration;
-		printfDx("ボタン押したな;");
+		printfDx("ボタン押したな\n");
 	}
 	if (m_pressRight)
 	{
 		m_playerVec.x -= kAcceleration;
-		printfDx("ボタン押したな;");
+		printfDx("ボタン押したな\n");
 	}
 	if (m_pressLeft)
 	{
 		m_playerVec.x += kAcceleration;
-		printfDx("ボタン押したな;");
+		printfDx("ボタン押したな\n");
 	}
 
 	if (!m_pressUp&&!m_pressDown)
@@ -224,11 +224,13 @@ void Player::UpdateIdle()
 	// 左右キーで旋回
 	if (Pad::IsPress(PAD_INPUT_LEFT))
 	{
-		m_playerAngleY -= 0.05f;
+		//m_playerAngleY -= 0.05f;
+		m_playerPos.x -= 0.1f;
 	}
 	if (Pad::IsPress(PAD_INPUT_RIGHT))
 	{
-		m_playerAngleY += 0.05f;
+		//m_playerAngleY += 0.05f;
+		m_playerPos.x += 0.1f;
 	}
 
 	// 移動処理
@@ -236,13 +238,21 @@ void Player::UpdateIdle()
 	// 上下キーで移動
 	if (Pad::IsPress(PAD_INPUT_UP))
 	{
+#if false
 		m_playerPos = VAdd(m_playerPos, m_playerMove);
 		m_isMove = true;
+#else
+		m_playerPos.z += 0.1f;
+#endif
 	}
 	if (Pad::IsPress(PAD_INPUT_DOWN))
 	{
+#if false
 		m_playerPos = VSub(m_playerPos, m_playerMove);
 		m_isMove = true;
+#else
+		m_playerPos.z -= 0.1f;
+#endif
 	}
 	if (m_isMove)
 	{
