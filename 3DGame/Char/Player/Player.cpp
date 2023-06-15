@@ -3,7 +3,7 @@
 
 namespace
 {
-	// キャラクターハンドル
+	// プレイヤーハンドル
 	const char* const kPlayerHandle = "Data/Char/Player/Player5.mv1";
 
 	// カメラの初期位置
@@ -12,9 +12,10 @@ namespace
 	constexpr VECTOR kCameraTarget{ 0.0f, 100.0f, 0.0f };
 
 	// プレイヤーのモーション番号
-	constexpr int kAnimIdle = 3;
-	constexpr int kAnimWalk = 14;
-	constexpr int kAnimRun = 11;
+	constexpr int kAnimIdle = 3;// アイドル状態
+	constexpr int kAnimWalk = 14;// 歩く状態
+	constexpr int kAnimRun = 11;// 走る状態
+	constexpr int kAnimJump = 7;
 
 	// プレイヤーの移動
 	// 加速度
@@ -23,6 +24,8 @@ namespace
 	constexpr float kDeceleration = 0.5f;
 	// 最高速度
 	constexpr float kTopSpeed = 15.0f;
+	// 回転速度
+	constexpr float kRotationSpeed = 0.1f;
 
 	// テスト：プレイヤーの移動
 	constexpr VECTOR kPlayerVec{ 0.0f,0.0f,-10.0f };
@@ -326,12 +329,18 @@ void Player::TestMove()
 
 	// 移動処理
 	m_isMove = false;
+	// 移動力の初期化
+	m_playerVec = VGet(0.0f, 0.0f, 0.0f);
+
 	// 上下キー
 	if (Pad::IsPress(PAD_INPUT_UP))
 	{
 		if (m_playerPos.z <= 950)
 		{
-			m_playerPos.z += kTopSpeed;
+			//m_playerPos.z += kTopSpeed;
+
+			m_playerVec = VAdd(m_playerVec, VGet(0.0f, 0.0f, kTopSpeed));
+
 			m_isMove = true;
 			m_playerAngleY = kAngleUp;
 		}
@@ -341,7 +350,10 @@ void Player::TestMove()
 	{
 		if (m_playerPos.z >= -950)
 		{
-			m_playerPos.z -= kTopSpeed;
+			//m_playerPos.z -= kTopSpeed;
+
+			m_playerVec = VAdd(m_playerVec, VGet(0.0f, 0.0f, -kTopSpeed));
+
 			m_isMove = true;
 			m_playerAngleY = kAngleDown;
 		}
@@ -351,7 +363,10 @@ void Player::TestMove()
 	{
 		if (m_playerPos.x >= -950)
 		{
-			m_playerPos.x -= kTopSpeed;
+			//m_playerPos.x -= kTopSpeed;
+
+			m_playerVec = VAdd(m_playerVec, VGet(-kTopSpeed, 0.0f, 0.0f));
+
 			m_isMove = true;
 			m_playerAngleY = kAngleLeft;
 		}
@@ -360,12 +375,25 @@ void Player::TestMove()
 	{
 		if (m_playerPos.x <= 950)
 		{
-			m_playerPos.x += kTopSpeed;
+			//m_playerPos.x += kTopSpeed;
+
+			m_playerVec = VAdd(m_playerVec, VGet(kTopSpeed, 0.0f, 0.0f));
+
 			m_isMove = true;
 			m_playerAngleY = kAngleRight;
 		}
 		
 	}
+
+	if (VSize(m_playerVec) > 0)
+	{
+		m_playerVec = VNorm(m_playerVec);
+	}
+
+	m_playerVec = VScale(m_playerVec, kTopSpeed);
+
+	m_playerPos = VAdd(m_playerPos, m_playerVec);
+
 	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
 	{
 		m_playerAngleY = kAngleUpLeft;
@@ -383,31 +411,100 @@ void Player::TestMove()
 		m_playerAngleY = kAngleDownRight;
 	}
 
-	printfDx("m_playerPos.z;%f\n", m_playerPos.z);
-	printfDx("m_playerPos.x:%f\n", m_playerPos.x);
+	/*printfDx("m_playerPos.z;%f\n", m_playerPos.z);
+	printfDx("m_playerPos.x:%f\n", m_playerPos.x);*/
+	printfDx("m_playerAngleY:%f\n", m_playerAngleY);
 	
 	
 
-	if (m_isMove)
+	if (m_isMove && !m_isJump)
 	{
-		if (m_AnimNum == kAnimIdle)
+		if (m_AnimNum != kAnimRun)
 		{
 			// 移動アニメーション
 			m_AnimNum = kAnimRun;
 			m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
 		}
 	}
-	else
+	else if (m_isJump)
 	{
-		if (m_AnimNum == kAnimRun)
+		if (m_AnimNum != kAnimJump)
+		{
+			// 移動からアイドル状態
+			m_AnimNum = kAnimJump;
+			m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+		}
+	}
+	else if(!m_isMove && !m_isJump)
+	{
+		if (m_AnimNum != kAnimIdle)
 		{
 			// 移動からアイドル状態
 			m_AnimNum = kAnimIdle;
-			m_pModel->ChangeAnimation(m_AnimNum, true, true, 20);
+			m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
 		}
 	}
+	
+	// プレイヤーの回転
 
+	/*if (TestCalculate() < 0)
+	{
+		m_playerAngleY -= kRotationSpeed;
+	}
+	else
+	{
+		m_playerAngleY += kRotationSpeed;
+	}*/
+
+	//if (m_playerAngleY > m_angleTest)
+	//{
+	//	m_playerAngleY -= kRotationSpeed;
+	//	/*if (0.01f > m_playerAngleY - m_angleTest)
+	//	{
+	//		m_playerAngleY = m_angleTest;
+	//	}*/
+
+	//	//m_isFlag = true;
+	//}
+	//if (m_playerAngleY < m_angleTest)
+	//{
+	//	m_playerAngleY += kRotationSpeed;
+	//	/*if (0.01f < m_playerAngleY - m_angleTest)
+	//	{
+	//		m_playerAngleY = m_angleTest;
+	//	}*/
+	//	//m_isFlag = true;
+	//}
+	//else
+	//{
+	//	//m_playerAngleY = m_angleTest;
+	//	m_isFlag = false;
+	//}
+
+	/*m_isFlag = false;
+
+	if (!m_isFlag)
+	{
+		m_playerAngleY = m_angleTest;
+	}*/
+	
+	
+
+	// プレイヤーの座標
 	m_pModel->SetPos(m_playerPos);
+	// プレイヤーの回転率
 	m_pModel->SetRot(VGet(0.0f, m_playerAngleY, 0.0f));
+}
+
+int Player::TestCalculate()
+{
+	m_testRusult = m_angleTest - m_playerAngleY;
+
+	/*if (m_testRusult < 0)
+	{
+		m_testRusult = -m_testRusult;
+	}*/
+
+	return m_testRusult;
 }
 

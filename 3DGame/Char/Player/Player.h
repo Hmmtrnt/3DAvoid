@@ -27,6 +27,8 @@ private:// 関数
 	//--------------------------------------------------------
 	void TestMove();// キャラクターの動き+α
 
+	int TestCalculate();// アングルの計算
+
 
 	// メンバ関数ポインタ
 	void (Player::* m_updateFunc)();
@@ -52,6 +54,7 @@ private:// 変数
 	// float
 	float m_playerAngle2;	// プレイヤーアングル
 	float m_playerAngleY;	// プレイヤーのY軸回転
+	//float m_playerRotation;	// プレイヤーの回転
 	float m_cameraAngle;	// カメラアングル
 
 	float m_AnimTotalTime;	// アニメーションの全体フレーム
@@ -75,6 +78,11 @@ private:// 変数
 	int m_animPrev;//前
 	int m_animNext;//後ろ
 
+	float m_angleTest = 0.0f;// 回転最大値
 	
+	float m_testRusult = 0.0f;// 計算結果
+
+	bool m_isFlag = false;
+
 };
 
