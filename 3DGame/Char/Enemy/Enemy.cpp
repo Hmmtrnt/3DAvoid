@@ -45,6 +45,11 @@ void Enemy::Update()
 
 	m_pModel->SetPos(m_EnemyPos);
 	m_pModel->SetRot(kZero);
+
+	if (m_EnemyPos.z <= -1000.0f)
+	{
+		m_EnemyPos.z = 1000.0f;
+	}
 }
 
 void Enemy::Draw()
@@ -54,7 +59,7 @@ void Enemy::Draw()
 
 void Enemy::UpdateMove()
 {
-	m_EnemyVec = VAdd(m_EnemyVec, VGet(0.0f,0.0f,-1.0f));
+	m_EnemyVec = VAdd(m_EnemyVec, VGet(0.0f,0.0f,10.0f));
 
 	if (VSize(m_EnemyVec) < 0)
 	{
