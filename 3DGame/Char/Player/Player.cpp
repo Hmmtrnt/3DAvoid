@@ -15,7 +15,7 @@ namespace
 	constexpr int kAnimIdle = 3;// アイドル状態
 	constexpr int kAnimWalk = 14;// 歩く状態
 	constexpr int kAnimRun = 11;// 走る状態
-	constexpr int kAnimJump = 7;
+	constexpr int kAnimJump = 7;// ジャンプ状態
 
 	// プレイヤーの移動
 	// 加速度
@@ -413,7 +413,7 @@ void Player::TestMove()
 
 	/*printfDx("m_playerPos.z;%f\n", m_playerPos.z);
 	printfDx("m_playerPos.x:%f\n", m_playerPos.x);*/
-	printfDx("m_playerAngleY:%f\n", m_playerAngleY);
+	//printfDx("m_playerAngleY:%f\n", m_playerAngleY);
 	
 	
 
