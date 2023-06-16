@@ -15,10 +15,12 @@ namespace
 	constexpr VECTOR kInitPos{ 0.0f,0.0f,1000.0f };
 }
 
-Enemy::Enemy()
+Enemy::Enemy() :
+	m_updateFunc(UpdateMove),
+	m_enemyAngle(0.0f)
 {
-	m_EnemyPos = kInitPos;
-	m_EnemyVec = kZero;
+	m_enemyPos = kInitPos;
+	m_enemyVec = kZero;
 	m_pModel = std::make_shared<Model>(kEnemyHandle);
 	m_pModel->SetAnimation(kAnimMove, true, true);
 }
@@ -37,18 +39,13 @@ void Enemy::End()
 
 void Enemy::Update()
 {
-	m_pModel->Update();
+	(this->*m_updateFunc)();
 
-	m_pModel->ChangeAnimation(kAnimMove, true, true, 5);
+	
 
-	UpdateMove();
-
-	m_pModel->SetPos(m_EnemyPos);
-	m_pModel->SetRot(kZero);
-
-	if (m_EnemyPos.z <= -1000.0f)
+	if (m_enemyPos.z <= -1000.0f)
 	{
-		m_EnemyPos.z = 1000.0f;
+		m_enemyPos.z = 1000.0f;
 	}
 }
 
@@ -59,14 +56,19 @@ void Enemy::Draw()
 
 void Enemy::UpdateMove()
 {
-	m_EnemyVec = VAdd(m_EnemyVec, VGet(0.0f,0.0f,10.0f));
+	m_pModel->Update();
+	m_enemyVec = VAdd(m_enemyVec, VGet(0.0f,0.0f,10.0f));
 
-	if (VSize(m_EnemyVec) < 0)
+	if (VSize(m_enemyVec) < 0)
 	{
-		m_EnemyVec = VNorm(m_EnemyVec);
+		m_enemyVec = VNorm(m_enemyVec);
 	}
 
-	m_EnemyVec = VScale(m_EnemyVec, -1.0f);
+	m_enemyVec = VScale(m_enemyVec, -1.0f);
 
-	m_EnemyPos = VAdd(m_EnemyPos, m_EnemyVec);
+	m_enemyPos = VAdd(m_enemyPos, m_enemyVec);
+
+	m_pModel->SetPos(m_enemyPos);
+	m_pModel->SetRot(kZero);
+
 }

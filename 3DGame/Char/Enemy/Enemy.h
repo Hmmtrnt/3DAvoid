@@ -18,15 +18,19 @@ public:
 
 	void UpdateMove();// エネミーの動き
 
+	// メンバ関数ポインタ
+	void(Enemy::* m_updateFunc)();
+
 private:
 	// ポインタ
 	std::shared_ptr<Model> m_pModel;
 
 	// VECTOR
-	VECTOR m_EnemyPos;		// エネミー座標
-	VECTOR m_EnemyVec;		// エネミー移動
+	VECTOR m_enemyPos;		// エネミー座標
+	VECTOR m_enemyVec;		// エネミー移動
 
-
+	// float
+	float m_enemyAngle;		// エネミーのアングル
 
 	// vector
 	//std::vector<int> m_enemies;// エネミーの数

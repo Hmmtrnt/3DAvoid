@@ -236,13 +236,13 @@ void Player::UpdateIdle()
 	// 左右キーで旋回
 	if (Pad::IsPress(PAD_INPUT_LEFT))
 	{
-		//m_playerAngleY -= 0.05f;
-		m_playerPos.x -= 0.1f;
+		m_playerAngleY -= 0.05f;
+		//m_playerPos.x -= 0.1f;
 	}
 	if (Pad::IsPress(PAD_INPUT_RIGHT))
 	{
-		//m_playerAngleY += 0.05f;
-		m_playerPos.x += 0.1f;
+		m_playerAngleY += 0.05f;
+		//m_playerPos.x += 0.1f;
 	}
 
 	// 移動処理
@@ -250,7 +250,7 @@ void Player::UpdateIdle()
 	// 上下キーで移動
 	if (Pad::IsPress(PAD_INPUT_UP))
 	{
-#if false
+#if true
 		m_playerPos = VAdd(m_playerPos, m_playerMove);
 		m_isMove = true;
 #else
@@ -259,7 +259,7 @@ void Player::UpdateIdle()
 	}
 	if (Pad::IsPress(PAD_INPUT_DOWN))
 	{
-#if false
+#if true
 		m_playerPos = VSub(m_playerPos, m_playerMove);
 		m_isMove = true;
 #else
