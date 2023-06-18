@@ -94,6 +94,11 @@ void Enemy::UpdateMove()
 
 }
 
+int Enemy::GetModelHandle() const
+{
+	return 0;
+}
+
 float Enemy::GetColRadius()
 {
 	return kColRadius;
