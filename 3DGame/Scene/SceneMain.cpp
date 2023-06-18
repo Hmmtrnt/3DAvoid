@@ -12,20 +12,24 @@ namespace
 
 SceneMain::SceneMain()
 {
-	m_pSet = new GameSetting;
+	/*m_pSet = new GameSetting;
 	m_pPlayer = new Player;
 	m_pEnemy = new Enemy;
-	m_pField = new Field;
+	m_pField = new Field;*/
 
+	m_pSet = std::make_shared<GameSetting>();
+	m_pPlayer = std::make_shared<Player>();
+	//m_pEnemy = std::make_shared<Enemy>();
+	m_pField = std::make_shared<Field>();
 	
 }
 
 SceneMain::~SceneMain()
 {
-	delete m_pSet;
+	/*delete m_pSet;
 	delete m_pPlayer;
 	delete m_pEnemy;
-	delete m_pField;
+	delete m_pField;*/
 }
 
 void SceneMain::Init()
@@ -34,6 +38,9 @@ void SceneMain::Init()
 	m_pSet->InitCamera();
 	m_pPlayer->Init();
 	m_pField->Init();
+
+	m_pEnemy.push_back(std::make_shared<Enemy>(m_pPlayer));
+	m_pEnemy.back()->Init();
 }
 
 void SceneMain::End()
@@ -44,7 +51,7 @@ void SceneMain::End()
 SceneBase* SceneMain::Update()
 {
 	m_pPlayer->Update();
-	m_pEnemy->Update();
+	//m_pEnemy->Update();
 
 	return this;
 }
@@ -52,6 +59,6 @@ SceneBase* SceneMain::Update()
 void SceneMain::Draw()
 {
 	m_pPlayer->Draw();
-	m_pEnemy->Draw();
+	//m_pEnemy->Draw();
 	m_pField->Draw();
 }

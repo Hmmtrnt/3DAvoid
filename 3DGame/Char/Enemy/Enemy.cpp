@@ -13,14 +13,35 @@ namespace
 	// VECTORの初期化
 	constexpr VECTOR kZero{ 0.0f,0.0f,0.0f };
 	constexpr VECTOR kInitPos{ 0.0f,0.0f,1000.0f };
+
+	// エネミーの向いている方向
+	constexpr VECTOR kEnemyDir{ 0.0f,0.0f,-1.0f };
+
+	// 当たり判定のサイズ
+	constexpr float kColRadius = 50.0f;
 }
 
-Enemy::Enemy() :
+Enemy::Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer) :
 	m_updateFunc(&Enemy::UpdateMove),
-	m_enemyAngle(0.0f)
+	m_pPlayer(pPlayer),
+	m_angle(0.0f)
 {
-	m_enemyPos = kInitPos;
-	m_enemyVec = kZero;
+	m_pos.x = GetRand(2000) - 1000;;
+	m_pos.y = 0.0f;
+	m_pos.z = GetRand(2000) - 1000;
+
+	m_pModel = std::make_shared<Model>(kEnemyHandle);
+	m_pModel->SetAnimation(kAnimMove, true, true);
+}
+
+Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
+	m_updateFunc(&Enemy::UpdateMove),
+	m_pPlayer(pPlayer),
+	m_angle(0.0f)
+{
+	m_pos.x = GetRand(2000) - 1000;;
+	m_pos.y = 0.0f;
+	m_pos.z = GetRand(2000) - 1000;
 	m_pModel = std::make_shared<Model>(kEnemyHandle);
 	m_pModel->SetAnimation(kAnimMove, true, true);
 }
@@ -43,10 +64,10 @@ void Enemy::Update()
 
 	
 
-	if (m_enemyPos.z <= -1000.0f)
+	/*if (m_pos.z <= -1000.0f)
 	{
-		m_enemyPos.z = 1000.0f;
-	}
+		m_pos.z = 1000.0f;
+	}*/
 }
 
 void Enemy::Draw()
@@ -57,18 +78,23 @@ void Enemy::Draw()
 void Enemy::UpdateMove()
 {
 	m_pModel->Update();
-	m_enemyVec = VAdd(m_enemyVec, VGet(0.0f,0.0f,10.0f));
 
-	if (VSize(m_enemyVec) < 0)
-	{
-		m_enemyVec = VNorm(m_enemyVec);
-	}
+	// 現在敵が向いている方向のベクトルを生成する
+	MATRIX enemyRotMtx = MGetRotY(m_angle);
+	VECTOR dir = VTransform(kEnemyDir, enemyRotMtx);
+	// 敵からプレイヤーへのベクトル（正規化）
+	VECTOR toPlayer = VSub(m_pPlayer->GetPos(), m_pos);
+	toPlayer = VNorm(toPlayer);
+	// 内積から角度を求める
+	float dot = VDot(dir, toPlayer);
+	float angle = acosf(dot);
 
-	m_enemyVec = VScale(m_enemyVec, -1.0f);
-
-	m_enemyPos = VAdd(m_enemyPos, m_enemyVec);
-
-	m_pModel->SetPos(m_enemyPos);
+	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(kZero);
 
+}
+
+float Enemy::GetColRadius()
+{
+	return kColRadius;
 }

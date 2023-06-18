@@ -505,6 +505,6 @@ int Player::TestCalculate()
 		m_testRusult = -m_testRusult;
 	}*/
 
-	return m_testRusult;
+	return static_cast<int>(m_testRusult);
 }
 

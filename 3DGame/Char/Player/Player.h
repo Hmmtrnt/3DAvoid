@@ -15,6 +15,7 @@ public:
 	void Update();
 	void Draw();
 
+	VECTOR GetPos()const { return m_pos; }
 	
 private:// 関数
 	void UpdatePlayerPos();// キャラクター操作
@@ -38,10 +39,10 @@ private:// 変数
 	std::shared_ptr<Model> m_pModel;
 
 	// VECTOR
-	VECTOR m_playerPos;		// プレイヤー座標
-	VECTOR m_playerAngle;	// プレイヤーアングル
-	VECTOR m_playerVec;		// プレイヤーの移動
-	VECTOR m_playerMove;	// プレイヤーの動き
+	VECTOR m_pos;		// プレイヤー座標
+	VECTOR m_angle;		// プレイヤーアングル
+	VECTOR m_vec;		// プレイヤーの移動
+	VECTOR m_move;		// プレイヤーの動き
 
 	// MATRIX
 	MATRIX m_cameraRotMtx;	// 水平移動の行列取得
