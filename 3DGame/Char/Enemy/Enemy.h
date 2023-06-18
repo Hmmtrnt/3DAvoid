@@ -35,4 +35,3 @@ private:
 	// vector
 	//std::vector<int> m_enemies;// エネミーの数
 };
-

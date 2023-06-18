@@ -16,7 +16,7 @@ namespace
 }
 
 Enemy::Enemy() :
-	m_updateFunc(UpdateMove),
+	m_updateFunc(&Enemy::UpdateMove),
 	m_enemyAngle(0.0f)
 {
 	m_enemyPos = kInitPos;
