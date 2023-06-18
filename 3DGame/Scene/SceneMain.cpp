@@ -39,8 +39,12 @@ void SceneMain::Init()
 	m_pPlayer->Init();
 	m_pField->Init();
 
+	// 一体目のエネミー生成
 	m_pEnemy.push_back(std::make_shared<Enemy>(m_pPlayer));
 	m_pEnemy.back()->Init();
+
+	// 二体目以降は一体目をコピー
+	
 }
 
 void SceneMain::End()

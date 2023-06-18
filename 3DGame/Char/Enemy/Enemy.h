@@ -23,6 +23,9 @@ public:
 
 	void UpdateMove();// エネミーの動き
 
+	// モデルの取得
+	int GetModelHandle()const;
+
 	// 当たり判定の半径
 	float GetColRadius();
 

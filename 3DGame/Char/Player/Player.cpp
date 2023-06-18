@@ -50,10 +50,10 @@ namespace
 
 Player::Player() :
 	m_updateFunc(&Player::TestMove),
-	m_playerPos(kZero),
-	m_playerAngle(kZero),
-	m_playerVec(kZero),
-	m_playerMove(kZero),
+	m_pos(kZero),
+	m_angle(kZero),
+	m_vec(kZero),
+	m_move(kZero),
 	m_cameraRotMtx(),
 	m_playerRotMtx(),
 	m_playerHandle(-1),
@@ -112,8 +112,8 @@ void Player::Draw()
 
 void Player::UpdatePlayerPos()
 {
-	m_playerPos.z += m_playerVec.z;
-	m_playerPos.x += m_playerVec.x;
+	m_pos.z += m_vec.z;
+	m_pos.x += m_vec.x;
 }
 
 void Player::UpdateCamera()
@@ -124,9 +124,9 @@ void Player::UpdateCamera()
 
 	// ジャンプ時は単純にプレイヤーに服従するのではなく
 	//プレイヤーの立っていた位置を見るようにする
-	VECTOR cameraTrans = m_playerPos;
+	VECTOR cameraTrans = m_pos;
 	//cameraTrans.y = m_pos.y * 0.0f;
-	cameraTrans.y = m_playerPos.y * 0.2f;
+	cameraTrans.y = m_pos.y * 0.2f;
 	MATRIX playerTransMtx = MGetTranslate(cameraTrans);
 
 	// プレイヤーの回転に合わせてカメラ位置、注視点を回転させる
@@ -154,53 +154,53 @@ void Player::UpdateVec()
 
 	if (m_pressUp)
 	{
-		m_playerVec.z -= kAcceleration;
+		m_vec.z -= kAcceleration;
 		printfDx("ボタン押したな\n");
 	}
 	if (m_pressDown)
 	{
-		m_playerVec.z += kAcceleration;
+		m_vec.z += kAcceleration;
 		printfDx("ボタン押したな\n");
 	}
 	if (m_pressRight)
 	{
-		m_playerVec.x -= kAcceleration;
+		m_vec.x -= kAcceleration;
 		printfDx("ボタン押したな\n");
 	}
 	if (m_pressLeft)
 	{
-		m_playerVec.x += kAcceleration;
+		m_vec.x += kAcceleration;
 		printfDx("ボタン押したな\n");
 	}
 
 	if (!m_pressUp&&!m_pressDown)
 	{
-		m_playerVec.z = min(max(m_playerVec.z - kDeceleration, 0),
-			m_playerVec.z + kDeceleration);
+		m_vec.z = min(max(m_vec.z - kDeceleration, 0),
+			m_vec.z + kDeceleration);
 	}
 	if (!m_pressRight && !m_pressLeft)
 	{
-		m_playerVec.x = min(max(m_playerVec.x - kDeceleration, 0),
-			m_playerVec.x + kDeceleration);
+		m_vec.x = min(max(m_vec.x - kDeceleration, 0),
+			m_vec.x + kDeceleration);
 	}
 
 
-	if (m_playerVec.z >= kTopSpeed)
+	if (m_vec.z >= kTopSpeed)
 	{
-		m_playerVec.z = kTopSpeed;
+		m_vec.z = kTopSpeed;
 	}
-	if (m_playerVec.z <= -kTopSpeed)
+	if (m_vec.z <= -kTopSpeed)
 	{
-		m_playerVec.z = -kTopSpeed;
+		m_vec.z = -kTopSpeed;
 	}
 
-	if (m_playerVec.x >= kTopSpeed)
+	if (m_vec.x >= kTopSpeed)
 	{
-		m_playerVec.x = kTopSpeed;
+		m_vec.x = kTopSpeed;
 	}
-	if (m_playerVec.x <= -kTopSpeed)
+	if (m_vec.x <= -kTopSpeed)
 	{
-		m_playerVec.x = -kTopSpeed;
+		m_vec.x = -kTopSpeed;
 	}
 }
 
@@ -212,16 +212,16 @@ void Player::UpdateIdle()
 	m_isJump = true;
 
 	m_jumpAcc += kGravity;
-	m_playerPos.y += m_jumpAcc;
-	if (m_playerPos.y <= 0.0f)
+	m_pos.y += m_jumpAcc;
+	if (m_pos.y <= 0.0f)
 	{
-		m_playerPos.y = 0.0f;
+		m_pos.y = 0.0f;
 		m_jumpAcc = 0.0f;
 		m_isJump = false;
 	}
 
 	m_playerRotMtx = MGetRotY(m_playerAngleY);
-	m_playerMove = VTransform(kPlayerVec, m_playerRotMtx);
+	m_move = VTransform(kPlayerVec, m_playerRotMtx);
 
 	// ジャンプしていないとき
 	if (!m_isJump)
@@ -251,7 +251,7 @@ void Player::UpdateIdle()
 	if (Pad::IsPress(PAD_INPUT_UP))
 	{
 #if true
-		m_playerPos = VAdd(m_playerPos, m_playerMove);
+		m_pos = VAdd(m_pos, m_move);
 		m_isMove = true;
 #else
 		m_playerPos.z += 0.1f;
@@ -260,7 +260,7 @@ void Player::UpdateIdle()
 	if (Pad::IsPress(PAD_INPUT_DOWN))
 	{
 #if true
-		m_playerPos = VSub(m_playerPos, m_playerMove);
+		m_pos = VSub(m_pos, m_move);
 		m_isMove = true;
 #else
 		m_playerPos.z -= 0.1f;
@@ -293,7 +293,7 @@ void Player::UpdateIdle()
 		}
 	}
 
-	m_pModel->SetPos(m_playerPos);
+	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f,m_playerAngleY,0.0f));
 
 	//UpdateCamera();
@@ -307,16 +307,16 @@ void Player::TestMove()
 	m_isJump = true;
 
 	m_jumpAcc += kGravity;
-	m_playerPos.y += m_jumpAcc;
-	if (m_playerPos.y <= 0.0f)
+	m_pos.y += m_jumpAcc;
+	if (m_pos.y <= 0.0f)
 	{
-		m_playerPos.y = 0.0f;
+		m_pos.y = 0.0f;
 		m_jumpAcc = 0.0f;
 		m_isJump = false;
 	}
 
 	m_playerRotMtx = MGetRotY(m_playerAngleY);
-	m_playerMove = VTransform(kPlayerVec, m_playerRotMtx);
+	m_move = VTransform(kPlayerVec, m_playerRotMtx);
 
 	// ジャンプしていないとき
 	if (!m_isJump)
@@ -330,16 +330,16 @@ void Player::TestMove()
 	// 移動処理
 	m_isMove = false;
 	// 移動力の初期化
-	m_playerVec = VGet(0.0f, 0.0f, 0.0f);
+	m_vec = VGet(0.0f, 0.0f, 0.0f);
 
 	// 上下キー
 	if (Pad::IsPress(PAD_INPUT_UP))
 	{
-		if (m_playerPos.z <= 950)
+		if (m_pos.z <= 950)
 		{
 			//m_playerPos.z += kTopSpeed;
 
-			m_playerVec = VAdd(m_playerVec, VGet(0.0f, 0.0f, kTopSpeed));
+			m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, kTopSpeed));
 
 			m_isMove = true;
 			m_playerAngleY = kAngleUp;
@@ -348,11 +348,11 @@ void Player::TestMove()
 	}
 	if (Pad::IsPress(PAD_INPUT_DOWN))
 	{
-		if (m_playerPos.z >= -950)
+		if (m_pos.z >= -950)
 		{
 			//m_playerPos.z -= kTopSpeed;
 
-			m_playerVec = VAdd(m_playerVec, VGet(0.0f, 0.0f, -kTopSpeed));
+			m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, -kTopSpeed));
 
 			m_isMove = true;
 			m_playerAngleY = kAngleDown;
@@ -361,11 +361,11 @@ void Player::TestMove()
 	// 左右キー
 	if (Pad::IsPress(PAD_INPUT_LEFT))
 	{
-		if (m_playerPos.x >= -950)
+		if (m_pos.x >= -950)
 		{
 			//m_playerPos.x -= kTopSpeed;
 
-			m_playerVec = VAdd(m_playerVec, VGet(-kTopSpeed, 0.0f, 0.0f));
+			m_vec = VAdd(m_vec, VGet(-kTopSpeed, 0.0f, 0.0f));
 
 			m_isMove = true;
 			m_playerAngleY = kAngleLeft;
@@ -373,11 +373,11 @@ void Player::TestMove()
 	}
 	if (Pad::IsPress(PAD_INPUT_RIGHT))
 	{
-		if (m_playerPos.x <= 950)
+		if (m_pos.x <= 950)
 		{
 			//m_playerPos.x += kTopSpeed;
 
-			m_playerVec = VAdd(m_playerVec, VGet(kTopSpeed, 0.0f, 0.0f));
+			m_vec = VAdd(m_vec, VGet(kTopSpeed, 0.0f, 0.0f));
 
 			m_isMove = true;
 			m_playerAngleY = kAngleRight;
@@ -385,14 +385,14 @@ void Player::TestMove()
 		
 	}
 
-	if (VSize(m_playerVec) > 0)
+	if (VSize(m_vec) > 0)
 	{
-		m_playerVec = VNorm(m_playerVec);
+		m_vec = VNorm(m_vec);
 	}
 
-	m_playerVec = VScale(m_playerVec, kTopSpeed);
+	m_vec = VScale(m_vec, kTopSpeed);
 
-	m_playerPos = VAdd(m_playerPos, m_playerVec);
+	m_pos = VAdd(m_pos, m_vec);
 
 	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
 	{
@@ -491,7 +491,7 @@ void Player::TestMove()
 	
 
 	// プレイヤーの座標
-	m_pModel->SetPos(m_playerPos);
+	m_pModel->SetPos(m_pos);
 	// プレイヤーの回転率
 	m_pModel->SetRot(VGet(0.0f, m_playerAngleY, 0.0f));
 }
