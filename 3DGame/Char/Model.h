@@ -27,6 +27,8 @@ public:
 	void SetPos(VECTOR pos);
 	// 回転状態の設定
 	void SetRot(VECTOR rot);
+	// モデルの拡大値
+	void SetScale(VECTOR scale);
 
 	// アニメーションの制御
 	

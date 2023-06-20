@@ -133,7 +133,7 @@ void Enemy::UpdateMove()
 
 	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f,m_angle,0.0f));
-
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
 int Enemy::GetModelHandle() const
