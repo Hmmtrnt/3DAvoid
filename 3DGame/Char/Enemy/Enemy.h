@@ -46,6 +46,9 @@ private:
 	// float
 	float m_angle;		// エネミーのアングル
 
+	// int
+	int m_modelHandle;	// エネミーのモデルハンドル
+
 	// vector
 	//std::vector<int> m_enemies;// エネミーの数
 };

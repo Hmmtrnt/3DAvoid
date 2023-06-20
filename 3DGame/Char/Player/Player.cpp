@@ -30,15 +30,17 @@ namespace
 	// テスト：プレイヤーの移動
 	constexpr VECTOR kPlayerVec{ 0.0f,0.0f,-10.0f };
 
+	constexpr float kAnglePI = DX_PI_F / 180.0f;
+
 	// プレイヤーのアングル
-	constexpr float kAngleUp = DX_PI_F;// 上
-	constexpr float kAngleDown = 0.0f;// 下
-	constexpr float kAngleLeft = DX_PI_F / 2;// 左
-	constexpr float kAngleRight = DX_PI_F / -2;// 右
-	constexpr float kAngleUpLeft = DX_PI_F / 1.3f;// 上左
-	constexpr float kAngleUpRight = DX_PI_F / -1.3f;// 上右
-	constexpr float kAngleDownLeft = DX_PI_F / 3.5f;// 下左
-	constexpr float kAngleDownRight = DX_PI_F / -3.5f;// 下右
+	constexpr float kAngleUp = 180.0f * kAnglePI;// 上
+	constexpr float kAngleDown = 0.0f * kAnglePI;// 下
+	constexpr float kAngleLeft = 90.0f * kAnglePI;// 左
+	constexpr float kAngleRight = 270.0f * kAnglePI;// 右
+	constexpr float kAngleUpLeft = 135.0f * kAnglePI;// 上左
+	constexpr float kAngleUpRight = 225.0f * kAnglePI;// 上右
+	constexpr float kAngleDownLeft = 45.0f * kAnglePI;// 下左
+	constexpr float kAngleDownRight = 315.0f * kAnglePI;// 下右
 
 	// プレイヤーのジャンプ
 	// ジャンプ力

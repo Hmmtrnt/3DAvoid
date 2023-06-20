@@ -10,7 +10,8 @@ namespace
 	
 }
 
-SceneMain::SceneMain()
+SceneMain::SceneMain() :
+	m_shadowMap(0)
 {
 	/*m_pSet = new GameSetting;
 	m_pPlayer = new Player;
@@ -45,29 +46,46 @@ void SceneMain::Init()
 
 	// 二体目以降は一体目をコピー
 	int enemyModelHandle = m_pEnemy.back()->GetModelHandle();
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		m_pEnemy.push_back(std::make_shared<Enemy>(enemyModelHandle, m_pPlayer));
 		m_pEnemy.back()->Init();
 	}
+
+	// シャドウマップの生成
+	m_shadowMap = MakeShadowMap(1024, 1024);
+	SetShadowMapLightDirection(m_shadowMap, GetLightDirection());
 }
 
 void SceneMain::End()
 {
 	m_pPlayer->End();
+	// シャドウマップの削除
+	DeleteShadowMap(m_shadowMap);
 }
 
+// 更新処理
 SceneBase* SceneMain::Update()
 {
 	m_pPlayer->Update();
-	//m_pEnemy->Update();
+
+	for (auto& enemies : m_pEnemy)
+	{
+		enemies->Update();
+	}
 
 	return this;
 }
 
+// 描画処理
 void SceneMain::Draw()
 {
 	m_pPlayer->Draw();
-	//m_pEnemy->Draw();
+
+	for (auto& enemies : m_pEnemy)
+	{
+		enemies->Draw();
+	}
+
 	m_pField->Draw();
 }

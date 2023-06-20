@@ -34,4 +34,7 @@ private:
 
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;
 
+	// int
+	int m_shadowMap; // シャドウマップ
+
 };
