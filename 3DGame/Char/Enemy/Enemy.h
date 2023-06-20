@@ -32,6 +32,9 @@ public:
 	// エネミーの位置取得
 	VECTOR GetPos()const { return m_pos; }
 
+	// 当たり判定の真偽取得
+	bool GetIsCol()const { return m_isCol; }
+
 	// メンバ関数ポインタ
 	void(Enemy::* m_updateFunc)();
 
@@ -48,6 +51,9 @@ private:
 
 	// int
 	int m_modelHandle;	// エネミーのモデルハンドル
+
+	// bool
+	bool m_isCol;// エネミーの当たり判定の真偽
 
 	// vector
 	//std::vector<int> m_enemies;// エネミーの数

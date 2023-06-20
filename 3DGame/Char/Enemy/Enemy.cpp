@@ -30,7 +30,8 @@ Enemy::Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer) :
 	m_angle(0.0f),
 	m_modelHandle(-1)
 {
-	m_pos.x = GetRand(2000) - 1000;
+	//m_pos.x = GetRand(2000) - 1000;
+	m_pos.x = 1000.0f;
 	m_pos.y = 0.0f;
 	m_pos.z = GetRand(2000) - 1000;
 
@@ -47,7 +48,8 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
 	m_angle(0.0f),
 	m_modelHandle(-1)
 {
-	m_pos.x = GetRand(2000) - 1000;
+	//m_pos.x = GetRand(2000) - 1000;
+	m_pos.x = 1000.0f;
 	m_pos.y = 0.0f;
 	m_pos.z = GetRand(2000) - 1000;
 
