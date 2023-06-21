@@ -13,24 +13,14 @@ namespace
 SceneMain::SceneMain() :
 	m_shadowMap(0)
 {
-	/*m_pSet = new GameSetting;
-	m_pPlayer = new Player;
-	m_pEnemy = new Enemy;
-	m_pField = new Field;*/
-
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
-	//m_pEnemy = std::make_shared<Enemy>();
 	m_pField = std::make_shared<Field>();
-	
 }
 
 SceneMain::~SceneMain()
 {
-	/*delete m_pSet;
-	delete m_pPlayer;
-	delete m_pEnemy;
-	delete m_pField;*/
+	
 }
 
 void SceneMain::Init()
@@ -72,7 +62,14 @@ SceneBase* SceneMain::Update()
 	for (auto& enemies : m_pEnemy)
 	{
 		enemies->Update();
+		if (enemies->ColFlag())
+		{
+			DrawString(10, 10, "当たっている\n", 0xff0000);
+			m_pPlayer->m_hp += 1;
+		}
 	}
+
+
 
 	return this;
 }
@@ -88,4 +85,6 @@ void SceneMain::Draw()
 	}
 
 	m_pField->Draw();
+
+	DrawFormatString(10, 30, 0xffffff, "プレイヤーのHP：%d", m_pPlayer->m_hp);
 }

@@ -23,7 +23,7 @@ public:
 
 	void UpdateMove();// エネミーの動き
 
-	bool ColTest();
+	bool ColFlag();// 当たり判定のテスト
 
 	// モデルの取得
 	int GetModelHandle()const;

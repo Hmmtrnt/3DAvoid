@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "../Player/Player.h"
 #include "../Model.h"
+#include <iostream>
 
 namespace
 {
@@ -70,6 +71,7 @@ Enemy::~Enemy()
 {
 	MV1DeleteModel(m_modelHandle);
 	MV1DeleteModel(m_playerHandle);
+	//MV1CollResultPolyDimTerminate(test);
 }
 
 void Enemy::Init()
@@ -84,32 +86,34 @@ void Enemy::Update()
 {
 	(this->*m_updateFunc)();
 
-	test = MV1CollCheck_Sphere(m_playerHandle, -1, m_pos, 100.0f);
+	//test = MV1CollCheck_Sphere(m_playerHandle, -1, GetPos(), 100.0f);
 
-	// “–‚½‚Á‚½‚©‚Ç‚¤‚©‚Åˆ—‚ğ•ªŠò
-	if (test.HitNum >= 1)
-	{
-		// “–‚½‚Á‚½ê‡‚ÍÕ“Ë‚Ìî•ñ‚ğ•`‰æ‚·‚é
+	//// “–‚½‚Á‚½‚©‚Ç‚¤‚©‚Åˆ—‚ğ•ªŠò
+	//if (test.HitNum >= 1)
+	//{
+	//	// “–‚½‚Á‚½ê‡‚ÍÕ“Ë‚Ìî•ñ‚ğ•`‰æ‚·‚é
 
-		// “–‚½‚Á‚½ƒ|ƒŠƒSƒ“‚Ì”‚ğ•`‰æ
-		DrawFormatString(0, 0, GetColor(255, 255, 255), "Hit Poly Num   %d", test.HitNum);
+	//	// “–‚½‚Á‚½ƒ|ƒŠƒSƒ“‚Ì”‚ğ•`‰æ
+	//	DrawFormatString(0, 0, GetColor(255, 255, 255), "Hit Poly Num   %d", test.HitNum);
 
-		printfDx("“–‚½‚Á‚½");
+	//	printfDx("“–‚½‚Á‚½\n");
 
-		// “–‚½‚Á‚½ƒ|ƒŠƒSƒ“‚Ì”‚¾‚¯ŒJ‚è•Ô‚µ
-		for (int i = 0; i < test.HitNum; i++)
-		{
-			// “–‚½‚Á‚½ƒ|ƒŠƒSƒ“‚ğ•`‰æ
-			DrawTriangle3D(
-				test.Dim[i].Position[0],
-				test.Dim[i].Position[1],
-				test.Dim[i].Position[2], GetColor(0, 255, 255), TRUE);
-		}
-	}
+	//	// “–‚½‚Á‚½ƒ|ƒŠƒSƒ“‚Ì”‚¾‚¯ŒJ‚è•Ô‚µ
+	//	for (int i = 0; i < test.HitNum; i++)
+	//	{
+	//		// “–‚½‚Á‚½ƒ|ƒŠƒSƒ“‚ğ•`‰æ
+	//		DrawTriangle3D(
+	//			test.Dim[i].Position[0],
+	//			test.Dim[i].Position[1],
+	//			test.Dim[i].Position[2], GetColor(0, 255, 255), TRUE);
+	//	}
+	//}
 	/*if (m_pos.z <= -1000.0f)
 	{
 		m_pos.z = 1000.0f;
 	}*/
+
+	//MV1SetPosition(m_playerHandle, m_pPlayer->GetPos());
 }
 
 void Enemy::Draw()
@@ -153,12 +157,18 @@ void Enemy::UpdateMove()
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
-bool Enemy::ColTest()
+bool Enemy::ColFlag()
 {
-	/*if (<500.0f + 250.0f)
-	{
+	int colx = m_pPlayer->GetPos().x - m_pos.x;
+	int coly = m_pPlayer->GetPos().y - m_pos.y;
+	int colz = m_pPlayer->GetPos().z - m_pos.z;
 
-	}*/
+	if (std::pow(colx,2.0f) +
+		std::pow(coly,2.0f) +
+		std::pow(colz,2.0f) <= 
+		std::pow(100.0f,2.0f)) {
+		return true;
+	}
 	return false;
 }
 

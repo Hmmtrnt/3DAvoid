@@ -37,4 +37,6 @@ private:
 	// int
 	int m_shadowMap; // シャドウマップ
 
+	int m_invincibleTime;// プレイヤーの無敵時間
+
 };

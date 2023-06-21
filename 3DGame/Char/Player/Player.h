@@ -15,7 +15,13 @@ public:
 	void Update();
 	void Draw();
 
+	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }
+
+	// プレイヤーのHP取得
+	int GetHp() { return m_hp; }
+
+	int m_hp;// 体力
 	
 private:// 関数
 	void UpdatePlayerPos();// キャラクター操作
@@ -29,7 +35,6 @@ private:// 関数
 	void TestMove();// キャラクターの動き+α
 
 	int TestCalculate();// アングルの計算
-
 
 	// メンバ関数ポインタ
 	void (Player::* m_updateFunc)();
@@ -79,11 +84,15 @@ private:// 変数
 	int m_animPrev;//前
 	int m_animNext;//後ろ
 
+	
+
 	float m_angleTest = 0.0f;// 回転最大値
 	
 	float m_testRusult = 0.0f;// 計算結果
 
 	bool m_isFlag = false;
+
+	MV1_COLL_RESULT_POLY_DIM test;
 
 };
 

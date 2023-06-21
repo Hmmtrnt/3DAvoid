@@ -74,7 +74,8 @@ Player::Player() :
 	m_isMove(false),
 	m_frameCount(0),
 	m_animPrev(0),
-	m_animNext(0)
+	m_animNext(0),
+	m_hp(0)
 {
 	m_pModel = std::make_shared<Model>(kPlayerHandle);
 	m_pModel->SetAnimation(m_AnimNum, true, true);
@@ -93,12 +94,40 @@ void Player::Init()
 void Player::End()
 {
 	MV1DeleteModel(m_playerHandle);// モデルの削除
+	//MV1CollResultPolyDimTerminate(test);
 }
 
 void Player::Update()
 {
 	(this->*m_updateFunc)();
 	
+	//test = MV1CollCheck_Sphere(m_playerHandle, -1, GetPos(), 100.0f);
+
+	//// 当たったかどうかで処理を分岐
+	//if (test.HitNum >= 1)
+	//{
+	//	// 当たった場合は衝突の情報を描画する
+
+	//	// 当たったポリゴンの数を描画
+	//	DrawFormatString(0, 0, GetColor(255, 255, 255), "Hit Poly Num   %d", test.HitNum);
+
+	//	printfDx("当たった\n");
+
+	//	
+	//}
+	//else
+	//{
+	//	// 当たったポリゴンの数だけ繰り返し
+	//	for (int i = 0; i < test.HitNum; i++)
+	//	{
+	//		// 当たったポリゴンを描画
+	//		DrawTriangle3D(
+	//			test.Dim[i].Position[0],
+	//			test.Dim[i].Position[1],
+	//			test.Dim[i].Position[2], GetColor(0, 255, 255), TRUE);
+	//	}
+	//}
+
 	//UpdateVec();// プレイヤーの加速度
 	//UpdatePlayerPos();// プレイヤーの座標更新
 	//UpdateCamera();
@@ -501,11 +530,6 @@ void Player::TestMove()
 int Player::TestCalculate()
 {
 	m_testRusult = m_angleTest - m_playerAngleY;
-
-	/*if (m_testRusult < 0)
-	{
-		m_testRusult = -m_testRusult;
-	}*/
 
 	return static_cast<int>(m_testRusult);
 }
