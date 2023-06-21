@@ -127,11 +127,11 @@ void Enemy::UpdateMove()
 
 	// 現在敵が向いている方向のベクトルを生成する
 	MATRIX enemyRotMtx = MGetRotY(m_angle);
-	VECTOR dir = VTransform(kEnemyDir, enemyRotMtx);
+	m_dir = VTransform(kEnemyDir, enemyRotMtx);
 	// 移動速度を反映させる
-	VECTOR vec = VScale(dir, kSpeed);
+	m_vec = VScale(m_dir, kSpeed);
 	// 移動させる
-	m_pos = VAdd(m_pos, vec);
+	m_pos = VAdd(m_pos, m_vec);
 
 
 	// 座標の初期化
@@ -157,9 +157,13 @@ void Enemy::UpdateMove()
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
-void Enemy::UpdateHit()
+void Enemy::UpdateHit(int playerHp)
 {
+	m_pPlayer->m_vec = VSub(m_pos, m_pPlayer->m_pos);
+	m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
 
+	m_pPlayer->m_vec = VScale(m_pPlayer->m_vec, 1);
+	m_pPlayer->m_pos = VSub(m_pPlayer->m_pos, VGet(m_pPlayer->m_vec.x + playerHp / 100, m_pPlayer->m_vec.y + playerHp / 100, m_pPlayer->m_vec.z + playerHp / 100));
 }
 
 bool Enemy::ColFlag()
@@ -168,10 +172,7 @@ bool Enemy::ColFlag()
 	int coly = m_pPlayer->GetPos().y - m_pos.y;
 	int colz = m_pPlayer->GetPos().z - m_pos.z;
 
-	if (std::pow(colx,2.0f) +
-		std::pow(coly,2.0f) +
-		std::pow(colz,2.0f) <= 
-		std::pow(100.0f,2.0f)) {
+	if (std::pow(colx,2.0f) + std::pow(coly,2.0f) + std::pow(colz,2.0f) <= std::pow(100.0f,2.0f)) {
 		return true;
 	}
 	return false;

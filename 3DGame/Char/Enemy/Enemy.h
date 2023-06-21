@@ -23,7 +23,7 @@ public:
 
 	void UpdateMove();// エネミーの動き
 
-	void UpdateHit();// エネミーとプレイヤーが当たったときの処理
+	void UpdateHit(int playerHp);// エネミーとプレイヤーが当たったときの処理
 
 	bool ColFlag();// 当たり判定のテスト
 
@@ -49,6 +49,8 @@ private:
 
 	// VECTOR
 	VECTOR m_pos;		// エネミー座標
+	VECTOR m_dir;		// エネミーの方向
+	VECTOR m_vec;		// エネミーの移動
 
 	// float
 	float m_angle;		// エネミーのアングル

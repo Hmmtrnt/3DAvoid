@@ -17,11 +17,17 @@ public:
 
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }
+	VECTOR GetVec()const { return m_vec; }
+
+	VECTOR m_pos;		// プレイヤー座標
+	VECTOR m_vec;		// プレイヤーの移動
 
 	// プレイヤーのHP取得
 	int GetHp() { return m_hp; }
 
 	int m_hp;// 体力
+
+	bool GetIsFall()const { return m_isFall; }
 	
 private:// 関数
 	void UpdatePlayerPos();// キャラクター操作
@@ -44,9 +50,9 @@ private:// 変数
 	std::shared_ptr<Model> m_pModel;
 
 	// VECTOR
-	VECTOR m_pos;		// プレイヤー座標
+	
 	VECTOR m_angle;		// プレイヤーアングル
-	VECTOR m_vec;		// プレイヤーの移動
+	
 	VECTOR m_move;		// プレイヤーの動き
 
 	// MATRIX
@@ -77,6 +83,7 @@ private:// 変数
 
 	bool m_isJump;			// ジャンプしているかどうか
 	bool m_isMove;			// 動いているかどうか
+	bool m_isFall;			// ステージ外に出たかどうか
 
 	// テスト
 	int m_frameCount;

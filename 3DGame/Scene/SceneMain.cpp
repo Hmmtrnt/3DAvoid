@@ -73,7 +73,19 @@ SceneBase* SceneMain::Update()
 	{
 		m_invincibleTime--;
 	}
+	if (m_pPlayer->GetPos().y < -100.0f)
+	{
+		DrawString(0, 130, "ゲームオーバー", 0xffffff);
+		DrawString(0, 150, "リトライ:PAD_INPUT_4", 0xffffff);
+	}
 
+	if (m_pPlayer->GetIsFall())
+	{
+		if (Pad::IsTrigger(PAD_INPUT_4))
+		{
+			return new SceneMain;
+		}
+	}
 
 	return this;
 }
@@ -113,6 +125,10 @@ void SceneMain::UpdateEnemy()
 				m_pPlayer->m_hp += 10;
 				m_invincibleTime = 120;
 			}
+		}
+		else if(m_invincibleTime >= 60)
+		{
+			enemies->UpdateHit(m_pPlayer->GetHp());
 		}
 
 	}

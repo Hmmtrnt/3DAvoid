@@ -12,6 +12,7 @@ namespace
 	constexpr VECTOR kCameraTarget{ 0.0f, 100.0f, 0.0f };
 
 	// プレイヤーのモーション番号
+	constexpr int kAnimFall = 0;
 	constexpr int kAnimIdle = 3;// アイドル状態
 	constexpr int kAnimWalk = 14;// 歩く状態
 	constexpr int kAnimRun = 11;// 走る状態
@@ -72,6 +73,7 @@ Player::Player() :
 	m_pressLeft(false),
 	m_isJump(false),
 	m_isMove(false),
+	m_isFall(false),
 	m_frameCount(0),
 	m_animPrev(0),
 	m_animNext(0),
@@ -101,36 +103,7 @@ void Player::Update()
 {
 	(this->*m_updateFunc)();
 	
-	//test = MV1CollCheck_Sphere(m_playerHandle, -1, GetPos(), 100.0f);
-
-	//// 当たったかどうかで処理を分岐
-	//if (test.HitNum >= 1)
-	//{
-	//	// 当たった場合は衝突の情報を描画する
-
-	//	// 当たったポリゴンの数を描画
-	//	DrawFormatString(0, 0, GetColor(255, 255, 255), "Hit Poly Num   %d", test.HitNum);
-
-	//	printfDx("当たった\n");
-
-	//	
-	//}
-	//else
-	//{
-	//	// 当たったポリゴンの数だけ繰り返し
-	//	for (int i = 0; i < test.HitNum; i++)
-	//	{
-	//		// 当たったポリゴンを描画
-	//		DrawTriangle3D(
-	//			test.Dim[i].Position[0],
-	//			test.Dim[i].Position[1],
-	//			test.Dim[i].Position[2], GetColor(0, 255, 255), TRUE);
-	//	}
-	//}
-
-	//UpdateVec();// プレイヤーの加速度
-	//UpdatePlayerPos();// プレイヤーの座標更新
-	//UpdateCamera();
+	
 }
 
 void Player::Draw()
@@ -334,6 +307,8 @@ void Player::TestMove()
 {
 	m_pModel->Update();
 
+	
+
 	// ジャンプ処理
 	m_isJump = true;
 
@@ -424,7 +399,7 @@ void Player::TestMove()
 	m_vec = VScale(m_vec, kTopSpeed);
 
 	m_pos = VAdd(m_pos, m_vec);
-
+	// 斜め
 	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
 	{
 		m_playerAngleY = kAngleUpLeft;
@@ -447,34 +422,54 @@ void Player::TestMove()
 	//printfDx("m_playerAngleY:%f\n", m_playerAngleY);
 	
 	
+	// ゲームオーバー処理
+	if (m_pos.x > 1000.0f || m_pos.x < -1000.0f ||
+		m_pos.y > 1000.0f || m_pos.y < -1000.0f ||
+		m_pos.z > 1000.0f || m_pos.z < -1000.0f)
+	{
+		// 落下アニメーション
+		m_AnimNum = kAnimFall;
+		m_pModel->ChangeAnimation(m_AnimNum, false, true, 5);
 
-	if (m_isMove && !m_isJump)
+		// 落下
+		m_pos.y-=10.0f;
+
+		m_isFall = true;
+	}
+	else
 	{
-		if (m_AnimNum != kAnimRun)
+		if (!m_isFall)
 		{
-			// 移動アニメーション
-			m_AnimNum = kAnimRun;
-			m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
+			if (m_isMove && !m_isJump)
+			{
+				if (m_AnimNum != kAnimRun)
+				{
+					// 移動アニメーション
+					m_AnimNum = kAnimRun;
+					m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
+				}
+			}
+			else if (m_isJump)
+			{
+				if (m_AnimNum != kAnimJump)
+				{
+					// 移動からアイドル状態
+					m_AnimNum = kAnimJump;
+					m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+				}
+			}
+			else if (!m_isMove && !m_isJump)
+			{
+				if (m_AnimNum != kAnimIdle)
+				{
+					// 移動からアイドル状態
+					m_AnimNum = kAnimIdle;
+					m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+				}
+			}
 		}
 	}
-	else if (m_isJump)
-	{
-		if (m_AnimNum != kAnimJump)
-		{
-			// 移動からアイドル状態
-			m_AnimNum = kAnimJump;
-			m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
-		}
-	}
-	else if(!m_isMove && !m_isJump)
-	{
-		if (m_AnimNum != kAnimIdle)
-		{
-			// 移動からアイドル状態
-			m_AnimNum = kAnimIdle;
-			m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
-		}
-	}
+	
 	
 	// プレイヤーの回転
 
