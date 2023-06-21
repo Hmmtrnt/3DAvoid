@@ -157,6 +157,11 @@ void Enemy::UpdateMove()
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
+void Enemy::UpdateHit()
+{
+
+}
+
 bool Enemy::ColFlag()
 {
 	int colx = m_pPlayer->GetPos().x - m_pos.x;

@@ -23,6 +23,8 @@ public:
 
 	void UpdateMove();// エネミーの動き
 
+	void UpdateHit();// エネミーとプレイヤーが当たったときの処理
+
 	bool ColFlag();// 当たり判定のテスト
 
 	// モデルの取得

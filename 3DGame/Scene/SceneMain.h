@@ -3,6 +3,7 @@
 #include "../Util/common.h"
 #include <memory>
 #include <vector>
+#include "../Util/common.h"
 
 class GameSetting;
 class Player;
@@ -20,23 +21,23 @@ public:
 	SceneBase* Update();
 	void Draw();
 
+	void UpdateEnemy();
+	//void UpdateHit();
+
 private:
 	// ゲームの設定ポインタ
-	/*GameSetting* m_pSet;
-	Player* m_pPlayer;
-	Enemy* m_pEnemy;
-	Field* m_pField;*/
+	std::shared_ptr<GameSetting> m_pSet;// 環境設定
+	std::shared_ptr<Player> m_pPlayer;// プレイヤー
+	std::shared_ptr<Field> m_pField;// ステージ
 
-	std::shared_ptr<GameSetting> m_pSet;
-	std::shared_ptr<Player> m_pPlayer;
-	//std::shared_ptr<Enemy> m_pEnemy;
-	std::shared_ptr<Field> m_pField;
-
-	std::vector<std::shared_ptr<Enemy>> m_pEnemy;
+	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
 
 	// int
 	int m_shadowMap; // シャドウマップ
 
 	int m_invincibleTime;// プレイヤーの無敵時間
 
+	int m_hpRedColor;// Hpのカラー赤
+
+	unsigned int m_hpColor;// Hpのカラー
 };
