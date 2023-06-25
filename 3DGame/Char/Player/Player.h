@@ -97,7 +97,7 @@ private:// •Ï”
 	
 	float m_testRusult = 0.0f;// ŒvZŒ‹‰Ê
 
-	bool m_isFlag = false;
+	bool m_isFlag = false;// ‰ñ“]
 
 	MV1_COLL_RESULT_POLY_DIM test;
 

@@ -163,7 +163,10 @@ void Enemy::UpdateHit(int playerHp)
 	m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
 
 	m_pPlayer->m_vec = VScale(m_pPlayer->m_vec, 1);
-	m_pPlayer->m_pos = VSub(m_pPlayer->m_pos, VGet(m_pPlayer->m_vec.x + playerHp / 100, m_pPlayer->m_vec.y + playerHp / 100, m_pPlayer->m_vec.z + playerHp / 100));
+	m_pPlayer->m_pos = VSub(m_pPlayer->m_pos, 
+		VGet(m_pPlayer->m_vec.x + playerHp / 100, 
+			m_pPlayer->m_vec.y + playerHp / 100, 
+			m_pPlayer->m_vec.z + playerHp / 100));
 }
 
 bool Enemy::ColFlag()

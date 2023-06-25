@@ -314,7 +314,7 @@ void Player::TestMove()
 
 	m_jumpAcc += kGravity;
 	m_pos.y += m_jumpAcc;
-	if (m_pos.y <= 0.0f)
+	if (m_pos.y <= 0.0f && !m_isFall)
 	{
 		m_pos.y = 0.0f;
 		m_jumpAcc = 0.0f;
@@ -337,59 +337,62 @@ void Player::TestMove()
 	m_isMove = false;
 	// 移動力の初期化
 	m_vec = VGet(0.0f, 0.0f, 0.0f);
-
-	// 上下キー
-	if (Pad::IsPress(PAD_INPUT_UP))
+	if (!m_isFall)
 	{
-		if (m_pos.z <= 950)
+		// 上下キー
+		if (Pad::IsPress(PAD_INPUT_UP))
 		{
-			//m_playerPos.z += kTopSpeed;
+			if (m_pos.z <= 950)
+			{
+				//m_playerPos.z += kTopSpeed;
 
-			m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, kTopSpeed));
+				m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, kTopSpeed));
 
-			m_isMove = true;
-			m_playerAngleY = kAngleUp;
+				m_isMove = true;
+				m_playerAngleY = kAngleUp;
+			}
+
 		}
-		
-	}
-	if (Pad::IsPress(PAD_INPUT_DOWN))
-	{
-		if (m_pos.z >= -950)
+		if (Pad::IsPress(PAD_INPUT_DOWN))
 		{
-			//m_playerPos.z -= kTopSpeed;
+			if (m_pos.z >= -950)
+			{
+				//m_playerPos.z -= kTopSpeed;
 
-			m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, -kTopSpeed));
+				m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, -kTopSpeed));
 
-			m_isMove = true;
-			m_playerAngleY = kAngleDown;
+				m_isMove = true;
+				m_playerAngleY = kAngleDown;
+			}
 		}
-	}
-	// 左右キー
-	if (Pad::IsPress(PAD_INPUT_LEFT))
-	{
-		if (m_pos.x >= -950)
+		// 左右キー
+		if (Pad::IsPress(PAD_INPUT_LEFT))
 		{
-			//m_playerPos.x -= kTopSpeed;
+			if (m_pos.x >= -950)
+			{
+				//m_playerPos.x -= kTopSpeed;
 
-			m_vec = VAdd(m_vec, VGet(-kTopSpeed, 0.0f, 0.0f));
+				m_vec = VAdd(m_vec, VGet(-kTopSpeed, 0.0f, 0.0f));
 
-			m_isMove = true;
-			m_playerAngleY = kAngleLeft;
+				m_isMove = true;
+				m_playerAngleY = kAngleLeft;
+			}
 		}
-	}
-	if (Pad::IsPress(PAD_INPUT_RIGHT))
-	{
-		if (m_pos.x <= 950)
+		if (Pad::IsPress(PAD_INPUT_RIGHT))
 		{
-			//m_playerPos.x += kTopSpeed;
+			if (m_pos.x <= 950)
+			{
+				//m_playerPos.x += kTopSpeed;
 
-			m_vec = VAdd(m_vec, VGet(kTopSpeed, 0.0f, 0.0f));
+				m_vec = VAdd(m_vec, VGet(kTopSpeed, 0.0f, 0.0f));
 
-			m_isMove = true;
-			m_playerAngleY = kAngleRight;
+				m_isMove = true;
+				m_playerAngleY = kAngleRight;
+			}
+
 		}
-		
 	}
+	
 
 	if (VSize(m_vec) > 0)
 	{
@@ -399,23 +402,27 @@ void Player::TestMove()
 	m_vec = VScale(m_vec, kTopSpeed);
 
 	m_pos = VAdd(m_pos, m_vec);
-	// 斜め
-	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
+	if (!m_isFall)
 	{
-		m_playerAngleY = kAngleUpLeft;
+		// 斜め
+		if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
+		{
+			m_playerAngleY = kAngleUpLeft;
+		}
+		if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_RIGHT))
+		{
+			m_playerAngleY = kAngleUpRight;
+		}
+		if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_LEFT))
+		{
+			m_playerAngleY = kAngleDownLeft;
+		}
+		if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_RIGHT))
+		{
+			m_playerAngleY = kAngleDownRight;
+		}
 	}
-	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_RIGHT))
-	{
-		m_playerAngleY = kAngleUpRight;
-	}
-	if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_LEFT))
-	{
-		m_playerAngleY = kAngleDownLeft;
-	}
-	if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_RIGHT))
-	{
-		m_playerAngleY = kAngleDownRight;
-	}
+	
 
 	/*printfDx("m_playerPos.z;%f\n", m_playerPos.z);
 	printfDx("m_playerPos.x:%f\n", m_playerPos.x);*/
@@ -424,7 +431,6 @@ void Player::TestMove()
 	
 	// ゲームオーバー処理
 	if (m_pos.x > 1000.0f || m_pos.x < -1000.0f ||
-		m_pos.y > 1000.0f || m_pos.y < -1000.0f ||
 		m_pos.z > 1000.0f || m_pos.z < -1000.0f)
 	{
 		// 落下アニメーション
@@ -432,7 +438,12 @@ void Player::TestMove()
 		m_pModel->ChangeAnimation(m_AnimNum, false, true, 5);
 
 		// 落下
-		m_pos.y-=10.0f;
+		m_pos.y-=1.0f;
+
+		if (m_pos.y <= -2000.0f)
+		{
+			m_pos.y = -2000.0f;
+		}
 
 		m_isFall = true;
 	}
