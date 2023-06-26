@@ -307,8 +307,6 @@ void Player::TestMove()
 {
 	m_pModel->Update();
 
-	
-
 	// ジャンプ処理
 	m_isJump = true;
 
@@ -416,8 +414,9 @@ void Player::TestMove()
 	}
 	
 	// ゲームオーバー処理
-	if (m_pos.x > 1000.0f || m_pos.x < -1000.0f ||
-		m_pos.z > 1000.0f || m_pos.z < -1000.0f)
+	if ((m_pos.x > 1000.0f || m_pos.x < -1000.0f ||
+		m_pos.z > 1000.0f || m_pos.z < -1000.0f) &&
+		m_pos.y <= 0.0f)
 	{
 		// 落下アニメーション
 		m_AnimNum = kAnimFall;
@@ -516,6 +515,7 @@ void Player::TestMove()
 	m_pModel->SetRot(VGet(0.0f, m_playerAngleY, 0.0f));
 }
 
+// 角度の計算
 int Player::TestCalculate()
 {
 	m_testRusult = m_angleTest - m_playerAngleY;

@@ -31,7 +31,8 @@ Enemy::Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer) :
 	m_updateFunc(&Enemy::UpdateMove),
 	m_pPlayer(pPlayer),
 	m_angle(0.0f),
-	m_modelHandle(-1)
+	m_modelHandle(-1),
+	m_playerPos(kZero)
 {
 	//m_pos.x = GetRand(2000) - 1000;
 	m_pos.x = 1000.0f;
@@ -49,7 +50,8 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
 	m_updateFunc(&Enemy::UpdateMove),
 	m_pPlayer(pPlayer),
 	m_angle(0.0f),
-	m_modelHandle(-1)
+	m_modelHandle(-1),
+	m_playerPos(kZero)
 {
 	//m_pos.x = GetRand(2000) - 1000;
 	m_pos.x = 1000.0f;
@@ -159,13 +161,22 @@ void Enemy::UpdateMove()
 
 void Enemy::UpdateHit(int playerHp)
 {
+	/*m_pPlayer->m_vec = VSub(m_pos, m_playerPos);
+	m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
+
+	m_pPlayer->m_vec = VScale(m_pPlayer->m_vec, 1);
+	m_pPlayer->m_pos = VSub(m_playerPos,
+		VGet(m_pPlayer->m_vec.x + playerHp * 0.005f, 
+			m_pPlayer->m_vec.y + playerHp * 0.005f, 
+			m_pPlayer->m_vec.z + playerHp * 0.005f));*/
+
 	m_pPlayer->m_vec = VSub(m_pos, m_pPlayer->m_pos);
 	m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
 
 	m_pPlayer->m_vec = VScale(m_pPlayer->m_vec, 1);
-	m_pPlayer->m_pos = VSub(m_pPlayer->m_pos, 
-		VGet(m_pPlayer->m_vec.x + playerHp * 0.005f, 
-			m_pPlayer->m_vec.y + playerHp * 0.005f, 
+	m_pPlayer->m_pos = VSub(m_pPlayer->m_pos,
+		VGet(m_pPlayer->m_vec.x + playerHp * 0.005f,
+			m_pPlayer->m_vec.y + playerHp * 0.005f,
 			m_pPlayer->m_vec.z + playerHp * 0.005f));
 }
 
@@ -189,4 +200,9 @@ int Enemy::GetModelHandle() const
 float Enemy::GetColRadius()
 {
 	return kColRadius;
+}
+
+void Enemy::SetPlayerPos(VECTOR playerPos)
+{
+	m_playerPos = playerPos;
 }

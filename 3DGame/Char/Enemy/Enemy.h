@@ -39,6 +39,9 @@ public:
 	// 当たり判定の真偽取得
 	bool GetIsCol()const { return m_isCol; }
 
+	// 当たった時の処理
+	void SetPlayerPos(VECTOR playerPos);
+
 	// メンバ関数ポインタ
 	void(Enemy::* m_updateFunc)();
 
@@ -51,6 +54,7 @@ private:
 	VECTOR m_pos;		// エネミー座標
 	VECTOR m_dir;		// エネミーの方向
 	VECTOR m_vec;		// エネミーの移動
+	VECTOR m_playerPos;	// プレイヤーの当たった時の座標
 
 	// float
 	float m_angle;		// エネミーのアングル

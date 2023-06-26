@@ -126,6 +126,10 @@ void SceneMain::UpdateEnemy()
 				m_invincibleTime = 120;
 			}
 		}
+		//else if (m_invincibleTime == 120)
+		//{
+		//	//enemies->SetPlayerPos(m_pPlayer->m_pos);
+		//}
 		else if(m_invincibleTime >= 60)
 		{
 			enemies->UpdateHit(m_pPlayer->GetHp());
