@@ -344,8 +344,6 @@ void Player::TestMove()
 		{
 			if (m_pos.z <= 950)
 			{
-				//m_playerPos.z += kTopSpeed;
-
 				m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, kTopSpeed));
 
 				m_isMove = true;
@@ -357,8 +355,6 @@ void Player::TestMove()
 		{
 			if (m_pos.z >= -950)
 			{
-				//m_playerPos.z -= kTopSpeed;
-
 				m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, -kTopSpeed));
 
 				m_isMove = true;
@@ -370,8 +366,6 @@ void Player::TestMove()
 		{
 			if (m_pos.x >= -950)
 			{
-				//m_playerPos.x -= kTopSpeed;
-
 				m_vec = VAdd(m_vec, VGet(-kTopSpeed, 0.0f, 0.0f));
 
 				m_isMove = true;
@@ -382,8 +376,6 @@ void Player::TestMove()
 		{
 			if (m_pos.x <= 950)
 			{
-				//m_playerPos.x += kTopSpeed;
-
 				m_vec = VAdd(m_vec, VGet(kTopSpeed, 0.0f, 0.0f));
 
 				m_isMove = true;
@@ -393,7 +385,7 @@ void Player::TestMove()
 		}
 	}
 	
-
+	// 正規化移動処理
 	if (VSize(m_vec) > 0)
 	{
 		m_vec = VNorm(m_vec);
@@ -404,7 +396,7 @@ void Player::TestMove()
 	m_pos = VAdd(m_pos, m_vec);
 	if (!m_isFall)
 	{
-		// 斜め
+		// 斜め入力時の角度
 		if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
 		{
 			m_playerAngleY = kAngleUpLeft;
@@ -422,12 +414,6 @@ void Player::TestMove()
 			m_playerAngleY = kAngleDownRight;
 		}
 	}
-	
-
-	/*printfDx("m_playerPos.z;%f\n", m_playerPos.z);
-	printfDx("m_playerPos.x:%f\n", m_playerPos.x);*/
-	//printfDx("m_playerAngleY:%f\n", m_playerAngleY);
-	
 	
 	// ゲームオーバー処理
 	if (m_pos.x > 1000.0f || m_pos.x < -1000.0f ||
@@ -449,34 +435,31 @@ void Player::TestMove()
 	}
 	else
 	{
-		if (!m_isFall)
+		if (m_isMove && !m_isJump&& !m_isFall)
 		{
-			if (m_isMove && !m_isJump)
+			if (m_AnimNum != kAnimRun)
 			{
-				if (m_AnimNum != kAnimRun)
-				{
-					// 移動アニメーション
-					m_AnimNum = kAnimRun;
-					m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
-				}
+				// 移動アニメーション
+				m_AnimNum = kAnimRun;
+				m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
 			}
-			else if (m_isJump)
+		}
+		else if (m_isJump)
+		{
+			if (m_AnimNum != kAnimJump)
 			{
-				if (m_AnimNum != kAnimJump)
-				{
-					// 移動からアイドル状態
-					m_AnimNum = kAnimJump;
-					m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
-				}
+				// 移動からアイドル状態
+				m_AnimNum = kAnimJump;
+				m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
 			}
-			else if (!m_isMove && !m_isJump)
+		}
+		else if (!m_isMove && !m_isJump)
+		{
+			if (m_AnimNum != kAnimIdle)
 			{
-				if (m_AnimNum != kAnimIdle)
-				{
-					// 移動からアイドル状態
-					m_AnimNum = kAnimIdle;
-					m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
-				}
+				// 移動からアイドル状態
+				m_AnimNum = kAnimIdle;
+				m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
 			}
 		}
 	}
