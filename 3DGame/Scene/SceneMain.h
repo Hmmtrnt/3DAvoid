@@ -37,6 +37,9 @@ private:
 	int m_hpRedColor;// Hpのカラー赤
 	unsigned int m_hpColor;// Hpのカラー
 
+	// デバッグ用変数敵の番号を見る
+	int m_debugEnemyNum = 0;
+
 	// bool
 	bool m_hit;// 当たったかどうか
 	bool m_hitting;// 当たっている

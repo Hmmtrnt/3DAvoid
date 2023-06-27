@@ -19,7 +19,7 @@ public:
 	void UpdateHit();// ダメージ
 
 	// テスト関数
-	void UpdateHit2(int playerHp, bool hit);// エネミーとプレイヤーが当たったときの処理
+	void UpdateHit2(VECTOR enemyPos, bool hit);// エネミーとプレイヤーが当たったときの処理
 
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }

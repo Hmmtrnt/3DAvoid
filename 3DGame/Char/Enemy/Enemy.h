@@ -12,7 +12,7 @@ public:
 	Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer);
 
 	// すでにロードされているモデルのハンドルを指定→Duplicateして生成
-	Enemy(int orgModel, std::shared_ptr<Player> pPlayer);
+	Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num);
 
 	virtual ~Enemy();
 
@@ -24,6 +24,8 @@ public:
 	void UpdateMove();// エネミーの動き
 
 	void UpdateHit(int playerHp, bool hit);// エネミーとプレイヤーが当たったときの処理
+
+	void DebugDraw();// デバッグ用描画
 
 	bool ColFlag();// 当たり判定のテスト
 
@@ -45,13 +47,15 @@ public:
 	// メンバ関数ポインタ
 	void(Enemy::* m_updateFunc)();
 
+	VECTOR m_pos;		// エネミー座標
+
 private:
 	// ポインタ
 	std::shared_ptr<Model> m_pModel;// モデル
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 
 	// VECTOR
-	VECTOR m_pos;		// エネミー座標
+	
 	VECTOR m_dir;		// エネミーの方向
 	VECTOR m_vec;		// エネミーの移動
 	VECTOR m_playerPos;	// プレイヤーの当たった時の座標
@@ -64,6 +68,8 @@ private:
 	// int
 	int m_modelHandle;	// エネミーのモデルハンドル
 	int m_playerHandle;
+
+	int m_Number;
 
 	// bool
 	bool m_isCol;// エネミーの当たり判定の真偽

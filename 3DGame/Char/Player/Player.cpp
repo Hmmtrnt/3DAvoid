@@ -114,7 +114,12 @@ void Player::Draw()
 
 	m_pModel->Draw();
 	
-	//DrawLine3D(m_pos, VGet(m_vec.x * 5, (m_pos.y - m_vec.y) * 5, (m_pos.z - m_vec.z) * 5), 0xffffff);
+	DrawLine3D(VGet(m_pos.x, 
+		m_pos.y + 10.0f, 
+		m_pos.z ), 
+		VGet(m_pEnemy->m_pos.x, 
+			m_pEnemy->m_pos.y + 10.0f, 
+			m_pEnemy->m_pos.z), 0xff0000);
 }
 
 void Player::UpdateHit()
@@ -122,12 +127,12 @@ void Player::UpdateHit()
 	m_blowRate += 10;
 }
 
-void Player::UpdateHit2(int playerHp, bool hit)
+void Player::UpdateHit2(VECTOR enemyPos, bool hit)
 {
 	// 当たった時のプレイヤーとエネミーの座標で正規化
 	if (!hit)
 	{
-		m_vec = VSub(m_pEnemy->GetPos(), m_pos);
+		m_vec = VSub(enemyPos, m_pos);
 		if (VSquareSize(m_vec) > 0)
 		{
 			// 正規化
@@ -136,9 +141,11 @@ void Player::UpdateHit2(int playerHp, bool hit)
 		m_vec = VScale(m_vec, 10);
 	}
 	m_pos = VSub(m_pos,
-		VGet(m_vec.x * (playerHp * 0.05f),
-			m_vec.y * (playerHp * 0.05f),
-			m_vec.z * (playerHp * 0.05f)));
+		VGet(m_vec.x * (m_blowRate * 0.1f),
+			m_vec.y * (m_blowRate * 0.1f),
+			m_vec.z * (m_blowRate * 0.1f)));
+
+	//sDrawLine3D(m_pos, enemyPos, 0xffffff);
 }
 
 void Player::UpdatePlayerPos()

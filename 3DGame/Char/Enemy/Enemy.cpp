@@ -32,13 +32,14 @@ Enemy::Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer) :
 	m_pPlayer(pPlayer),
 	m_angle(0.0f),
 	m_modelHandle(-1),
-	m_playerPos(kZero)
+	m_playerPos(kZero),
+	m_Number(0)
 {
-	m_pos.x = 1000.0f;
-	//m_pos.x = 500.0f;
+	//m_pos.x = 1000.0f;
+	m_pos.x = 500.0f;
 	m_pos.y = 0.0f;
-	m_pos.z = GetRand(2000) - 1000;
-	//m_pos.z = 0;
+	//m_pos.z = GetRand(2000) - 1000;
+	m_pos.z = 0;
 
 	m_modelHandle = MV1LoadModel(kEnemyHandle);// モデルのロード
 
@@ -47,18 +48,20 @@ Enemy::Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer) :
 	m_angle = GetRand(360) * DX_PI_F / 180;
 }
 
-Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
+Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	m_updateFunc(&Enemy::UpdateMove),
 	m_pPlayer(pPlayer),
 	m_angle(0.0f),
 	m_modelHandle(-1),
-	m_playerPos(kZero)
+	m_playerPos(kZero),
+	m_Number(num)
 {
 	//m_pos.x = GetRand(2000) - 1000;
-	m_pos.x = 1000.0f;
+	//m_pos.x = -500.0f;
+	m_pos.x = GetRand(1000) -1000;
 	m_pos.y = 0.0f;
-	m_pos.z = GetRand(2000) - 1000;
-	//m_pos.z = 0;
+	//m_pos.z = GetRand(2000) - 1000;
+	m_pos.z = 0;
 
 	m_modelHandle = MV1LoadModel(kEnemyHandle);
 	m_playerHandle = MV1LoadModel(kPlayerHandle);
@@ -94,6 +97,7 @@ void Enemy::Update()
 void Enemy::Draw()
 {
 	m_pModel->Draw();
+	DebugDraw();
 }
 
 void Enemy::UpdateMove()
@@ -106,7 +110,7 @@ void Enemy::UpdateMove()
 	// 移動速度を反映させる
 	m_vec = VScale(m_dir, kSpeed);
 	// 移動させる
-	m_pos = VAdd(m_pos, m_vec);
+	//m_pos = VAdd(m_pos, m_vec);
 
 
 	// 座標の初期化
@@ -173,6 +177,47 @@ void Enemy::UpdateHit(int playerHp, bool hit)
 	printfDx("z:%f\n", m_pPlayer->m_pos.z);*/
 	
 
+}
+
+void Enemy::DebugDraw()
+{
+	// モデルのハンドル取得
+	int handle = m_pModel->getModelHandle();
+
+	// モデル内にあるHPバーを表示する座標のデータを取得する
+	int frameNo = MV1SearchFrame(handle, "Head3_end");
+	// HPバーを表示する座標データのワールド座標を取得する
+	VECTOR hpPos = MV1GetFramePosition(handle, frameNo);
+	// HPバー表示位置のワールド座標をスクリーン座標に変換する
+	VECTOR screenPos = ConvWorldPosToScreenPos(hpPos);
+	if ((screenPos.z <= 0.0f) || (screenPos.z >= 1.0f))
+	{
+		// 表示範囲外の場合何も表示しない
+		return;
+	}
+
+	DrawFormatString(screenPos.x - 64 / 2, screenPos.y,0xffffff, "%d", m_Number);
+
+	//// 最大HPに対する現在のHPの割合を計算する
+	//float hpRate = static_cast<float>(m_hp) / static_cast<float>(kMaxHp);
+	//// HPバーの長さを計算する
+	//float barWidth = kHpBarWidth * hpRate;
+
+	////HPバーの表示
+
+	//// バーの土台　赤で
+	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
+	//	screenPos.x + kHpBarWidth / 2, screenPos.y + kHpBarHeight,
+	//	0xff0000, true);
+	//// 現在のHP 緑
+	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
+	//	screenPos.x - kHpBarWidth / 2 + barWidth, screenPos.y + kHpBarHeight,
+	//	0x00ff00, true);
+
+	//// 枠線
+	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
+	//	screenPos.x + kHpBarWidth / 2, screenPos.y + kHpBarHeight,
+	//	0xffffff, false);
 }
 
 bool Enemy::ColFlag()
