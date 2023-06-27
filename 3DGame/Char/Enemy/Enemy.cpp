@@ -87,35 +87,6 @@ void Enemy::End()
 void Enemy::Update()
 {
 	(this->*m_updateFunc)();
-
-	//test = MV1CollCheck_Sphere(m_playerHandle, -1, GetPos(), 100.0f);
-
-	//// 当たったかどうかで処理を分岐
-	//if (test.HitNum >= 1)
-	//{
-	//	// 当たった場合は衝突の情報を描画する
-
-	//	// 当たったポリゴンの数を描画
-	//	DrawFormatString(0, 0, GetColor(255, 255, 255), "Hit Poly Num   %d", test.HitNum);
-
-	//	printfDx("当たった\n");
-
-	//	// 当たったポリゴンの数だけ繰り返し
-	//	for (int i = 0; i < test.HitNum; i++)
-	//	{
-	//		// 当たったポリゴンを描画
-	//		DrawTriangle3D(
-	//			test.Dim[i].Position[0],
-	//			test.Dim[i].Position[1],
-	//			test.Dim[i].Position[2], GetColor(0, 255, 255), TRUE);
-	//	}
-	//}
-	/*if (m_pos.z <= -1000.0f)
-	{
-		m_pos.z = 1000.0f;
-	}*/
-
-	//MV1SetPosition(m_playerHandle, m_pPlayer->GetPos());
 }
 
 void Enemy::Draw()
@@ -170,17 +141,36 @@ void Enemy::UpdateHit(int playerHp, bool hit)
 			m_pPlayer->m_vec.y + playerHp * 0.005f, 
 			m_pPlayer->m_vec.z + playerHp * 0.005f));*/
 
+	// 当たった時のプレイヤーとエネミーの座標で正規化
 	if (!hit)
 	{
 		m_pPlayer->m_vec = VSub(m_pos, m_pPlayer->m_pos);
-		m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
-
+		if (VSquareSize(m_pPlayer->m_vec) > 0)
+		{
+			// 正規化
+			m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
+		}
 		m_pPlayer->m_vec = VScale(m_pPlayer->m_vec, 1);
 	}
 	m_pPlayer->m_pos = VSub(m_pPlayer->m_pos,
-		VGet(m_pPlayer->m_vec.x + playerHp * 0.005f,
-			m_pPlayer->m_vec.y + playerHp * 0.005f,
-			m_pPlayer->m_vec.z + playerHp * 0.005f));
+		VGet(-m_pPlayer->m_vec.x + playerHp * 0.04f,
+			-m_pPlayer->m_vec.y + playerHp * 0.04f,
+			-m_pPlayer->m_vec.z + playerHp * 0.04f));
+
+	if (m_pPlayer->m_vec.x != 0.0f ||
+		m_pPlayer->m_vec.y != 0.0f || 
+		m_pPlayer->m_vec.z != 0.0f)
+	{
+		/*printfDx("x:%f\n", m_pPlayer->m_vec.x);
+		printfDx("y:%f\n", m_pPlayer->m_vec.y);
+		printfDx("z:%f\n", m_pPlayer->m_vec.z);*/
+	}
+
+	/*printfDx("x:%f\n", m_pPlayer->m_pos.x);
+	printfDx("y:%f\n", m_pPlayer->m_pos.y);
+	printfDx("z:%f\n", m_pPlayer->m_pos.z);*/
+	
+
 }
 
 bool Enemy::ColFlag()

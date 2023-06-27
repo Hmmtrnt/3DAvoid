@@ -131,14 +131,14 @@ void SceneMain::UpdateEnemy()
 			}
 		}
 		// 当たった時のプレイヤーの座標処理
-		else if(m_invincibleTime >= 60)
+		else if(m_invincibleTime >= 110)
 		{
 			m_hitting = true;
 			enemies->UpdateHit(m_pPlayer->GetBlowRate(), m_hit);
 			m_hit = true;
 		}
 		// 当たっていない状態に戻す
-		if (m_invincibleTime < 60)
+		if (m_invincibleTime < 110)
 		{
 			m_hit = false;
 			m_hitting = false;

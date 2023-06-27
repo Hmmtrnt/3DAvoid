@@ -112,6 +112,7 @@ void Player::Draw()
 
 	m_pModel->Draw();
 	
+	//DrawLine3D(m_pos, VGet(m_vec.x * 5, (m_pos.y - m_vec.y) * 5, (m_pos.z - m_vec.z) * 5), 0xffffff);
 }
 
 void Player::UpdateHit()
