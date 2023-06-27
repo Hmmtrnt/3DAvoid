@@ -15,6 +15,8 @@ public:
 	void Update();
 	void Draw();
 
+	void UpdateHit();
+
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }
 	VECTOR GetVec()const { return m_vec; }
@@ -23,9 +25,7 @@ public:
 	VECTOR m_vec;		// プレイヤーの移動
 
 	// プレイヤーのHP取得
-	int GetHp() { return m_hp; }
-
-	int m_hp;// 体力
+	int GetBlowRate() { return m_blowRate; }
 
 	bool GetIsFall()const { return m_isFall; }
 	
@@ -62,6 +62,7 @@ private:// 変数
 	// int
 	int m_playerHandle;		// キャラクターハンドル
 	int m_AnimNum;			// アニメーションの番号
+	int m_blowRate;// 吹っ飛び率
 
 	// float
 	float m_playerAngle2;	// プレイヤーアングル

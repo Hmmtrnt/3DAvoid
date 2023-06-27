@@ -35,7 +35,7 @@ void SceneMain::Init()
 	m_pPlayer->Init();
 	m_pField->Init();
 
-	m_hpRedColor = m_pPlayer->GetHp();
+	m_hpRedColor = m_pPlayer->GetBlowRate();
 
 	m_hpColor = GetColor(m_hpRedColor, 0, 0);
 
@@ -106,10 +106,10 @@ void SceneMain::Draw()
 
 	m_pField->Draw();
 
-	DrawFormatString(10, 30, Color::kCoral, "プレイヤーのHP：%d", m_pPlayer->GetHp());
-	DrawFormatString(10, 50, Color::kTomato, "プレイヤーのHP：%d", m_pPlayer->GetHp());
-	DrawFormatString(10, 70, Color::kOrangered, "プレイヤーのHP：%d", m_pPlayer->GetHp());
-	DrawFormatString(10, 90, Color::kRed, "プレイヤーのHP：%d", m_pPlayer->GetHp());
+	DrawFormatString(10, 30, Color::kCoral, "%d%", m_pPlayer->GetBlowRate());
+	DrawFormatString(10, 50, Color::kTomato, "%d%", m_pPlayer->GetBlowRate());
+	DrawFormatString(10, 70, Color::kOrangered, "%d%", m_pPlayer->GetBlowRate());
+	DrawFormatString(10, 90, Color::kRed, "%d%", m_pPlayer->GetBlowRate());
 }
 
 void SceneMain::UpdateEnemy()
@@ -122,17 +122,13 @@ void SceneMain::UpdateEnemy()
 			if (enemies->ColFlag())
 			{
 				DrawString(10, 10, "当たっている\n", 0xff0000);
-				m_pPlayer->m_hp += 10;
+				m_pPlayer->UpdateHit();
 				m_invincibleTime = 120;
 			}
 		}
-		//else if (m_invincibleTime == 120)
-		//{
-		//	//enemies->SetPlayerPos(m_pPlayer->m_pos);
-		//}
 		else if(m_invincibleTime >= 60)
 		{
-			enemies->UpdateHit(m_pPlayer->GetHp());
+			enemies->UpdateHit(m_pPlayer->GetBlowRate());
 		}
 
 	}

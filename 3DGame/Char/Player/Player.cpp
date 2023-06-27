@@ -77,7 +77,7 @@ Player::Player() :
 	m_frameCount(0),
 	m_animPrev(0),
 	m_animNext(0),
-	m_hp(0)
+	m_blowRate(0)
 {
 	m_pModel = std::make_shared<Model>(kPlayerHandle);
 	m_pModel->SetAnimation(m_AnimNum, true, true);
@@ -112,6 +112,11 @@ void Player::Draw()
 
 	m_pModel->Draw();
 	
+}
+
+void Player::UpdateHit()
+{
+	m_blowRate += 10;
 }
 
 void Player::UpdatePlayerPos()
