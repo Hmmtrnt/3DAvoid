@@ -3,6 +3,7 @@
 #include <memory>
 
 class Model;
+class Enemy;
 
 class Player
 {
@@ -15,7 +16,10 @@ public:
 	void Update(bool Hitting);
 	void Draw();
 
-	void UpdateHit();
+	void UpdateHit();// ダメージ
+
+	// テスト関数
+	void UpdateHit2(int playerHp, bool hit);// エネミーとプレイヤーが当たったときの処理
 
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }
@@ -48,6 +52,8 @@ private:// 関数
 private:// 変数
 	// ポインタ
 	std::shared_ptr<Model> m_pModel;
+	std::shared_ptr<Enemy> m_pEnemy;
+	std::shared_ptr<Player> m_pPlayer;
 
 	// VECTOR
 	

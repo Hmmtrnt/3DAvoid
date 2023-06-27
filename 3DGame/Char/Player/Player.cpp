@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../Model.h"
+#include "../Enemy/Enemy.h"
 
 namespace
 {
@@ -80,6 +81,7 @@ Player::Player() :
 	m_blowRate(0)
 {
 	m_pModel = std::make_shared<Model>(kPlayerHandle);
+	m_pEnemy = std::make_shared<Enemy>(m_pPlayer);
 	m_pModel->SetAnimation(m_AnimNum, true, true);
 }
 
@@ -118,6 +120,25 @@ void Player::Draw()
 void Player::UpdateHit()
 {
 	m_blowRate += 10;
+}
+
+void Player::UpdateHit2(int playerHp, bool hit)
+{
+	// 当たった時のプレイヤーとエネミーの座標で正規化
+	if (!hit)
+	{
+		m_vec = VSub(m_pEnemy->GetPos(), m_pos);
+		if (VSquareSize(m_vec) > 0)
+		{
+			// 正規化
+			m_vec = VNorm(m_vec);
+		}
+		m_vec = VScale(m_vec, 10);
+	}
+	m_pos = VSub(m_pos,
+		VGet(m_vec.x * (playerHp * 0.05f),
+			m_vec.y * (playerHp * 0.05f),
+			m_vec.z * (playerHp * 0.05f)));
 }
 
 void Player::UpdatePlayerPos()

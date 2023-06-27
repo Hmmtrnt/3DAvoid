@@ -134,7 +134,7 @@ void SceneMain::UpdateEnemy()
 		else if(m_invincibleTime >= 110)
 		{
 			m_hitting = true;
-			enemies->UpdateHit(m_pPlayer->GetBlowRate(), m_hit);
+			m_pPlayer->UpdateHit2(m_pPlayer->GetBlowRate(), m_hit);
 			m_hit = true;
 		}
 		// “–‚½‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É–ß‚·

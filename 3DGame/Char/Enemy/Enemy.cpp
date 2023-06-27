@@ -181,7 +181,9 @@ bool Enemy::ColFlag()
 	int coly = m_pPlayer->GetPos().y - m_pos.y;
 	int colz = m_pPlayer->GetPos().z - m_pos.z;
 
-	if (std::pow(colx,2.0f) + std::pow(coly,2.0f) + std::pow(colz,2.0f) <= std::pow(100.0f,2.0f)) {
+	if (std::pow(colx,2.0f) + 
+		std::pow(coly,2.0f) + 
+		std::pow(colz,2.0f) <= std::pow(100.0f,2.0f)) {
 		return true;
 	}
 	return false;
