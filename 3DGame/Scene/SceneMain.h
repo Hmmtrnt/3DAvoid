@@ -22,7 +22,6 @@ public:
 	void Draw();
 
 	void UpdateEnemy();
-	//void UpdateHit();
 
 private:
 	// ゲームの設定ポインタ
@@ -34,10 +33,11 @@ private:
 
 	// int
 	int m_shadowMap; // シャドウマップ
-
 	int m_invincibleTime;// プレイヤーの無敵時間
-
 	int m_hpRedColor;// Hpのカラー赤
-
 	unsigned int m_hpColor;// Hpのカラー
+
+	// bool
+	bool m_hit;// 当たったかどうか
+	bool m_hitting;// 当たっている
 };

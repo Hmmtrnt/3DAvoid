@@ -52,7 +52,7 @@ namespace
 }
 
 Player::Player() :
-	m_updateFunc(&Player::TestMove),
+	//m_updateFunc(&Player::TestMove),
 	m_pos(kZero),
 	m_angle(kZero),
 	m_vec(kZero),
@@ -99,11 +99,11 @@ void Player::End()
 	//MV1CollResultPolyDimTerminate(test);
 }
 
-void Player::Update()
+void Player::Update(bool Hitting)
 {
-	(this->*m_updateFunc)();
+	//(this->*m_updateFunc)();
 	
-	
+	TestMove(Hitting);
 }
 
 void Player::Draw()
@@ -308,7 +308,7 @@ void Player::UpdateIdle()
 	//UpdateCamera();
 }
 
-void Player::TestMove()
+void Player::TestMove(bool Hitting)
 {
 	m_pModel->Update();
 
@@ -340,7 +340,7 @@ void Player::TestMove()
 	m_isMove = false;
 	// ˆÚ“®—Í‚Ì‰Šú‰»
 	m_vec = VGet(0.0f, 0.0f, 0.0f);
-	if (!m_isFall)
+	if (!m_isFall && !Hitting)
 	{
 		// ã‰ºƒL[
 		if (Pad::IsPress(PAD_INPUT_UP))

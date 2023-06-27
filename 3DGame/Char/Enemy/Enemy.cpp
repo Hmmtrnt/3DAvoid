@@ -159,7 +159,7 @@ void Enemy::UpdateMove()
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
-void Enemy::UpdateHit(int playerHp)
+void Enemy::UpdateHit(int playerHp, bool hit)
 {
 	/*m_pPlayer->m_vec = VSub(m_pos, m_playerPos);
 	m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
@@ -170,10 +170,13 @@ void Enemy::UpdateHit(int playerHp)
 			m_pPlayer->m_vec.y + playerHp * 0.005f, 
 			m_pPlayer->m_vec.z + playerHp * 0.005f));*/
 
-	m_pPlayer->m_vec = VSub(m_pos, m_pPlayer->m_pos);
-	m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
+	if (!hit)
+	{
+		m_pPlayer->m_vec = VSub(m_pos, m_pPlayer->m_pos);
+		m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
 
-	m_pPlayer->m_vec = VScale(m_pPlayer->m_vec, 1);
+		m_pPlayer->m_vec = VScale(m_pPlayer->m_vec, 1);
+	}
 	m_pPlayer->m_pos = VSub(m_pPlayer->m_pos,
 		VGet(m_pPlayer->m_vec.x + playerHp * 0.005f,
 			m_pPlayer->m_vec.y + playerHp * 0.005f,

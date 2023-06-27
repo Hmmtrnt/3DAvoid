@@ -23,7 +23,7 @@ public:
 
 	void UpdateMove();// エネミーの動き
 
-	void UpdateHit(int playerHp);// エネミーとプレイヤーが当たったときの処理
+	void UpdateHit(int playerHp, bool hit);// エネミーとプレイヤーが当たったときの処理
 
 	bool ColFlag();// 当たり判定のテスト
 

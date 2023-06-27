@@ -12,7 +12,7 @@ public:
 
 	void Init();
 	void End();
-	void Update();
+	void Update(bool Hitting);
 	void Draw();
 
 	void UpdateHit();
@@ -38,12 +38,12 @@ private:// 関数
 	//--------------------------------------------------------
 	// テスト関数
 	//--------------------------------------------------------
-	void TestMove();// キャラクターの動き+α
+	void TestMove(bool Hitting);// キャラクターの動き+α
 
 	int TestCalculate();// アングルの計算
 
 	// メンバ関数ポインタ
-	void (Player::* m_updateFunc)();
+	//void (Player::* m_updateFunc)();
 	
 private:// 変数
 	// ポインタ
@@ -62,7 +62,7 @@ private:// 変数
 	// int
 	int m_playerHandle;		// キャラクターハンドル
 	int m_AnimNum;			// アニメーションの番号
-	int m_blowRate;// 吹っ飛び率
+	int m_blowRate;			// 吹っ飛び率
 
 	// float
 	float m_playerAngle2;	// プレイヤーアングル

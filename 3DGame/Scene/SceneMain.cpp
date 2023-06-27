@@ -14,7 +14,9 @@ SceneMain::SceneMain() :
 	m_shadowMap(0),
 	m_invincibleTime(0),
 	m_hpRedColor(0),
-	m_hpColor(0)
+	m_hpColor(0),
+	m_hit(false),
+	m_hitting(false)
 {
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
@@ -66,7 +68,7 @@ void SceneMain::End()
 // 更新処理
 SceneBase* SceneMain::Update()
 {
-	m_pPlayer->Update();
+	m_pPlayer->Update(m_hitting);
 	UpdateEnemy();
 	
 	if (m_invincibleTime > 0)
@@ -114,11 +116,13 @@ void SceneMain::Draw()
 
 void SceneMain::UpdateEnemy()
 {
+	// 当たった時の処理
 	for (auto& enemies : m_pEnemy)
 	{
 		enemies->Update();
 		if (m_invincibleTime <= 0)
 		{
+			// 当たった時のダメージ追加
 			if (enemies->ColFlag())
 			{
 				DrawString(10, 10, "当たっている\n", 0xff0000);
@@ -126,9 +130,18 @@ void SceneMain::UpdateEnemy()
 				m_invincibleTime = 120;
 			}
 		}
+		// 当たった時のプレイヤーの座標処理
 		else if(m_invincibleTime >= 60)
 		{
-			enemies->UpdateHit(m_pPlayer->GetBlowRate());
+			m_hitting = true;
+			enemies->UpdateHit(m_pPlayer->GetBlowRate(), m_hit);
+			m_hit = true;
+		}
+		// 当たっていない状態に戻す
+		if (m_invincibleTime < 60)
+		{
+			m_hit = false;
+			m_hitting = false;
 		}
 
 	}
