@@ -58,7 +58,7 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 {
 	//m_pos.x = GetRand(2000) - 1000;
 	//m_pos.x = -500.0f;
-	m_pos.x = GetRand(1000) -1000;
+	m_pos.x = static_cast<float>(GetRand(1000) -1000);
 	m_pos.y = 0.0f;
 	//m_pos.z = GetRand(2000) - 1000;
 	m_pos.z = 0;
@@ -196,7 +196,7 @@ void Enemy::DebugDraw()
 		return;
 	}
 
-	DrawFormatString(screenPos.x - 64 / 2, screenPos.y,0xffffff, "%d", m_Number);
+	DrawFormatString(static_cast<int>(screenPos.x) - 64 / 2, static_cast<int>(screenPos.y),0xffffff, "%d", m_Number);
 
 	//// ç≈ëÂHPÇ…ëŒÇ∑ÇÈåªç›ÇÃHPÇÃäÑçáÇåvéZÇ∑ÇÈ
 	//float hpRate = static_cast<float>(m_hp) / static_cast<float>(kMaxHp);
@@ -222,9 +222,9 @@ void Enemy::DebugDraw()
 
 bool Enemy::ColFlag()
 {
-	int colx = m_pPlayer->GetPos().x - m_pos.x;
-	int coly = m_pPlayer->GetPos().y - m_pos.y;
-	int colz = m_pPlayer->GetPos().z - m_pos.z;
+	float colx = m_pPlayer->GetPos().x - m_pos.x;
+	float coly = m_pPlayer->GetPos().y - m_pos.y;
+	float colz = m_pPlayer->GetPos().z - m_pos.z;
 
 	if (std::pow(colx,2.0f) + 
 		std::pow(coly,2.0f) + 
