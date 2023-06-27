@@ -47,7 +47,7 @@ void SceneMain::Init()
 
 	// “ñ‘Ì–ÚˆÈ~‚Íˆê‘Ì–Ú‚ðƒRƒs[
 	int enemyModelHandle = m_pEnemy.back()->GetModelHandle();
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		m_pEnemy.push_back(std::make_shared<Enemy>(enemyModelHandle, m_pPlayer));
 		m_pEnemy.back()->Init();

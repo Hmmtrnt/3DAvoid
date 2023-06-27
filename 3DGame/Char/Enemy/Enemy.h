@@ -55,9 +55,11 @@ private:
 	VECTOR m_dir;		// エネミーの方向
 	VECTOR m_vec;		// エネミーの移動
 	VECTOR m_playerPos;	// プレイヤーの当たった時の座標
+	VECTOR m_testPlayerVec = VGet(0.0f, 0.0f, 0.0f);// プレイヤーのベクトル
 
 	// float
 	float m_angle;		// エネミーのアングル
+	
 
 	// int
 	int m_modelHandle;	// エネミーのモデルハンドル

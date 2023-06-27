@@ -34,10 +34,11 @@ Enemy::Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer) :
 	m_modelHandle(-1),
 	m_playerPos(kZero)
 {
-	//m_pos.x = GetRand(2000) - 1000;
 	m_pos.x = 1000.0f;
+	//m_pos.x = 500.0f;
 	m_pos.y = 0.0f;
 	m_pos.z = GetRand(2000) - 1000;
+	//m_pos.z = 0;
 
 	m_modelHandle = MV1LoadModel(kEnemyHandle);// モデルのロード
 
@@ -57,6 +58,7 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
 	m_pos.x = 1000.0f;
 	m_pos.y = 0.0f;
 	m_pos.z = GetRand(2000) - 1000;
+	//m_pos.z = 0;
 
 	m_modelHandle = MV1LoadModel(kEnemyHandle);
 	m_playerHandle = MV1LoadModel(kPlayerHandle);
@@ -144,18 +146,18 @@ void Enemy::UpdateHit(int playerHp, bool hit)
 	// 当たった時のプレイヤーとエネミーの座標で正規化
 	if (!hit)
 	{
-		m_pPlayer->m_vec = VSub(m_pos, m_pPlayer->m_pos);
-		if (VSquareSize(m_pPlayer->m_vec) > 0)
+		m_testPlayerVec = VSub(m_pos, m_pPlayer->m_pos);
+		if (VSquareSize(m_testPlayerVec) > 0)
 		{
 			// 正規化
-			m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
+			m_testPlayerVec = VNorm(m_testPlayerVec);
 		}
-		m_pPlayer->m_vec = VScale(m_pPlayer->m_vec, 1);
+		m_testPlayerVec = VScale(m_testPlayerVec, 10);
 	}
 	m_pPlayer->m_pos = VSub(m_pPlayer->m_pos,
-		VGet(-m_pPlayer->m_vec.x + playerHp * 0.04f,
-			-m_pPlayer->m_vec.y + playerHp * 0.04f,
-			-m_pPlayer->m_vec.z + playerHp * 0.04f));
+		VGet(m_testPlayerVec.x * (playerHp * 0.05f),
+			m_testPlayerVec.y * (playerHp * 0.05f),
+			m_testPlayerVec.z * (playerHp * 0.05f)));
 
 	if (m_pPlayer->m_vec.x != 0.0f ||
 		m_pPlayer->m_vec.y != 0.0f || 
