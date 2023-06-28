@@ -21,5 +21,5 @@ SceneBase* SceneResult::Update()
 
 void SceneResult::Draw()
 {
-	DrawString(0, 0, "Title", 0xffffff);
+	DrawString(0, 0, "Result", 0xffffff);
 }
