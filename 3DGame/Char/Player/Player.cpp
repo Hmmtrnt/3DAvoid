@@ -53,7 +53,6 @@ namespace
 }
 
 Player::Player() :
-	//m_updateFunc(&Player::TestMove),
 	m_pos(kZero),
 	m_angle(kZero),
 	m_vec(kZero),
@@ -76,9 +75,6 @@ Player::Player() :
 	m_isJump(false),
 	m_isMove(false),
 	m_isFall(false),
-	m_frameCount(0),
-	m_animPrev(0),
-	m_animNext(0),
 	m_blowRate(0)
 {
 	m_pModel = std::make_shared<Model>(kPlayerHandle);
@@ -92,35 +88,21 @@ Player::~Player()
 
 void Player::Init()
 {
-	m_animPrev = -1;
-	m_animNext = MV1AttachAnim(m_playerHandle, 3, -1, false);
 }
 
 void Player::End()
 {
 	MV1DeleteModel(m_playerHandle);// ÉÇÉfÉãÇÃçÌèú
-	//MV1CollResultPolyDimTerminate(test);
 }
 
 void Player::Update(bool Hitting)
 {
-	//(this->*m_updateFunc)();
-	
 	UpdateMove(Hitting);
 }
 
 void Player::Draw()
 {
-	//MV1DrawModel(m_playerHandle);
-
 	m_pModel->Draw();
-	
-	/*DrawLine3D(VGet(m_pos.x, 
-		m_pos.y + 10.0f, 
-		m_pos.z ), 
-		VGet(m_pEnemy->m_pos.x, 
-			m_pEnemy->m_pos.y + 10.0f, 
-			m_pEnemy->m_pos.z), 0xff0000);*/
 }
 
 void Player::UpdateHitDamage()
@@ -141,15 +123,12 @@ void Player::UpdateHitVec(VECTOR enemyPos, bool hit)
 		}
 		m_hitVec = VScale(m_hitVec, 1);
 	}
+	// êÅÇ¡îÚÇ—ó¶
 	int blowRate = m_blowRate * 0.05f;
 	m_pos = VSub(m_pos,
 		VGet(m_hitVec.x * blowRate,
 			m_hitVec.y * blowRate,
 			m_hitVec.z * blowRate));
-
-	//printfDx("x:%f\ny:%f\nz:%f\n", m_pos.x, m_pos.y, m_pos.z);
-
-	//DrawLine3D(m_pos, enemyPos, 0xffffff);
 }
 
 void Player::UpdatePlayerPos()

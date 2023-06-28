@@ -18,14 +18,11 @@ public:
 
 	void UpdateHitDamage();// ダメージ
 
-	// テスト関数
 	void UpdateHitVec(VECTOR enemyPos, bool hit);// エネミーとプレイヤーが当たったときの処理
 
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }
 	VECTOR GetVec()const { return m_vec; }
-
-	
 
 	// プレイヤーのHP取得
 	int GetBlowRate() { return m_blowRate; }
@@ -94,20 +91,10 @@ private:// 変数
 	bool m_isFall;			// ステージ外に出たかどうか
 
 	// テスト
-	int m_frameCount;
-
-	int m_animPrev;//前
-	int m_animNext;//後ろ
-
-	
-
 	float m_angleTest = 0.0f;// 回転最大値
 	
 	float m_testRusult = 0.0f;// 計算結果
 
 	bool m_isFlag = false;// 回転
-
-	MV1_COLL_RESULT_POLY_DIM test;
-
 };
 

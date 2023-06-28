@@ -28,7 +28,6 @@ private:
 	std::shared_ptr<GameSetting> m_pSet;// 環境設定
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 	std::shared_ptr<Field> m_pField;// ステージ
-
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
 
 	// int
@@ -36,6 +35,8 @@ private:
 	int m_invincibleTime;// プレイヤーの無敵時間
 	int m_hpRedColor;// Hpのカラー赤
 	unsigned int m_hpColor;// Hpのカラー
+
+	int m_score;// ゲームのスコア
 
 	// デバッグ用変数敵の番号を見る
 	int m_debugEnemyNum = 0;

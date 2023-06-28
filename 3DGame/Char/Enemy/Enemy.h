@@ -67,10 +67,5 @@ private:
 
 	// bool
 	bool m_isCol;// エネミーの当たり判定の真偽
-
-	// vector
-	//std::vector<int> m_enemies;// エネミーの数
-
-	MV1_COLL_RESULT_POLY_DIM test;
 };
 

@@ -15,6 +15,7 @@ SceneMain::SceneMain() :
 	m_invincibleTime(0),
 	m_hpRedColor(0),
 	m_hpColor(0),
+	m_score(0),
 	m_hit(false),
 	m_hitting(false)
 {
@@ -72,12 +73,18 @@ SceneBase* SceneMain::Update()
 	m_pPlayer->Update(m_hitting);
 	UpdateEnemy();
 	
+	// ゲームが進んでいる間スコアを増やす
+	if (!m_pPlayer->GetIsFall())
+	{
+		m_score++;
+	}
+	
+	// ゲームオーバーになった時の処理
 	if (m_pPlayer->GetPos().y < -100.0f)
 	{
 		DrawString(0, 130, "ゲームオーバー", 0xffffff);
 		DrawString(0, 150, "リトライ:PAD_INPUT_4", 0xffffff);
 	}
-
 	if (m_pPlayer->GetIsFall())
 	{
 		if (Pad::IsTrigger(PAD_INPUT_4))
@@ -96,31 +103,18 @@ void SceneMain::Draw()
 	{
 		m_pPlayer->Draw();
 	}
-	
 
 	for (auto& enemies : m_pEnemy)
 	{
 		enemies->Draw();
-		if (m_invincibleTime <= 0)
-		{
-			/*DrawLine3D(VGet(m_pPlayer->m_pos.x,
-				m_pPlayer->m_pos.y + 10.0f,
-				m_pPlayer->m_pos.z),
-				VGet(enemies->m_pos.x,
-					enemies->m_pos.y + 10.0f,
-					enemies->m_pos.z), 0xffffff);*/
-		}
-		/*m_debugEnemyNum++;
-		DrawFormatString(enemies->m_pos.x, 
-			enemies->m_pos.y, 0xffffff,
-			"%d", m_debugEnemyNum);*/
 	}
 	m_pField->Draw();
 
-	DrawFormatString(10, 30, Color::kCoral, "%d%", m_pPlayer->GetBlowRate());
-	DrawFormatString(10, 50, Color::kTomato, "%d%", m_pPlayer->GetBlowRate());
-	DrawFormatString(10, 70, Color::kOrangered, "%d%", m_pPlayer->GetBlowRate());
-	DrawFormatString(10, 90, Color::kRed, "%d%", m_pPlayer->GetBlowRate());
+	DrawFormatString(10, 30, Color::kCoral, "%d", m_pPlayer->GetBlowRate());
+	DrawFormatString(10, 50, Color::kTomato, "%d", m_pPlayer->GetBlowRate());
+	DrawFormatString(10, 70, Color::kOrangered, "%d", m_pPlayer->GetBlowRate());
+	DrawFormatString(10, 90, Color::kRed, "%d", m_pPlayer->GetBlowRate());
+	DrawFormatString(10, 110, Color::kRed, "%d", m_score);
 
 
 }
@@ -147,13 +141,6 @@ void SceneMain::UpdateEnemy()
 			m_hitting = true;
 			m_pPlayer->UpdateHitVec(enemies->GetPos(), m_hit);
 			m_hit = true;
-
-			/*DrawLine3D(VGet(m_pPlayer->m_pos.x,
-				m_pPlayer->m_pos.y + 10.0f,
-				m_pPlayer->m_pos.z),
-				VGet(enemies->m_pos.x,
-					enemies->m_pos.y + 10.0f,
-					enemies->m_pos.z), 0xff0000);*/
 		}
 		// 当たっていない状態に戻す
 		if (m_invincibleTime < 110)

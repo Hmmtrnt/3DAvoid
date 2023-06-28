@@ -27,7 +27,7 @@ namespace
 	constexpr float kColRadius = 50.0f;
 }
 
-Enemy::Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer) :
+Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	m_updateFunc(&Enemy::UpdateMove),
 	m_pPlayer(pPlayer),
 	m_angle(0.0f),
@@ -126,7 +126,7 @@ void Enemy::UpdateMove()
 	if (m_pos.z < -1000.0f)
 	{
 		m_pos.z = 1000.0f;
-		m_angle = GetRand(360) * DX_PI_F / 180;
+		m_angle = GetRand(180) * DX_PI_F / 180;
 	}
 	// ステージの上
 	if (m_pos.z > 1000.0f)
