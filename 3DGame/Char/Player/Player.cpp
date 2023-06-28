@@ -57,6 +57,7 @@ Player::Player() :
 	m_pos(kZero),
 	m_angle(kZero),
 	m_vec(kZero),
+	m_hitVec(kZero),
 	m_move(kZero),
 	m_cameraRotMtx(),
 	m_playerRotMtx(),
@@ -105,7 +106,7 @@ void Player::Update(bool Hitting)
 {
 	//(this->*m_updateFunc)();
 	
-	TestMove(Hitting);
+	UpdateMove(Hitting);
 }
 
 void Player::Draw()
@@ -122,28 +123,30 @@ void Player::Draw()
 			m_pEnemy->m_pos.z), 0xff0000);*/
 }
 
-void Player::UpdateHit()
+void Player::UpdateHitDamage()
 {
 	m_blowRate += 10;
 }
 
-void Player::UpdateHit2(VECTOR enemyPos, bool hit)
+void Player::UpdateHitVec(VECTOR enemyPos, bool hit)
 {
 	// 当たった時のプレイヤーとエネミーの座標で正規化
 	if (!hit)
 	{
-		m_vec = VSub(enemyPos, m_pos);
-		if (VSquareSize(m_vec) > 0)
+		m_hitVec = VSub(enemyPos, m_pos);
+		if (VSquareSize(m_hitVec) > 0)
 		{
 			// 正規化
-			m_vec = VNorm(m_vec);
+			m_hitVec = VNorm(m_hitVec);
 		}
-		m_vec = VScale(m_vec, 10);
+		m_hitVec = VScale(m_hitVec, 1);
 	}
 	m_pos = VSub(m_pos,
-		VGet(m_vec.x * (m_blowRate * 0.1f),
-			m_vec.y * (m_blowRate * 0.1f),
-			m_vec.z * (m_blowRate * 0.1f)));
+		VGet(m_hitVec.x * (m_blowRate * 0.005f),
+			m_hitVec.y * (m_blowRate * 0.005f),
+			m_hitVec.z * (m_blowRate * 0.005f)));
+
+	//printfDx("x:%f\ny:%f\nz:%f\n", m_pos.x, m_pos.y, m_pos.z);
 
 	//DrawLine3D(m_pos, enemyPos, 0xffffff);
 }
@@ -337,7 +340,7 @@ void Player::UpdateIdle()
 	//UpdateCamera();
 }
 
-void Player::TestMove(bool Hitting)
+void Player::UpdateMove(bool Hitting)
 {
 	m_pModel->Update();
 

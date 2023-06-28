@@ -72,10 +72,6 @@ SceneBase* SceneMain::Update()
 	m_pPlayer->Update(m_hitting);
 	UpdateEnemy();
 	
-	if (m_invincibleTime > 0)
-	{
-		m_invincibleTime--;
-	}
 	if (m_pPlayer->GetPos().y < -100.0f)
 	{
 		DrawString(0, 130, "ゲームオーバー", 0xffffff);
@@ -141,15 +137,15 @@ void SceneMain::UpdateEnemy()
 			if (enemies->ColFlag())
 			{
 				DrawString(10, 10, "当たっている\n", 0xff0000);
-				m_pPlayer->UpdateHit();
+				m_pPlayer->UpdateHitDamage();
 				m_invincibleTime = 120;
 			}
 		}
 		// 当たった時のプレイヤーの座標処理
-		if(m_invincibleTime >= 110)
+		if(m_invincibleTime >= 60)
 		{
 			m_hitting = true;
-			m_pPlayer->UpdateHit2(enemies->m_pos, m_hit);
+			m_pPlayer->UpdateHitVec(enemies->GetPos(), m_hit);
 			m_hit = true;
 
 			/*DrawLine3D(VGet(m_pPlayer->m_pos.x,
@@ -160,11 +156,16 @@ void SceneMain::UpdateEnemy()
 					enemies->m_pos.z), 0xff0000);*/
 		}
 		// 当たっていない状態に戻す
-		if (m_invincibleTime < 110)
+		if (m_invincibleTime < 60)
 		{
 			m_hit = false;
 			m_hitting = false;
 		}
 
+	}
+
+	if (m_invincibleTime > 0)
+	{
+		m_invincibleTime--;
 	}
 }

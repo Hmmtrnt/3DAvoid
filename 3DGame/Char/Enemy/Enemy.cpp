@@ -35,16 +35,21 @@ Enemy::Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer) :
 	m_playerPos(kZero),
 	m_Number(0)
 {
+	// 敵の初期位置
 	m_pos.x = 1000;
 	//m_pos.x = 500.0f;
 	m_pos.y = 0.0f;
 	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
 	//m_pos.z = 0;
 
-	m_modelHandle = MV1LoadModel(kEnemyHandle);// モデルのロード
+	// モデルのロード
+	m_modelHandle = MV1LoadModel(kEnemyHandle);
 
+	// ポインタのメモリ確保
 	m_pModel = std::make_shared<Model>(m_modelHandle);
+	// 敵のアニメーション設定
 	m_pModel->SetAnimation(kAnimMove, true, true);
+	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
 }
 
@@ -56,6 +61,7 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	m_playerPos(kZero),
 	m_Number(num)
 {
+	// 敵の初期位置
 	m_pos.x = 1000;
 	//m_pos.x = -500.0f;
 	//m_pos.x = static_cast<float>(GetRand(1000) -1000);
@@ -63,12 +69,14 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
 	//m_pos.z = 0;
 
+	// モデルのロード
 	m_modelHandle = MV1LoadModel(kEnemyHandle);
-	m_playerHandle = MV1LoadModel(kPlayerHandle);
 
+	// ポインタのメモリ確保
 	m_pModel = std::make_shared<Model>(m_modelHandle);
+	// 敵のアニメーション設定
 	m_pModel->SetAnimation(kAnimMove, true, true);
-
+	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
 
 	
@@ -76,9 +84,9 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 
 Enemy::~Enemy()
 {
+	// モデルのメモリ削除
 	MV1DeleteModel(m_modelHandle);
 	MV1DeleteModel(m_playerHandle);
-	//MV1CollResultPolyDimTerminate(test);
 }
 
 void Enemy::Init()
@@ -114,69 +122,34 @@ void Enemy::UpdateMove()
 
 
 	// 座標の初期化
+	// ステージの下
 	if (m_pos.z < -1000.0f)
 	{
 		m_pos.z = 1000.0f;
+		m_angle = GetRand(360) * DX_PI_F / 180;
 	}
+	// ステージの上
 	if (m_pos.z > 1000.0f)
 	{
 		m_pos.z = -1000.0f;
+		m_angle = GetRand(360) * DX_PI_F / 180;
 	}
+	// ステージの右
 	if (m_pos.x > 1000.0f)
 	{
 		m_pos.x = -1000.0f;
+		m_angle = GetRand(360) * DX_PI_F / 180;
 	}
+	// ステージの左
 	if (m_pos.x < -1000.0f)
 	{
 		m_pos.x = 1000.0f;
+		m_angle = GetRand(360) * DX_PI_F / 180;
 	}
 
 	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f,m_angle,0.0f));
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
-}
-
-void Enemy::UpdateHit(int playerHp, bool hit)
-{
-	/*m_pPlayer->m_vec = VSub(m_pos, m_playerPos);
-	m_pPlayer->m_vec = VNorm(m_pPlayer->m_vec);
-
-	m_pPlayer->m_vec = VScale(m_pPlayer->m_vec, 1);
-	m_pPlayer->m_pos = VSub(m_playerPos,
-		VGet(m_pPlayer->m_vec.x + playerHp * 0.005f, 
-			m_pPlayer->m_vec.y + playerHp * 0.005f, 
-			m_pPlayer->m_vec.z + playerHp * 0.005f));*/
-
-	// 当たった時のプレイヤーとエネミーの座標で正規化
-	if (!hit)
-	{
-		m_testPlayerVec = VSub(m_pos, m_pPlayer->m_pos);
-		if (VSquareSize(m_testPlayerVec) > 0)
-		{
-			// 正規化
-			m_testPlayerVec = VNorm(m_testPlayerVec);
-		}
-		m_testPlayerVec = VScale(m_testPlayerVec, 10);
-	}
-	m_pPlayer->m_pos = VSub(m_pPlayer->m_pos,
-		VGet(m_testPlayerVec.x * (playerHp * 0.05f),
-			m_testPlayerVec.y * (playerHp * 0.05f),
-			m_testPlayerVec.z * (playerHp * 0.05f)));
-
-	if (m_pPlayer->m_vec.x != 0.0f ||
-		m_pPlayer->m_vec.y != 0.0f || 
-		m_pPlayer->m_vec.z != 0.0f)
-	{
-		/*printfDx("x:%f\n", m_pPlayer->m_vec.x);
-		printfDx("y:%f\n", m_pPlayer->m_vec.y);
-		printfDx("z:%f\n", m_pPlayer->m_vec.z);*/
-	}
-
-	/*printfDx("x:%f\n", m_pPlayer->m_pos.x);
-	printfDx("y:%f\n", m_pPlayer->m_pos.y);
-	printfDx("z:%f\n", m_pPlayer->m_pos.z);*/
-	
-
 }
 
 void Enemy::DebugDraw()
@@ -197,27 +170,6 @@ void Enemy::DebugDraw()
 	}
 
 	DrawFormatString(static_cast<int>(screenPos.x) - 64 / 2, static_cast<int>(screenPos.y),0xffffff, "%d", m_Number);
-
-	//// 最大HPに対する現在のHPの割合を計算する
-	//float hpRate = static_cast<float>(m_hp) / static_cast<float>(kMaxHp);
-	//// HPバーの長さを計算する
-	//float barWidth = kHpBarWidth * hpRate;
-
-	////HPバーの表示
-
-	//// バーの土台　赤で
-	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
-	//	screenPos.x + kHpBarWidth / 2, screenPos.y + kHpBarHeight,
-	//	0xff0000, true);
-	//// 現在のHP 緑
-	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
-	//	screenPos.x - kHpBarWidth / 2 + barWidth, screenPos.y + kHpBarHeight,
-	//	0x00ff00, true);
-
-	//// 枠線
-	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
-	//	screenPos.x + kHpBarWidth / 2, screenPos.y + kHpBarHeight,
-	//	0xffffff, false);
 }
 
 bool Enemy::ColFlag()

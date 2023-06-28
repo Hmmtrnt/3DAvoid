@@ -16,21 +16,21 @@ public:
 	void Update(bool Hitting);
 	void Draw();
 
-	void UpdateHit();// ダメージ
+	void UpdateHitDamage();// ダメージ
 
 	// テスト関数
-	void UpdateHit2(VECTOR enemyPos, bool hit);// エネミーとプレイヤーが当たったときの処理
+	void UpdateHitVec(VECTOR enemyPos, bool hit);// エネミーとプレイヤーが当たったときの処理
 
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }
 	VECTOR GetVec()const { return m_vec; }
 
-	VECTOR m_pos;		// プレイヤー座標
-	VECTOR m_vec;		// プレイヤーの移動
+	
 
 	// プレイヤーのHP取得
 	int GetBlowRate() { return m_blowRate; }
 
+	// 落ちているかどうかの真偽
 	bool GetIsFall()const { return m_isFall; }
 	
 private:// 関数
@@ -39,10 +39,10 @@ private:// 関数
 	void UpdateVec();// キャラクターの加速度
 	void UpdateIdle();// キャラクターのアイドル状態
 
+	void UpdateMove(bool Hitting);// キャラクターの動き+α
 	//--------------------------------------------------------
 	// テスト関数
 	//--------------------------------------------------------
-	void TestMove(bool Hitting);// キャラクターの動き+α
 
 	int TestCalculate();// アングルの計算
 
@@ -56,9 +56,10 @@ private:// 変数
 	std::shared_ptr<Player> m_pPlayer;
 
 	// VECTOR
-	
+	VECTOR m_pos;		// プレイヤー座標
+	VECTOR m_vec;		// プレイヤーの移動
+	VECTOR m_hitVec;	// 当たった時のプレイヤーの移動
 	VECTOR m_angle;		// プレイヤーアングル
-	
 	VECTOR m_move;		// プレイヤーの動き
 
 	// MATRIX
