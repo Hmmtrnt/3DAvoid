@@ -47,7 +47,7 @@ void SceneMain::Init()
 
 	// 二体目以降は一体目をコピー
 	int enemyModelHandle = m_pEnemy.back()->GetModelHandle();
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 19; i++)
 	{
 		m_debugEnemyNum++;
 		m_pEnemy.push_back(std::make_shared<Enemy>(enemyModelHandle, m_pPlayer, m_debugEnemyNum));
@@ -107,12 +107,12 @@ void SceneMain::Draw()
 		enemies->Draw();
 		if (m_invincibleTime <= 0)
 		{
-			DrawLine3D(VGet(m_pPlayer->m_pos.x,
+			/*DrawLine3D(VGet(m_pPlayer->m_pos.x,
 				m_pPlayer->m_pos.y + 10.0f,
 				m_pPlayer->m_pos.z),
 				VGet(enemies->m_pos.x,
 					enemies->m_pos.y + 10.0f,
-					enemies->m_pos.z), 0xffffff);
+					enemies->m_pos.z), 0xffffff);*/
 		}
 		/*m_debugEnemyNum++;
 		DrawFormatString(enemies->m_pos.x, 
@@ -146,7 +146,7 @@ void SceneMain::UpdateEnemy()
 			}
 		}
 		// 当たった時のプレイヤーの座標処理
-		else if(m_invincibleTime >= 110)
+		if(m_invincibleTime >= 110)
 		{
 			m_hitting = true;
 			m_pPlayer->UpdateHit2(enemies->m_pos, m_hit);

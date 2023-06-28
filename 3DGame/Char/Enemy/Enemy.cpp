@@ -35,11 +35,11 @@ Enemy::Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer) :
 	m_playerPos(kZero),
 	m_Number(0)
 {
-	//m_pos.x = 1000.0f;
-	m_pos.x = 500.0f;
+	m_pos.x = 1000;
+	//m_pos.x = 500.0f;
 	m_pos.y = 0.0f;
-	//m_pos.z = GetRand(2000) - 1000;
-	m_pos.z = 0;
+	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
+	//m_pos.z = 0;
 
 	m_modelHandle = MV1LoadModel(kEnemyHandle);// モデルのロード
 
@@ -56,12 +56,12 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	m_playerPos(kZero),
 	m_Number(num)
 {
-	//m_pos.x = GetRand(2000) - 1000;
+	m_pos.x = 1000;
 	//m_pos.x = -500.0f;
-	m_pos.x = static_cast<float>(GetRand(1000) -1000);
+	//m_pos.x = static_cast<float>(GetRand(1000) -1000);
 	m_pos.y = 0.0f;
-	//m_pos.z = GetRand(2000) - 1000;
-	m_pos.z = 0;
+	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
+	//m_pos.z = 0;
 
 	m_modelHandle = MV1LoadModel(kEnemyHandle);
 	m_playerHandle = MV1LoadModel(kPlayerHandle);
@@ -110,7 +110,7 @@ void Enemy::UpdateMove()
 	// 移動速度を反映させる
 	m_vec = VScale(m_dir, kSpeed);
 	// 移動させる
-	//m_pos = VAdd(m_pos, m_vec);
+	m_pos = VAdd(m_pos, m_vec);
 
 
 	// 座標の初期化

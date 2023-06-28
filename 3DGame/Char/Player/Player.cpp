@@ -114,12 +114,12 @@ void Player::Draw()
 
 	m_pModel->Draw();
 	
-	DrawLine3D(VGet(m_pos.x, 
+	/*DrawLine3D(VGet(m_pos.x, 
 		m_pos.y + 10.0f, 
 		m_pos.z ), 
 		VGet(m_pEnemy->m_pos.x, 
 			m_pEnemy->m_pos.y + 10.0f, 
-			m_pEnemy->m_pos.z), 0xff0000);
+			m_pEnemy->m_pos.z), 0xff0000);*/
 }
 
 void Player::UpdateHit()
@@ -145,7 +145,7 @@ void Player::UpdateHit2(VECTOR enemyPos, bool hit)
 			m_vec.y * (m_blowRate * 0.1f),
 			m_vec.z * (m_blowRate * 0.1f)));
 
-	//sDrawLine3D(m_pos, enemyPos, 0xffffff);
+	//DrawLine3D(m_pos, enemyPos, 0xffffff);
 }
 
 void Player::UpdatePlayerPos()
