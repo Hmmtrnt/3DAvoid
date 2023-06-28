@@ -142,7 +142,7 @@ void SceneMain::UpdateEnemy()
 			}
 		}
 		// 当たった時のプレイヤーの座標処理
-		if(m_invincibleTime >= 60)
+		if(m_invincibleTime >= 110)
 		{
 			m_hitting = true;
 			m_pPlayer->UpdateHitVec(enemies->GetPos(), m_hit);
@@ -156,7 +156,7 @@ void SceneMain::UpdateEnemy()
 					enemies->m_pos.z), 0xff0000);*/
 		}
 		// 当たっていない状態に戻す
-		if (m_invincibleTime < 60)
+		if (m_invincibleTime < 110)
 		{
 			m_hit = false;
 			m_hitting = false;

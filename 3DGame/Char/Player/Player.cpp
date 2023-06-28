@@ -141,10 +141,11 @@ void Player::UpdateHitVec(VECTOR enemyPos, bool hit)
 		}
 		m_hitVec = VScale(m_hitVec, 1);
 	}
+	int blowRate = m_blowRate * 0.05f;
 	m_pos = VSub(m_pos,
-		VGet(m_hitVec.x * (m_blowRate * 0.005f),
-			m_hitVec.y * (m_blowRate * 0.005f),
-			m_hitVec.z * (m_blowRate * 0.005f)));
+		VGet(m_hitVec.x * blowRate,
+			m_hitVec.y * blowRate,
+			m_hitVec.z * blowRate));
 
 	//printfDx("x:%f\ny:%f\nz:%f\n", m_pos.x, m_pos.y, m_pos.z);
 
@@ -429,7 +430,7 @@ void Player::UpdateMove(bool Hitting)
 	m_vec = VScale(m_vec, kTopSpeed);
 
 	m_pos = VAdd(m_pos, m_vec);
-	if (!m_isFall)
+	if (!m_isFall && !Hitting)
 	{
 		// ŽÎ‚ß“ü—ÍŽž‚ÌŠp“x
 		if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
