@@ -497,11 +497,12 @@ void Player::UpdateMove(bool Hitting)
 		// 落下
 		m_pos.y-=1.0f;
 
+		// 見えなくなったら落下を終了
 		if (m_pos.y <= -2000.0f)
 		{
 			m_pos.y = -2000.0f;
 		}
-
+		// 落ちる時のプレイヤーの向き固定
 		m_playerAngleY = 0;
 
 		m_isFall = true;

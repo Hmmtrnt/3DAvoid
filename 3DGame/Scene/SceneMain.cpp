@@ -139,7 +139,9 @@ void SceneMain::Draw()
 	UpdateColor();
 
 	// 文字を見やすくする
+	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
 	DrawBox(0, 85, 300, 250, Color::kBlack, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 	// プレイヤーの吹っ飛び率描画
 	m_pFont->DrawFormat(10, 90, m_hpColor, "%d%%", m_pPlayer->GetBlowRate());
@@ -150,9 +152,6 @@ void SceneMain::Draw()
 	// ゲームオーバーになった時の処理
 	if (m_pPlayer->GetPos().y < -100.0f)
 	{
-		/*DrawString(0, 130, "ゲームオーバー", 0xffffff);
-		DrawString(0, 150, "リトライ:PAD_INPUT_4", 0xffffff);*/
-
 		m_pFont->DrawNoFormat(0, 150, "ゲームオーバー", Color::kWhite);
 		m_pFont->DrawNoFormat(0, 180, "リトライ:PAD_INPUT_4", Color::kWhite);
 
