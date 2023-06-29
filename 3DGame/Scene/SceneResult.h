@@ -8,6 +8,8 @@ public:
 	SceneResult();
 	virtual ~SceneResult();
 
+	void Init();
+	void End();
 	SceneBase* Update();
 	void Draw();
 

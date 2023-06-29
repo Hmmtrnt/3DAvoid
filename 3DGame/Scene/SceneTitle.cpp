@@ -19,10 +19,27 @@ void SceneTitle::End()
 
 SceneBase* SceneTitle::Update()
 {
-	if (Pad::IsTrigger(PAD_INPUT_1))
+	// フェードインアウトしている
+	if (IsFading())
 	{
-		return new SceneMain;
+		m_isFadeOut = IsFadingOut();
+		SceneBase::UpdateFade();
+		// フェードアウト終了時
+		if (!IsFading() && m_isFadeOut && !m_isBackScene)
+		{
+			return (new SceneMain);
+		}
 	}
+
+	if (!IsFading())
+	{
+		// フェードアウト開始
+		if (Pad::IsTrigger(PAD_INPUT_1))
+		{
+			StartFadeOut();
+		}
+	}
+	
 
 	return this;
 }
@@ -30,4 +47,7 @@ SceneBase* SceneTitle::Update()
 void SceneTitle::Draw()
 {
 	DrawString(0, 0, "Title", 0xffffff);
+
+	// フェードインアウトのフィルター
+	SceneBase::DrawFade();
 }

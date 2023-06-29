@@ -1,5 +1,6 @@
 #include "SceneMain.h"
-#include "SceneTitle.h"
+#include "SceneTitle.h"// デバッグ用
+#include "SceneResult.h"
 #include "../Util/GameSetting.h"
 #include "../Char/Player/Player.h"
 #include "../Char/Enemy/Enemy.h"
@@ -38,9 +39,8 @@ void SceneMain::Init()
 	m_pPlayer->Init();
 	m_pField->Init();
 
-	m_hpRedColor = m_pPlayer->GetBlowRate();
 
-	m_hpColor = GetColor(m_hpRedColor, 0, 0);
+	m_hpColor = Color::kWhite;
 
 	// 一体目のエネミー生成
 	m_pEnemy.push_back(std::make_shared<Enemy>(m_pPlayer));
@@ -85,11 +85,29 @@ SceneBase* SceneMain::Update()
 		DrawString(0, 130, "ゲームオーバー", 0xffffff);
 		DrawString(0, 150, "リトライ:PAD_INPUT_4", 0xffffff);
 	}
+
+	// フェードインアウトしている
+	if (IsFading())
+	{
+		m_isFadeOut = IsFadingOut();
+		SceneBase::UpdateFade();
+		// フェードアウト終了時
+		if (!IsFading() && m_isFadeOut && !m_isBackScene)
+		{
+			return (new SceneResult);
+		}
+	}
+
 	if (m_pPlayer->GetIsFall())
 	{
-		if (Pad::IsTrigger(PAD_INPUT_4))
+		if (!IsFading())
 		{
-			return new SceneMain;
+			if (Pad::IsTrigger(PAD_INPUT_1))
+			{
+				return new SceneMain;// デバッグ用シーン遷移
+
+				//StartFadeOut();// 本番用シーン遷移
+			}
 		}
 	}
 
@@ -110,12 +128,16 @@ void SceneMain::Draw()
 	}
 	m_pField->Draw();
 
-	DrawFormatString(10, 30, Color::kCoral, "%d", m_pPlayer->GetBlowRate());
+	/*DrawFormatString(10, 30, Color::kCoral, "%d", m_pPlayer->GetBlowRate());
 	DrawFormatString(10, 50, Color::kTomato, "%d", m_pPlayer->GetBlowRate());
 	DrawFormatString(10, 70, Color::kOrangered, "%d", m_pPlayer->GetBlowRate());
-	DrawFormatString(10, 90, Color::kRed, "%d", m_pPlayer->GetBlowRate());
-	DrawFormatString(10, 110, Color::kRed, "%d", m_score);
+	DrawFormatString(10, 90, Color::kRed, "%d", m_pPlayer->GetBlowRate());*/
 
+	DrawFormatString(10, 90, m_hpColor, "%d%%", m_pPlayer->GetBlowRate());
+	DrawFormatString(10, 110, m_hpColor, "score:%d", m_score);
+
+	// フェードインアウトのフィルター
+	SceneBase::DrawFade();
 
 }
 

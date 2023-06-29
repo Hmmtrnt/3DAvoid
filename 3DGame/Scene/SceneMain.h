@@ -35,7 +35,6 @@ private:
 	int m_invincibleTime;// プレイヤーの無敵時間
 	int m_hpRedColor;// Hpのカラー赤
 	unsigned int m_hpColor;// Hpのカラー
-
 	int m_score;// ゲームのスコア
 
 	// デバッグ用変数敵の番号を見る
