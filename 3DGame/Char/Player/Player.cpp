@@ -533,6 +533,8 @@ void Player::UpdateMove(bool Hitting)
 	m_pModel->SetPos(m_pos);
 	// プレイヤーの回転率
 	m_pModel->SetRot(VGet(0.0f, m_playerAngleY, 0.0f));
+	// プレイヤーの拡大率
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
 // 角度の計算：使ってない

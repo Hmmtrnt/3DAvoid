@@ -91,7 +91,7 @@ SceneBase* SceneMain::Update()
 
 	if (m_score != 0)
 	{
-		if (/*m_score % 1000 == 0*/ Pad::IsTrigger(PAD_INPUT_7))
+		if (m_score % 1000 == 0 /*Pad::IsTrigger(PAD_INPUT_7)*/)
 		{
 			for (int i = 0; i < 10; i++)
 			{
