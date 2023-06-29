@@ -16,6 +16,7 @@ namespace
 }
 
 SceneMain::SceneMain() :
+	m_updateFunc(&SceneMain::UpdatePauseNo),
 	m_shadowMap(0),
 	m_invincibleTime(0),
 	m_hpRedColor(0),
@@ -23,7 +24,8 @@ SceneMain::SceneMain() :
 	m_score(0),
 	m_BackGroundHandle(-1),
 	m_hit(false),
-	m_hitting(false)
+	m_hitting(false),
+	m_pushPause(false)
 {
 	// ポインタのメモリ確保後で自動的に解放される
 	m_pSet = std::make_shared<GameSetting>();
@@ -80,6 +82,20 @@ void SceneMain::End()
 // 更新処理
 SceneBase* SceneMain::Update()
 {
+	(this->*m_updateFunc)();
+
+	if (Pad::IsTrigger(PAD_INPUT_8))
+	{
+		if (!m_pushPause)
+		{
+			m_pushPause = true;
+		}
+		else
+		{
+			m_pushPause = false;
+		}
+	}
+
 	// フェードインアウトしている
 	if (IsFading())
 	{
@@ -151,6 +167,11 @@ void SceneMain::Draw()
 
 	}
 
+	if (m_pushPause)
+	{
+		m_pPause->Draw();
+	}
+
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();
 
@@ -209,11 +230,18 @@ void SceneMain::UpdatePauseNo()
 	{
 		m_score++;
 	}
-
+	if (m_pushPause)
+	{
+		m_updateFunc = &SceneMain::UpdatePause;
+	}
 	
 }
 
 void SceneMain::UpdatePause()
 {
 	m_pPause->Update();
+	if (!m_pushPause)
+	{
+		m_updateFunc = &SceneMain::UpdatePauseNo;
+	}
 }

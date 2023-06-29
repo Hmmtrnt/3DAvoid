@@ -31,12 +31,11 @@ void Pause::Update()
 
 void Pause::Draw()
 {
-	SetDrawBlendMode(DX_BLENDMODE_MULA, 200);
 	// デバッグ用
 	DrawBox(200, 200, 200, 300, Color::kBlack, true);
 
 	DrawBox(200, 400, 200, 500, Color::kBlack, true);
 	DrawBox(m_posx, m_posy, m_posx, m_posy + 100, Color::kWhite, true);
 
-	SetDrawBlendMode(DX_BLENDMODE_MULA, 255);
+	DrawString(0, 0, "ポーズ", Color::kBlack);
 }
