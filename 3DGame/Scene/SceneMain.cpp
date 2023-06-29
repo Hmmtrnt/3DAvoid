@@ -31,7 +31,7 @@ SceneMain::SceneMain() :
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
 	m_pField = std::make_shared<Field>();
-	m_pFont = std::make_shared<FontFunction>();
+	m_pFont = std::make_shared<StringInit>();
 	m_pPause = std::make_shared<Pause>();
 	
 	m_BackGroundHandle = LoadGraph(kImgName);

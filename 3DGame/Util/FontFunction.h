@@ -1,11 +1,11 @@
 #pragma once
 // フォントデータ書式付き文字列の描画関数(フォントは創英角ポップ体に固定)
 
-class FontFunction
+class StringInit
 {
 public:
-	FontFunction();// コンストラクタ
-	virtual ~FontFunction();// デストラクタ
+	StringInit();// コンストラクタ
+	virtual ~StringInit();// デストラクタ
 
 	/// <summary>
 	/// フォントデータ作成

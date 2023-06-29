@@ -8,7 +8,7 @@ class GameSetting;
 class Player;
 class Enemy;
 class Field;
-class FontFunction;
+class StringInit;
 class Pause;
 
 class SceneMain : public SceneBase
@@ -45,7 +45,7 @@ private:
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 	std::shared_ptr<Field> m_pField;// ステージ
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
-	std::shared_ptr<FontFunction> m_pFont;// フォント
+	std::shared_ptr<StringInit> m_pFont;// フォント
 	std::shared_ptr<Pause> m_pPause;
 
 	// int
