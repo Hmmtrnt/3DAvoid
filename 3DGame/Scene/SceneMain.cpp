@@ -7,6 +7,7 @@
 #include "../Stage/Field.h"
 #include <cassert>
 #include "../Util/FontFunction.h"
+#include "../System/Pause.h"
 
 namespace
 {
@@ -29,6 +30,7 @@ SceneMain::SceneMain() :
 	m_pPlayer = std::make_shared<Player>();
 	m_pField = std::make_shared<Field>();
 	m_pFont = std::make_shared<FontFunction>();
+	m_pPause = std::make_shared<Pause>();
 	
 	m_BackGroundHandle = LoadGraph(kImgName);
 	assert(m_BackGroundHandle != -1);
@@ -78,15 +80,6 @@ void SceneMain::End()
 // 更新処理
 SceneBase* SceneMain::Update()
 {
-	m_pPlayer->Update(m_hitting);
-	UpdateEnemy();
-	
-	// ゲームが進んでいる間スコアを増やす
-	if (!m_pPlayer->GetIsFall())
-	{
-		m_score++;
-	}
-
 	// フェードインアウトしている
 	if (IsFading())
 	{
@@ -204,4 +197,23 @@ void SceneMain::UpdateEnemy()
 void SceneMain::UpdateColor()
 {
 	m_hpColor = GetColor(255, 255 - (m_pPlayer->GetBlowRate() * 2), 255 - (m_pPlayer->GetBlowRate() * 2));
+}
+
+void SceneMain::UpdatePauseNo()
+{
+	m_pPlayer->Update(m_hitting);
+	UpdateEnemy();
+
+	// ゲームが進んでいる間スコアを増やす
+	if (!m_pPlayer->GetIsFall())
+	{
+		m_score++;
+	}
+
+	
+}
+
+void SceneMain::UpdatePause()
+{
+	m_pPause->Update();
 }

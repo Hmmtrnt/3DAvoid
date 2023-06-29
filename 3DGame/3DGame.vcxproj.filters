@@ -49,6 +49,12 @@
     <Filter Include="ヘッダー ファイル\Char\Enemy">
       <UniqueIdentifier>{33433192-364f-4351-a737-0154c75a3440}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\System">
+      <UniqueIdentifier>{7b86e529-c511-42f0-be4b-02dea4158cb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\System">
+      <UniqueIdentifier>{53b7f9ba-6004-4779-961f-781fb9966027}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -92,6 +98,9 @@
     </ClCompile>
     <ClCompile Include="Util\FontFunction.cpp">
       <Filter>ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Pause.cpp">
+      <Filter>ソース ファイル\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="Util\FontFunction.h">
       <Filter>ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Pause.h">
+      <Filter>ヘッダー ファイル\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@ class Player;
 class Enemy;
 class Field;
 class FontFunction;
+class Pause;
 
 class SceneMain : public SceneBase
 {
@@ -21,13 +22,21 @@ public:
 	SceneBase* Update();
 	void Draw();
 
-	void UpdateEnemy();
+	// DOTO:関数名変更
+	void UpdateEnemy();// 敵に当たった時の更新処理
 
 // 関数
 private:
 	// ダメージ表記によって色変更
 	void UpdateColor();
 
+	// ポーズを押していないときの処理
+	void UpdatePauseNo();
+	// ポーズを押したときの処理
+	void UpdatePause();
+
+	// メンバ関数ポインタ
+	void(SceneMain::* m_updateFunc)();
 
 // 変数
 private:
@@ -37,6 +46,7 @@ private:
 	std::shared_ptr<Field> m_pField;// ステージ
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
 	std::shared_ptr<FontFunction> m_pFont;// フォント
+	std::shared_ptr<Pause> m_pPause;
 
 	// int
 	int m_shadowMap; // シャドウマップ
@@ -52,4 +62,6 @@ private:
 	// bool
 	bool m_hit;// 当たったかどうか
 	bool m_hitting;// 当たっている
+
+	bool m_pushPause;// ポーズボタンを押したかどうか
 };
