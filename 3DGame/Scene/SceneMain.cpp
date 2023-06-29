@@ -137,6 +137,9 @@ void SceneMain::Draw()
 	// 受けたダメージによって色変更
 	UpdateColor();
 
+	// 文字を見やすくする
+	DrawBox(0, 85, 150, 130, Color::kBlack, true);
+
 	// プレイヤーの吹っ飛び率描画
 	DrawFormatString(10, 90, m_hpColor, "%d%%", m_pPlayer->GetBlowRate());
 	// スコア描画
@@ -183,7 +186,6 @@ void SceneMain::UpdateEnemy()
 			m_hit = false;
 			m_hitting = false;
 		}
-
 	}
 
 	if (m_invincibleTime > 0)
