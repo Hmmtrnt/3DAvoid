@@ -5,10 +5,12 @@
 #include "../Char/Player/Player.h"
 #include "../Char/Enemy/Enemy.h"
 #include "../Stage/Field.h"
+#include <cassert>
 
 namespace
 {
-	
+	// 画像のファイルの場所
+	const char* const kImgName = "Data/BackGround/FieldBackGround.jpg";
 }
 
 SceneMain::SceneMain() :
@@ -17,6 +19,7 @@ SceneMain::SceneMain() :
 	m_hpRedColor(0),
 	m_hpColor(0),
 	m_score(0),
+	m_BackGroundHandle(-1),
 	m_hit(false),
 	m_hitting(false)
 {
@@ -24,12 +27,13 @@ SceneMain::SceneMain() :
 	m_pPlayer = std::make_shared<Player>();
 	m_pField = std::make_shared<Field>();
 	
-	
+	m_BackGroundHandle = LoadGraph(kImgName);
+	assert(m_BackGroundHandle != -1);
 }
 
 SceneMain::~SceneMain()
 {
-	
+	DeleteGraph(m_BackGroundHandle);
 }
 
 void SceneMain::Init()
@@ -79,12 +83,7 @@ SceneBase* SceneMain::Update()
 		m_score++;
 	}
 	
-	// ゲームオーバーになった時の処理
-	if (m_pPlayer->GetPos().y < -100.0f)
-	{
-		DrawString(0, 130, "ゲームオーバー", 0xffffff);
-		DrawString(0, 150, "リトライ:PAD_INPUT_4", 0xffffff);
-	}
+	
 
 	// フェードインアウトしている
 	if (IsFading())
@@ -117,6 +116,8 @@ SceneBase* SceneMain::Update()
 // 描画処理
 void SceneMain::Draw()
 {
+	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_BackGroundHandle, true);
+
 	if (m_invincibleTime % 3 == 0)
 	{
 		m_pPlayer->Draw();
@@ -133,8 +134,20 @@ void SceneMain::Draw()
 	DrawFormatString(10, 70, Color::kOrangered, "%d", m_pPlayer->GetBlowRate());
 	DrawFormatString(10, 90, Color::kRed, "%d", m_pPlayer->GetBlowRate());*/
 
+	// 受けたダメージによって色変更
+	UpdateColor();
+
+	// プレイヤーの吹っ飛び率描画
 	DrawFormatString(10, 90, m_hpColor, "%d%%", m_pPlayer->GetBlowRate());
-	DrawFormatString(10, 110, m_hpColor, "score:%d", m_score);
+	// スコア描画
+	DrawFormatString(10, 110, Color::kWhite, "score:%d", m_score);
+
+	// ゲームオーバーになった時の処理
+	if (m_pPlayer->GetPos().y < -100.0f)
+	{
+		DrawString(0, 130, "ゲームオーバー", 0xffffff);
+		DrawString(0, 150, "リトライ:PAD_INPUT_1", 0xffffff);
+	}
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();
@@ -177,4 +190,9 @@ void SceneMain::UpdateEnemy()
 	{
 		m_invincibleTime--;
 	}
+}
+
+void SceneMain::UpdateColor()
+{
+	m_hpColor = GetColor(255, 255 - (m_pPlayer->GetBlowRate() * 2), 255 - (m_pPlayer->GetBlowRate() * 2));
 }

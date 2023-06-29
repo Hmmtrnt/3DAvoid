@@ -3,7 +3,6 @@
 #include "../Util/common.h"
 #include <memory>
 #include <vector>
-#include "../Util/common.h"
 
 class GameSetting;
 class Player;
@@ -23,6 +22,13 @@ public:
 
 	void UpdateEnemy();
 
+// 関数
+private:
+	// ダメージ表記によって色変更
+	void UpdateColor();
+
+
+// 変数
 private:
 	// ゲームの設定ポインタ
 	std::shared_ptr<GameSetting> m_pSet;// 環境設定
@@ -36,6 +42,7 @@ private:
 	int m_hpRedColor;// Hpのカラー赤
 	unsigned int m_hpColor;// Hpのカラー
 	int m_score;// ゲームのスコア
+	int m_BackGroundHandle;// 背景のハンドル
 
 	// デバッグ用変数敵の番号を見る
 	int m_debugEnemyNum = 0;
