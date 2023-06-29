@@ -23,6 +23,7 @@ SceneMain::SceneMain() :
 	m_hpColor(0),
 	m_score(0),
 	m_BackGroundHandle(-1),
+	
 	m_hit(false),
 	m_hitting(false),
 	m_pushPause(false)
@@ -36,6 +37,10 @@ SceneMain::SceneMain() :
 	
 	m_BackGroundHandle = LoadGraph(kImgName);
 	assert(m_BackGroundHandle != -1);
+
+	m_red = 255;
+
+	m_decreaseColor = 255 - (m_pPlayer->GetBlowRate() * 2);
 }
 
 SceneMain::~SceneMain()
@@ -221,7 +226,19 @@ void SceneMain::UpdateEnemy()
 
 void SceneMain::UpdateColor()
 {
-	m_hpColor = GetColor(255, 255 - (m_pPlayer->GetBlowRate() * 2), 255 - (m_pPlayer->GetBlowRate() * 2));
+	
+
+	m_hpColor = GetColor(m_red, m_decreaseColor, m_decreaseColor);
+
+	if (m_decreaseColor < 0)
+	{
+		m_decreaseColor = 0;
+	}
+	else if(m_decreaseColor != 0)
+	{
+		m_decreaseColor = 255 - (m_pPlayer->GetBlowRate() * 2);
+	}
+
 }
 
 void SceneMain::UpdatePauseNo()

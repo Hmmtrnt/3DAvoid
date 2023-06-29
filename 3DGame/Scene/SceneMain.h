@@ -59,6 +59,9 @@ private:
 	// デバッグ用変数敵の番号を見る
 	int m_debugEnemyNum = 0;
 
+	int m_red;// 赤の値
+	int m_decreaseColor;// 色が消えていく変数
+
 	// bool
 	bool m_hit;// 当たったかどうか
 	bool m_hitting;// 当たっている

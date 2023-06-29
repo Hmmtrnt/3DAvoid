@@ -99,6 +99,18 @@ void Player::End()
 void Player::Update(bool Hitting)
 {
 	UpdateMove(Hitting);
+
+	// デバッグ用ダメージ
+	if (Pad::IsTrigger(PAD_INPUT_3))
+	{
+		m_blowRate += 10;
+	}
+	if (Pad::IsTrigger(PAD_INPUT_4))
+	{
+		m_blowRate -= 10;
+	}
+
+	
 }
 
 void Player::Draw()
