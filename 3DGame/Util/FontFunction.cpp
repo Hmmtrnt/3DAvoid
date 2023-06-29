@@ -1,5 +1,6 @@
 #include "FontFunction.h"
 #include "DxLib.h"
+#include <cassert>
 
 namespace
 {
@@ -19,6 +20,7 @@ FontFunction::~FontFunction()
 void FontFunction::Init(int fontSize, int fontThick, int fontType)
 {
 	m_fontHandle = CreateFontToHandle(kFontName, fontSize, fontThick, fontType);
+	assert(m_fontHandle != 0);
 }
 
 // フォントデータ削除
