@@ -129,17 +129,11 @@ void SceneMain::Draw()
 	}
 	m_pField->Draw();
 
-	/*DrawFormatString(10, 30, Color::kCoral, "%d", m_pPlayer->GetBlowRate());
-	DrawFormatString(10, 50, Color::kTomato, "%d", m_pPlayer->GetBlowRate());
-	DrawFormatString(10, 70, Color::kOrangered, "%d", m_pPlayer->GetBlowRate());
-	DrawFormatString(10, 90, Color::kRed, "%d", m_pPlayer->GetBlowRate());*/
-
 	// 受けたダメージによって色変更
 	UpdateColor();
 
 	// 文字を見やすくする
 	DrawBox(0, 85, 150, 130, Color::kBlack, true);
-
 	// プレイヤーの吹っ飛び率描画
 	DrawFormatString(10, 90, m_hpColor, "%d%%", m_pPlayer->GetBlowRate());
 	// スコア描画
