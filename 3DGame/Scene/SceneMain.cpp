@@ -152,7 +152,7 @@ void SceneMain::Draw()
 	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_BackGroundHandle, true);
 
 	// ƒvƒŒƒCƒ„[‚Ì•`‰æ
-	if (m_invincibleTime % 3 == 0)
+	if (m_invincibleTime % 3 == 0 || m_pushPause)
 	{
 		m_pPlayer->Draw();
 	}
