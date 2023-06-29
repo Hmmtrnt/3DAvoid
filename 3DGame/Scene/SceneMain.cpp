@@ -24,6 +24,7 @@ SceneMain::SceneMain() :
 	m_hit(false),
 	m_hitting(false)
 {
+	// ポインタのメモリ確保後で自動的に解放される
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
 	m_pField = std::make_shared<Field>();
@@ -102,7 +103,7 @@ SceneBase* SceneMain::Update()
 	{
 		if (!IsFading())
 		{
-			// ボタン配置はデバッグ用(後で1に直す)
+			//TODO:PAD_INPUT_1に戻す(デバッグが終わったら)
 			if (Pad::IsTrigger(PAD_INPUT_4))
 			{
 				return new SceneMain;// デバッグ用シーン遷移
