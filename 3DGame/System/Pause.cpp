@@ -32,10 +32,10 @@ void Pause::Update()
 void Pause::Draw()
 {
 	// デバッグ用
-	DrawBox(200, 200, 200, 300, Color::kBlack, true);
+	DrawBox(200, 200, 400, 300, Color::kBlack, true);
 
-	DrawBox(200, 400, 200, 500, Color::kBlack, true);
-	DrawBox(m_posx, m_posy, m_posx, m_posy + 100, Color::kWhite, true);
+	DrawBox(200, 400, 400, 500, Color::kBlack, true);
+	DrawBox(m_posx, m_posy, m_posx + 200, m_posy + 100, Color::kWhite, true);
 
 	DrawString(0, 0, "ポーズ", Color::kBlack);
 }
