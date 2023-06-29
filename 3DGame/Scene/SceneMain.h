@@ -40,7 +40,7 @@ private:
 
 // 変数
 private:
-	// ゲームの設定ポインタ
+	// ポインタ
 	std::shared_ptr<GameSetting> m_pSet;// 環境設定
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 	std::shared_ptr<Field> m_pField;// ステージ

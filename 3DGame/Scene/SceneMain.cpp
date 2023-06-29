@@ -124,7 +124,7 @@ SceneBase* SceneMain::Update()
 		// フェードアウト終了時
 		if (!IsFading() && m_isFadeOut && !m_isBackScene)
 		{
-			return (new SceneResult);
+			return (new SceneResult(m_score));
 		}
 	}
 
@@ -135,9 +135,9 @@ SceneBase* SceneMain::Update()
 			//TODO:PAD_INPUT_1に戻す(デバッグが終わったら)
 			if (Pad::IsTrigger(PAD_INPUT_4))
 			{
-				return new SceneMain;// デバッグ用シーン遷移
+				//return new SceneMain;// デバッグ用シーン遷移
 
-				//StartFadeOut();// 本番用シーン遷移
+				StartFadeOut();// 本番用シーン遷移
 			}
 		}
 	}
