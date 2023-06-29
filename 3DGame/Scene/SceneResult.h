@@ -16,11 +16,21 @@ public:
 	SceneBase* Update();
 	void Draw();
 
+// 関数
+private:
+	// ファイルの生成書き込み
+	void GenerationFile();
+
+	// ファイルの書き込み
+	void ReadFile();
+// 変数
 private:
 	// ポインタ
 	std::shared_ptr<StringInit> m_pFont;
 
 	// int
 	int m_score;// ゲームで得たスコア
+	int m_scoreWriting;// 高得点のスコアを書き込む
+	int m_highScore;// ファイルの中にあるハイスコア
 };
 
