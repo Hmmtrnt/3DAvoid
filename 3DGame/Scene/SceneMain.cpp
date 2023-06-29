@@ -6,6 +6,7 @@
 #include "../Char/Enemy/Enemy.h"
 #include "../Stage/Field.h"
 #include <cassert>
+#include "../Util/FontFunction.h"
 
 namespace
 {
@@ -26,6 +27,7 @@ SceneMain::SceneMain() :
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
 	m_pField = std::make_shared<Field>();
+	m_pFont = std::make_shared<FontFunction>();
 	
 	m_BackGroundHandle = LoadGraph(kImgName);
 	assert(m_BackGroundHandle != -1);
@@ -42,7 +44,7 @@ void SceneMain::Init()
 	m_pSet->InitCamera();
 	m_pPlayer->Init();
 	m_pField->Init();
-
+	m_pFont->Init(30, 0, -1);
 
 	m_hpColor = Color::kWhite;
 
@@ -67,6 +69,7 @@ void SceneMain::Init()
 void SceneMain::End()
 {
 	m_pPlayer->End();
+	m_pFont->End();
 	// シャドウマップの削除
 	DeleteShadowMap(m_shadowMap);
 }
@@ -82,8 +85,6 @@ SceneBase* SceneMain::Update()
 	{
 		m_score++;
 	}
-	
-	
 
 	// フェードインアウトしている
 	if (IsFading())
@@ -135,16 +136,20 @@ void SceneMain::Draw()
 
 	// 文字を見やすくする
 	DrawBox(0, 85, 200, 200, Color::kBlack, true);
+
 	// プレイヤーの吹っ飛び率描画
-	DrawFormatString(10, 90, m_hpColor, "%d%%", m_pPlayer->GetBlowRate());
+	m_pFont->DrawFormat(10, 90, m_hpColor, "%d%%", m_pPlayer->GetBlowRate());
+
 	// スコア描画
-	DrawFormatString(10, 110, Color::kWhite, "score:%d", m_score);
+	m_pFont->DrawFormat(10, 130, Color::kWhite, "score:%d", m_score);
 
 	// ゲームオーバーになった時の処理
 	if (m_pPlayer->GetPos().y < -100.0f)
 	{
 		DrawString(0, 130, "ゲームオーバー", 0xffffff);
 		DrawString(0, 150, "リトライ:PAD_INPUT_4", 0xffffff);
+
+
 	}
 
 	// フェードインアウトのフィルター
@@ -183,6 +188,7 @@ void SceneMain::UpdateEnemy()
 		}
 	}
 
+	// 数字が限界突破しないようにする
 	if (m_invincibleTime > 0)
 	{
 		m_invincibleTime--;

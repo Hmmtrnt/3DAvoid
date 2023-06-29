@@ -253,7 +253,7 @@ void Player::UpdateHitVec(VECTOR enemyPos, bool hit)
 		m_hitVec = VScale(m_hitVec, 1);
 	}
 	// êÅÇ¡îÚÇ—ó¶
-	int blowRate = m_blowRate * 0.05f;
+	float blowRate = m_blowRate * 0.05f;
 	m_pos = VSub(m_pos,
 		VGet(m_hitVec.x * blowRate,
 			m_hitVec.y * blowRate,

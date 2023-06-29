@@ -8,6 +8,7 @@ class GameSetting;
 class Player;
 class Enemy;
 class Field;
+class FontFunction;
 
 class SceneMain : public SceneBase
 {
@@ -35,6 +36,7 @@ private:
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 	std::shared_ptr<Field> m_pField;// ステージ
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
+	std::shared_ptr<FontFunction> m_pFont;// フォント
 
 	// int
 	int m_shadowMap; // シャドウマップ
