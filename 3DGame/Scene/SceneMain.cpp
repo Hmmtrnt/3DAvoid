@@ -118,37 +118,43 @@ SceneBase* SceneMain::Update()
 // 描画処理
 void SceneMain::Draw()
 {
+	// 背景の描画
 	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_BackGroundHandle, true);
 
+	// プレイヤーの描画
 	if (m_invincibleTime % 3 == 0)
 	{
 		m_pPlayer->Draw();
 	}
 
+	// 敵の描画
 	for (auto& enemies : m_pEnemy)
 	{
 		enemies->Draw();
 	}
+	// ステージ描画
 	m_pField->Draw();
 
 	// 受けたダメージによって色変更
 	UpdateColor();
 
 	// 文字を見やすくする
-	DrawBox(0, 85, 200, 200, Color::kBlack, true);
+	DrawBox(0, 85, 300, 250, Color::kBlack, true);
 
 	// プレイヤーの吹っ飛び率描画
 	m_pFont->DrawFormat(10, 90, m_hpColor, "%d%%", m_pPlayer->GetBlowRate());
 
 	// スコア描画
-	m_pFont->DrawFormat(10, 130, Color::kWhite, "score:%d", m_score);
+	m_pFont->DrawFormat(10, 120, Color::kWhite, "score:%d", m_score);
 
 	// ゲームオーバーになった時の処理
 	if (m_pPlayer->GetPos().y < -100.0f)
 	{
-		DrawString(0, 130, "ゲームオーバー", 0xffffff);
-		DrawString(0, 150, "リトライ:PAD_INPUT_4", 0xffffff);
+		/*DrawString(0, 130, "ゲームオーバー", 0xffffff);
+		DrawString(0, 150, "リトライ:PAD_INPUT_4", 0xffffff);*/
 
+		m_pFont->DrawNoFormat(0, 150, "ゲームオーバー", Color::kWhite);
+		m_pFont->DrawNoFormat(0, 180, "リトライ:PAD_INPUT_4", Color::kWhite);
 
 	}
 

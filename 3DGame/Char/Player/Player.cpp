@@ -502,6 +502,8 @@ void Player::UpdateMove(bool Hitting)
 			m_pos.y = -2000.0f;
 		}
 
+		m_playerAngleY = 0;
+
 		m_isFall = true;
 	}
 	else
