@@ -107,7 +107,11 @@ void Player::Update(bool Hitting)
 	}
 	if (Pad::IsTrigger(PAD_INPUT_4))
 	{
-		m_blowRate -= 10;
+		if (m_blowRate > 0)
+		{
+			m_blowRate -= 10;
+		}
+		
 	}
 
 	
