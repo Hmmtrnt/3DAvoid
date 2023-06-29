@@ -154,7 +154,9 @@
     <ClCompile Include="Char\Player\Player.cpp" />
     <ClCompile Include="Char\Model.cpp" />
     <ClCompile Include="Char\Enemy\Enemy.cpp" />
+    <ClCompile Include="Scene\SceneResult.cpp" />
     <ClCompile Include="Stage\Field.cpp" />
+    <ClCompile Include="Util\FontFunction.cpp" />
     <ClCompile Include="Util\GameSetting.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Scene\SceneMain.cpp" />
@@ -168,7 +170,9 @@
     <ClInclude Include="Char\Player\Player.h" />
     <ClInclude Include="Char\Model.h" />
     <ClInclude Include="Char\Enemy\Enemy.h" />
+    <ClInclude Include="Scene\SceneResult.h" />
     <ClInclude Include="Stage\Field.h" />
+    <ClInclude Include="Util\FontFunction.h" />
     <ClInclude Include="Util\GameSetting.h" />
     <ClInclude Include="Scene\SceneMain.h" />
     <ClInclude Include="Scene\SceneTitle.h" />

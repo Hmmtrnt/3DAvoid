@@ -13,11 +13,16 @@ public:
 
 	void Init();
 	void End();
+	/// <summary>
+	/// 更新処理
+	/// </summary>
+	/// <param name="Hitting">当たっている</param>
 	void Update(bool Hitting);
 	void Draw();
 
+	void UpdateVec(bool Hitting);// 移動処理
+	void UpdateMotion();
 	void UpdateHitDamage();// ダメージ
-
 	void UpdateHitVec(VECTOR enemyPos, bool hit);// エネミーとプレイヤーが当たったときの処理
 
 	// プレイヤーの座標取得

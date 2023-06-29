@@ -87,6 +87,12 @@
     <ClCompile Include="Char\Enemy\Enemy.cpp">
       <Filter>ソース ファイル\Char\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\SceneResult.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\FontFunction.cpp">
+      <Filter>ソース ファイル\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Vec2.h">
@@ -127,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="Char\Enemy\Enemy.h">
       <Filter>ヘッダー ファイル\Char\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneResult.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\FontFunction.h">
+      <Filter>ヘッダー ファイル\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

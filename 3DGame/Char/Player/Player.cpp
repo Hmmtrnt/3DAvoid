@@ -105,11 +105,129 @@ void Player::Draw()
 	m_pModel->Draw();
 }
 
+void Player::UpdateVec(bool Hitting)
+{
+
+	m_isMove = false;
+	// 移動力の初期化
+	m_vec = VGet(0.0f, 0.0f, 0.0f);
+	if (!m_isFall && !Hitting)
+	{
+		// 上下キー
+		if (Pad::IsPress(PAD_INPUT_UP))
+		{
+			if (m_pos.z <= 950)
+			{
+				m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, kTopSpeed));
+
+				m_isMove = true;
+				m_playerAngleY = kAngleUp;
+			}
+
+		}
+		if (Pad::IsPress(PAD_INPUT_DOWN))
+		{
+			if (m_pos.z >= -950)
+			{
+				m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, -kTopSpeed));
+
+				m_isMove = true;
+				m_playerAngleY = kAngleDown;
+			}
+		}
+		// 左右キー
+		if (Pad::IsPress(PAD_INPUT_LEFT))
+		{
+			if (m_pos.x >= -950)
+			{
+				m_vec = VAdd(m_vec, VGet(-kTopSpeed, 0.0f, 0.0f));
+
+				m_isMove = true;
+				m_playerAngleY = kAngleLeft;
+			}
+		}
+		if (Pad::IsPress(PAD_INPUT_RIGHT))
+		{
+			if (m_pos.x <= 950)
+			{
+				m_vec = VAdd(m_vec, VGet(kTopSpeed, 0.0f, 0.0f));
+
+				m_isMove = true;
+				m_playerAngleY = kAngleRight;
+			}
+
+		}
+	}
+
+	// 正規化移動処理
+	if (VSize(m_vec) > 0)
+	{
+		m_vec = VNorm(m_vec);
+	}
+
+	m_vec = VScale(m_vec, kTopSpeed);
+
+	m_pos = VAdd(m_pos, m_vec);
+	if (!m_isFall && !Hitting)
+	{
+		// 斜め入力時の角度
+		if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
+		{
+			m_playerAngleY = kAngleUpLeft;
+		}
+		if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_RIGHT))
+		{
+			m_playerAngleY = kAngleUpRight;
+		}
+		if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_LEFT))
+		{
+			m_playerAngleY = kAngleDownLeft;
+		}
+		if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_RIGHT))
+		{
+			m_playerAngleY = kAngleDownRight;
+		}
+	}
+}
+
+void Player::UpdateMotion()
+{
+	if (m_isMove && !m_isJump && !m_isFall)
+	{
+		if (m_AnimNum != kAnimRun)
+		{
+			// 移動アニメーション
+			m_AnimNum = kAnimRun;
+			m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
+		}
+	}
+	else if (m_isJump)
+	{
+		if (m_AnimNum != kAnimJump)
+		{
+			// 移動からアイドル状態
+			m_AnimNum = kAnimJump;
+			m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+		}
+	}
+	else if (!m_isMove && !m_isJump)
+	{
+		if (m_AnimNum != kAnimIdle)
+		{
+			// 移動からアイドル状態
+			m_AnimNum = kAnimIdle;
+			m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+		}
+	}
+}
+
+// 当たった時のダメージ
 void Player::UpdateHitDamage()
 {
 	m_blowRate += 10;
 }
 
+// 当たった時のプレイヤーの移動
 void Player::UpdateHitVec(VECTOR enemyPos, bool hit)
 {
 	// 当たった時のプレイヤーとエネミーの座標で正規化
@@ -131,12 +249,14 @@ void Player::UpdateHitVec(VECTOR enemyPos, bool hit)
 			m_hitVec.z * blowRate));
 }
 
+// 使ってない
 void Player::UpdatePlayerPos()
 {
 	m_pos.z += m_vec.z;
 	m_pos.x += m_vec.x;
 }
 
+// 使ってない
 void Player::UpdateCamera()
 {
 	//m_cameraAngle = m_angle;
@@ -166,6 +286,7 @@ void Player::UpdateCamera()
 	SetCameraPositionAndTarget_UpVecY(cameraPos, cameraTarget);
 }
 
+// 使ってない
 void Player::UpdateVec()
 {
 	m_pressUp = Pad::IsPress(PAD_INPUT_UP);
@@ -225,6 +346,7 @@ void Player::UpdateVec()
 	}
 }
 
+// 使ってない
 void Player::UpdateIdle()
 {
 	m_pModel->Update();
@@ -320,6 +442,7 @@ void Player::UpdateIdle()
 	//UpdateCamera();
 }
 
+// プレイヤーの更新処理
 void Player::UpdateMove(bool Hitting)
 {
 	m_pModel->Update();
@@ -349,86 +472,7 @@ void Player::UpdateMove(bool Hitting)
 	}
 
 	// 移動処理
-	m_isMove = false;
-	// 移動力の初期化
-	m_vec = VGet(0.0f, 0.0f, 0.0f);
-	if (!m_isFall && !Hitting)
-	{
-		// 上下キー
-		if (Pad::IsPress(PAD_INPUT_UP))
-		{
-			if (m_pos.z <= 950)
-			{
-				m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, kTopSpeed));
-
-				m_isMove = true;
-				m_playerAngleY = kAngleUp;
-			}
-
-		}
-		if (Pad::IsPress(PAD_INPUT_DOWN))
-		{
-			if (m_pos.z >= -950)
-			{
-				m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, -kTopSpeed));
-
-				m_isMove = true;
-				m_playerAngleY = kAngleDown;
-			}
-		}
-		// 左右キー
-		if (Pad::IsPress(PAD_INPUT_LEFT))
-		{
-			if (m_pos.x >= -950)
-			{
-				m_vec = VAdd(m_vec, VGet(-kTopSpeed, 0.0f, 0.0f));
-
-				m_isMove = true;
-				m_playerAngleY = kAngleLeft;
-			}
-		}
-		if (Pad::IsPress(PAD_INPUT_RIGHT))
-		{
-			if (m_pos.x <= 950)
-			{
-				m_vec = VAdd(m_vec, VGet(kTopSpeed, 0.0f, 0.0f));
-
-				m_isMove = true;
-				m_playerAngleY = kAngleRight;
-			}
-
-		}
-	}
-	
-	// 正規化移動処理
-	if (VSize(m_vec) > 0)
-	{
-		m_vec = VNorm(m_vec);
-	}
-
-	m_vec = VScale(m_vec, kTopSpeed);
-
-	m_pos = VAdd(m_pos, m_vec);
-	if (!m_isFall && !Hitting)
-	{
-		// 斜め入力時の角度
-		if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
-		{
-			m_playerAngleY = kAngleUpLeft;
-		}
-		if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_RIGHT))
-		{
-			m_playerAngleY = kAngleUpRight;
-		}
-		if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_LEFT))
-		{
-			m_playerAngleY = kAngleDownLeft;
-		}
-		if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_RIGHT))
-		{
-			m_playerAngleY = kAngleDownRight;
-		}
-	}
+	UpdateVec(Hitting);
 	
 	// ゲームオーバー処理
 	if ((m_pos.x > 1000.0f || m_pos.x < -1000.0f ||
@@ -451,80 +495,9 @@ void Player::UpdateMove(bool Hitting)
 	}
 	else
 	{
-		if (m_isMove && !m_isJump&& !m_isFall)
-		{
-			if (m_AnimNum != kAnimRun)
-			{
-				// 移動アニメーション
-				m_AnimNum = kAnimRun;
-				m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
-			}
-		}
-		else if (m_isJump)
-		{
-			if (m_AnimNum != kAnimJump)
-			{
-				// 移動からアイドル状態
-				m_AnimNum = kAnimJump;
-				m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
-			}
-		}
-		else if (!m_isMove && !m_isJump)
-		{
-			if (m_AnimNum != kAnimIdle)
-			{
-				// 移動からアイドル状態
-				m_AnimNum = kAnimIdle;
-				m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
-			}
-		}
+		// プレイヤーのモーション処理
+		UpdateMotion();
 	}
-	
-	
-	// プレイヤーの回転
-
-	/*if (TestCalculate() < 0)
-	{
-		m_playerAngleY -= kRotationSpeed;
-	}
-	else
-	{
-		m_playerAngleY += kRotationSpeed;
-	}*/
-
-	//if (m_playerAngleY > m_angleTest)
-	//{
-	//	m_playerAngleY -= kRotationSpeed;
-	//	/*if (0.01f > m_playerAngleY - m_angleTest)
-	//	{
-	//		m_playerAngleY = m_angleTest;
-	//	}*/
-
-	//	//m_isFlag = true;
-	//}
-	//if (m_playerAngleY < m_angleTest)
-	//{
-	//	m_playerAngleY += kRotationSpeed;
-	//	/*if (0.01f < m_playerAngleY - m_angleTest)
-	//	{
-	//		m_playerAngleY = m_angleTest;
-	//	}*/
-	//	//m_isFlag = true;
-	//}
-	//else
-	//{
-	//	//m_playerAngleY = m_angleTest;
-	//	m_isFlag = false;
-	//}
-
-	/*m_isFlag = false;
-
-	if (!m_isFlag)
-	{
-		m_playerAngleY = m_angleTest;
-	}*/
-	
-	
 
 	// プレイヤーの座標
 	m_pModel->SetPos(m_pos);
@@ -532,7 +505,7 @@ void Player::UpdateMove(bool Hitting)
 	m_pModel->SetRot(VGet(0.0f, m_playerAngleY, 0.0f));
 }
 
-// 角度の計算
+// 角度の計算：使ってない
 int Player::TestCalculate()
 {
 	m_testRusult = m_angleTest - m_playerAngleY;
