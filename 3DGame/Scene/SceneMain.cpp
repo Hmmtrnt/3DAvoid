@@ -23,7 +23,7 @@ SceneMain::SceneMain() :
 	m_hpColor(0),
 	m_score(0),
 	m_BackGroundHandle(-1),
-	
+	m_enemyModelHandle(0),
 	m_hit(false),
 	m_hitting(false),
 	m_pushPause(false)
@@ -63,11 +63,11 @@ void SceneMain::Init()
 	m_pEnemy.back()->Init();
 
 	// 二体目以降は一体目をコピー
-	int enemyModelHandle = m_pEnemy.back()->GetModelHandle();
+	m_enemyModelHandle = m_pEnemy.back()->GetModelHandle();
 	for (int i = 0; i < 19; i++)
 	{
 		m_debugEnemyNum++;
-		m_pEnemy.push_back(std::make_shared<Enemy>(enemyModelHandle, m_pPlayer, m_debugEnemyNum));
+		m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer, m_debugEnemyNum));
 		m_pEnemy.back()->Init();
 	}
 
@@ -88,6 +88,20 @@ void SceneMain::End()
 SceneBase* SceneMain::Update()
 {
 	(this->*m_updateFunc)();
+
+	if (m_score != 0)
+	{
+		//if (m_score % 1000 == 0 /*Pad::IsTrigger(PAD_INPUT_7)*/)
+		//{
+		//	for (int i = 0; i < 10; i++)
+		//	{
+		//		m_debugEnemyNum++;
+		//		m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer, m_debugEnemyNum));
+		//		m_pEnemy.back()->Init();
+		//	}
+		//}
+	}
+	
 
 	// ポーズボタンを押したときの処理
 	if (Pad::IsTrigger(PAD_INPUT_8))
@@ -222,6 +236,11 @@ void SceneMain::UpdateEnemy()
 	{
 		m_invincibleTime--;
 	}
+
+	if (m_pPlayer->GetIsFall())
+	{
+		m_invincibleTime = 0;
+	}
 }
 
 void SceneMain::UpdateColor()
@@ -255,7 +274,6 @@ void SceneMain::UpdatePauseNo()
 	{
 		m_updateFunc = &SceneMain::UpdatePause;
 	}
-	
 }
 
 void SceneMain::UpdatePause()
