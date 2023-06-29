@@ -84,6 +84,7 @@ SceneBase* SceneMain::Update()
 {
 	(this->*m_updateFunc)();
 
+	// ポーズボタンを押したときの処理
 	if (Pad::IsTrigger(PAD_INPUT_8))
 	{
 		if (!m_pushPause)
@@ -199,6 +200,9 @@ void SceneMain::UpdateEnemy()
 			m_hitting = true;
 			m_pPlayer->UpdateHitVec(enemies->GetPos(), m_hit);
 			m_hit = true;
+			// 敵に当たった時のコントローラーの振動
+			StartJoypadVibration(DX_INPUT_PAD1, 300, 100, -1);
+
 		}
 		// 当たっていない状態に戻す
 		if (m_invincibleTime < 110)

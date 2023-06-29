@@ -14,13 +14,14 @@ FontFunction::FontFunction() :
 
 FontFunction::~FontFunction()
 {
+	
 }
 
 // フォントデータ作成
 void FontFunction::Init(int fontSize, int fontThick, int fontType)
 {
 	m_fontHandle = CreateFontToHandle(kFontName, fontSize, fontThick, fontType);
-	assert(m_fontHandle != 0);
+	assert(m_fontHandle != -1);
 }
 
 // フォントデータ削除
