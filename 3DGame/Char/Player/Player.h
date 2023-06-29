@@ -22,8 +22,8 @@ public:
 
 	void UpdateVec(bool Hitting);// 移動処理
 	void UpdateMotion(bool hit);
-	void UpdateHitDamage();// ダメージ
-	void UpdateHitVec(VECTOR enemyPos, bool hit);// エネミーとプレイヤーが当たったときの処理
+	void UpdateHitDamage(VECTOR enemyPos, bool hit);// ダメージ
+	void UpdateHitVec();// エネミーとプレイヤーが当たったときの処理
 
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }

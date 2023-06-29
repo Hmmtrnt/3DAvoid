@@ -249,14 +249,9 @@ void Player::UpdateMotion(bool hit)
 }
 
 // 当たった時のダメージ
-void Player::UpdateHitDamage()
+void Player::UpdateHitDamage(VECTOR enemyPos, bool hit)
 {
 	m_blowRate += 10;
-}
-
-// 当たった時のプレイヤーの移動
-void Player::UpdateHitVec(VECTOR enemyPos, bool hit)
-{
 	// 当たった時のプレイヤーとエネミーの座標で正規化
 	if (!hit)
 	{
@@ -268,8 +263,13 @@ void Player::UpdateHitVec(VECTOR enemyPos, bool hit)
 		}
 		m_hitVec = VScale(m_hitVec, 1);
 	}
+}
+
+// 当たった時のプレイヤーの移動
+void Player::UpdateHitVec()
+{
 	// 吹っ飛び率
-	float blowRate = m_blowRate * 0.05f;
+	float blowRate = m_blowRate * 0.8f;
 	m_pos = VSub(m_pos,
 		VGet(m_hitVec.x * blowRate,
 			m_hitVec.y * blowRate,

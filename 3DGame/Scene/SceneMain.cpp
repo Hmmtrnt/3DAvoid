@@ -91,15 +91,15 @@ SceneBase* SceneMain::Update()
 
 	if (m_score != 0)
 	{
-		//if (m_score % 1000 == 0 /*Pad::IsTrigger(PAD_INPUT_7)*/)
-		//{
-		//	for (int i = 0; i < 10; i++)
-		//	{
-		//		m_debugEnemyNum++;
-		//		m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer, m_debugEnemyNum));
-		//		m_pEnemy.back()->Init();
-		//	}
-		//}
+		if (/*m_score % 1000 == 0*/ Pad::IsTrigger(PAD_INPUT_7))
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				m_debugEnemyNum++;
+				m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer, m_debugEnemyNum));
+				m_pEnemy.back()->Init();
+			}
+		}
 	}
 	
 
@@ -209,26 +209,27 @@ void SceneMain::UpdateEnemy()
 			if (enemies->ColFlag())
 			{
 				DrawString(10, 10, "当たっている\n", 0xff0000);
-				m_pPlayer->UpdateHitDamage();
+				m_pPlayer->UpdateHitDamage(enemies->GetPos(), m_hit);
+				m_hit = true;
 				m_invincibleTime = 120;
 			}
 		}
-		// 当たった時のプレイヤーの座標処理
-		if(m_invincibleTime >= 110)
-		{
-			m_hitting = true;
-			m_pPlayer->UpdateHitVec(enemies->GetPos(), m_hit);
-			m_hit = true;
-			// 敵に当たった時のコントローラーの振動
-			StartJoypadVibration(DX_INPUT_PAD1, 300, 100, -1);
+	}
+	// 当たった時のプレイヤーの座標処理
+	if(m_invincibleTime >= 110)
+	{
+		m_hitting = true;
+		m_pPlayer->UpdateHitVec();
+			
+		// 敵に当たった時のコントローラーの振動
+		StartJoypadVibration(DX_INPUT_PAD1, 300, 100, -1);
 
-		}
-		// 当たっていない状態に戻す
-		if (m_invincibleTime < 110)
-		{
-			m_hit = false;
-			m_hitting = false;
-		}
+	}
+	// 当たっていない状態に戻す
+	if (m_invincibleTime < 110)
+	{
+		m_hit = false;
+		m_hitting = false;
 	}
 
 	// 数字が限界突破しないようにする
