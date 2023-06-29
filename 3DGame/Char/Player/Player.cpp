@@ -13,11 +13,12 @@ namespace
 	constexpr VECTOR kCameraTarget{ 0.0f, 100.0f, 0.0f };
 
 	// プレイヤーのモーション番号
-	constexpr int kAnimFall = 0;
+	constexpr int kAnimFall = 0;// ステージ外に出た時の状態
 	constexpr int kAnimIdle = 3;// アイドル状態
 	constexpr int kAnimWalk = 14;// 歩く状態
 	constexpr int kAnimRun = 11;// 走る状態
 	constexpr int kAnimJump = 7;// ジャンプ状態
+	constexpr int kAnimDamage = 2;// 敵に当たった時の状態
 
 	// プレイヤーの移動
 	// 加速度
@@ -190,33 +191,43 @@ void Player::UpdateVec(bool Hitting)
 	}
 }
 
-void Player::UpdateMotion()
+void Player::UpdateMotion(bool hit)
 {
-	if (m_isMove && !m_isJump && !m_isFall)
+	if (hit)
 	{
-		if (m_AnimNum != kAnimRun)
-		{
-			// 移動アニメーション
-			m_AnimNum = kAnimRun;
-			m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
-		}
+		// ダメージ状態
+		m_AnimNum = kAnimDamage;
+		m_pModel->ChangeAnimation(m_AnimNum, false, true, 10);
+
 	}
-	else if (m_isJump)
+	else
 	{
-		if (m_AnimNum != kAnimJump)
+		if (m_isMove && !m_isJump && !m_isFall)
 		{
-			// 移動からアイドル状態
-			m_AnimNum = kAnimJump;
-			m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+			if (m_AnimNum != kAnimRun)
+			{
+				// 移動アニメーション
+				m_AnimNum = kAnimRun;
+				m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
+			}
 		}
-	}
-	else if (!m_isMove && !m_isJump)
-	{
-		if (m_AnimNum != kAnimIdle)
+		else if (m_isJump)
 		{
-			// 移動からアイドル状態
-			m_AnimNum = kAnimIdle;
-			m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+			if (m_AnimNum != kAnimJump)
+			{
+				// ジャンプアニメーション
+				m_AnimNum = kAnimJump;
+				m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+			}
+		}
+		else if (!m_isMove && !m_isJump)
+		{
+			if (m_AnimNum != kAnimIdle)
+			{
+				// 移動からアイドル状態
+				m_AnimNum = kAnimIdle;
+				m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+			}
 		}
 	}
 }
@@ -496,7 +507,7 @@ void Player::UpdateMove(bool Hitting)
 	else
 	{
 		// プレイヤーのモーション処理
-		UpdateMotion();
+		UpdateMotion(Hitting);
 	}
 
 	// プレイヤーの座標

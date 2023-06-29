@@ -101,7 +101,8 @@ SceneBase* SceneMain::Update()
 	{
 		if (!IsFading())
 		{
-			if (Pad::IsTrigger(PAD_INPUT_1))
+			// ボタン配置はデバッグ用(後で1に直す)
+			if (Pad::IsTrigger(PAD_INPUT_4))
 			{
 				return new SceneMain;// デバッグ用シーン遷移
 
@@ -133,7 +134,7 @@ void SceneMain::Draw()
 	UpdateColor();
 
 	// 文字を見やすくする
-	DrawBox(0, 85, 150, 130, Color::kBlack, true);
+	DrawBox(0, 85, 200, 200, Color::kBlack, true);
 	// プレイヤーの吹っ飛び率描画
 	DrawFormatString(10, 90, m_hpColor, "%d%%", m_pPlayer->GetBlowRate());
 	// スコア描画
@@ -143,7 +144,7 @@ void SceneMain::Draw()
 	if (m_pPlayer->GetPos().y < -100.0f)
 	{
 		DrawString(0, 130, "ゲームオーバー", 0xffffff);
-		DrawString(0, 150, "リトライ:PAD_INPUT_1", 0xffffff);
+		DrawString(0, 150, "リトライ:PAD_INPUT_4", 0xffffff);
 	}
 
 	// フェードインアウトのフィルター
