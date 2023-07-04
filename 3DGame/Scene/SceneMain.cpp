@@ -80,7 +80,7 @@ void SceneMain::Init()
 void SceneMain::End()
 {
 	m_pPlayer->End();
-	m_pFont->End();
+	m_pFont->End(m_fontHandle);
 	// シャドウマップの削除
 	DeleteShadowMap(m_shadowMap);
 }

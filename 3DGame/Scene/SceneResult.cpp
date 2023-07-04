@@ -27,7 +27,7 @@ void SceneResult::Init()
 
 void SceneResult::End()
 {
-	m_pFont->End();
+	m_pFont->End(m_fontHandle);
 }
 
 SceneBase* SceneResult::Update()
