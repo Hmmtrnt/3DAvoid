@@ -33,8 +33,8 @@ SceneBase* SceneResult::Update()
 {
 
 	ReadFile();
-	if(m_score > m_highScore)
-	GenerationFile();
+	
+	
 	// フェードインアウトしている
 	if (IsFading())
 	{
@@ -43,6 +43,10 @@ SceneBase* SceneResult::Update()
 		// フェードアウト終了時
 		if (!IsFading() && m_isFadeOut && !m_isBackScene)
 		{
+			if (m_score > m_highScore)
+			{
+				GenerationFile();
+			}
 			return (new SceneMain);
 		}
 	}
@@ -63,7 +67,7 @@ void SceneResult::Draw()
 	DrawString(0, 0, "Result", Color::kWhite);
 
 	// スコア描画(仮)
-	m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE  :%d", m_score);
+	m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE :%d", m_score);
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();
@@ -93,6 +97,6 @@ void SceneResult::ReadFile()
 		// string型をint型へ
 		m_highScore = atoi(reading_line_buffer.c_str());
 
-		m_pFont->DrawFormat(10, 120, Color::kWhite, "HIGHSCORE!:%d", m_highScore);
+		m_pFont->DrawFormat(10, 120, Color::kWhite, "HIGHSCORE:%d", m_highScore);
 	}
 }
