@@ -152,7 +152,6 @@ SceneBase* SceneMain::Update()
 void SceneMain::Draw()
 {
 	// ”wŒi‚Ì•`‰æ
-	//DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_BackGroundHandle, true);
 	DrawBillboard3D(VGet(-1900.0f, 0.0f, 975.0f), 0.5f, 0.5f, 8000.0f, 0.0f, m_BackGroundHandle, true);
 
 	// ƒvƒŒƒCƒ„[‚Ì•`‰æ
