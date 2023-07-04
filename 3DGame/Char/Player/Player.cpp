@@ -385,6 +385,9 @@ void Player::UpdateHitVec()
 		VGet(m_hitVec.x * blowRate,
 			m_hitVec.y * blowRate,
 			m_hitVec.z * blowRate));
+
+	// 敵に当たった時のコントローラーの振動
+	StartJoypadVibration(DX_INPUT_PAD1, m_blowRate + 200, 100, -1);
 }
 
 // 使ってない

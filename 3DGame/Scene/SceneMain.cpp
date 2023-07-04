@@ -224,8 +224,7 @@ void SceneMain::UpdateEnemy()
 		m_hitting = true;
 		m_pPlayer->UpdateHitVec();
 			
-		// 敵に当たった時のコントローラーの振動
-		StartJoypadVibration(DX_INPUT_PAD1, 300, 100, -1);
+		
 
 	}
 	// 当たっていない状態に戻す
@@ -249,8 +248,6 @@ void SceneMain::UpdateEnemy()
 
 void SceneMain::UpdateColor()
 {
-	
-
 	m_hpColor = GetColor(m_red, m_decreaseColor, m_decreaseColor);
 
 	if (m_decreaseColor < 0)
