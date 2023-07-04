@@ -31,7 +31,7 @@ public:
 	VECTOR GetVec()const { return m_vec; }
 
 	// プレイヤーのHP取得
-	int GetBlowRate() { return m_blowRate; }
+	int GetBlowRate()const { return m_blowRate; }
 
 	// 落ちているかどうかの真偽
 	bool GetIsFall()const { return m_isFall; }

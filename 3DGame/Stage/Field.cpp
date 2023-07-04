@@ -38,6 +38,7 @@ Field::Field()
 		float z = kBlockSideLenght * (i / kBlockNumX) - kFieldSideLenghtX / 2 + kBlockSideLenght / 2;
 		m_pModel[i]->SetPos(VGet(x, -kBlockSideLenght / 2.0f, z));	// è„ñ Ç™ y =0.0Ç…Ç»ÇÈÇÊÇ§Ç…îzíu
 	}
+
 }
 
 Field::~Field()

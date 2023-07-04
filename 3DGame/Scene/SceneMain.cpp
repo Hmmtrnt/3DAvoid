@@ -136,7 +136,7 @@ SceneBase* SceneMain::Update()
 		if (!IsFading())
 		{
 			//TODO:PAD_INPUT_1に戻す(デバッグが終わったら)
-			if (Pad::IsTrigger(PAD_INPUT_4))
+			if (Pad::IsTrigger(PAD_INPUT_1))
 			{
 				//return new SceneMain;// デバッグ用シーン遷移
 
@@ -186,7 +186,7 @@ void SceneMain::Draw()
 	if (m_pPlayer->GetPos().y < -100.0f)
 	{
 		DrawStringToHandle(0, 150, "ゲームオーバー", Color::kWhite, m_fontHandle);
-		DrawStringToHandle(0, 180, "リザルト:PAD_INPUT_4", Color::kWhite, m_fontHandle);
+		DrawStringToHandle(0, 180, "リザルト:PAD_INPUT_1", Color::kWhite, m_fontHandle);
 
 	}
 
