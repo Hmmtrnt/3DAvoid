@@ -166,6 +166,7 @@
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\SceneBase.cpp" />
     <ClCompile Include="Util\Vec2.cpp" />
+    <ClCompile Include="Stage\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Char\Player\Player.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="Util\game.h" />
     <ClInclude Include="Util\Vec2.h" />
+    <ClInclude Include="Stage\Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -25,7 +25,7 @@ Field::Field()
 	// 3Dモデルをロードする
 	m_pModel.push_back(std::make_shared<Model>(kFileName));
 
-	// 最初にロードしたモデルと合わせてモデルを１００個生成
+	// 最初にロードしたモデルと合わせてモデルを100個生成
 	int orgModel = m_pModel[0]->getModelHandle();
 	for (int i = 0; i < kBlockNum - 1; i++)					//最初に精製した1つを引いてあげる
 	{

@@ -8,6 +8,7 @@ class GameSetting;
 class Player;
 class Enemy;
 class Field;
+class Wall;
 class StringInit;
 class Pause;
 
@@ -44,6 +45,7 @@ private:
 	std::shared_ptr<GameSetting> m_pSet;// 環境設定
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 	std::shared_ptr<Field> m_pField;// ステージ
+	std::shared_ptr<Wall> m_pWall;// 壁
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
 	std::shared_ptr<StringInit> m_pFont;// フォント
 	std::shared_ptr<Pause> m_pPause;
