@@ -20,7 +20,8 @@ public:
 	void Update(bool Hitting);
 	void Draw();
 
-	void UpdateVec(bool Hitting);// 移動処理
+	void UpdateNoHitVec(bool Hitting);// 移動処理
+	void UpdateTestVec(bool Hitting);// 移動テスト処理
 	void UpdateMotion(bool hit);
 	void UpdateHitDamage(VECTOR enemyPos, bool hit);// ダメージ
 	void UpdateHitVec();// エネミーとプレイヤーが当たったときの処理
@@ -42,6 +43,9 @@ private:// 関数
 	void UpdateIdle();// キャラクターのアイドル状態
 
 	void UpdateMove(bool Hitting);// キャラクターの動き+α
+
+	void PadInputState();
+
 	//--------------------------------------------------------
 	// テスト関数
 	//--------------------------------------------------------
@@ -100,5 +104,8 @@ private:// 変数
 	float m_testRusult = 0.0f;// 計算結果
 
 	bool m_isFlag = false;// 回転
+
+
+	XINPUT_STATE input;// パッド状態取得変数
 };
 

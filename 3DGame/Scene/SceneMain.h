@@ -70,4 +70,7 @@ private:
 	bool m_hitting;// 当たっている
 
 	bool m_pushPause;// ポーズボタンを押したかどうか
+
+
+	XINPUT_STATE  input;// パッド状態取得変数
 };

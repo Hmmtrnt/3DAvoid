@@ -100,6 +100,8 @@ void Player::Update(bool Hitting)
 {
 	UpdateMove(Hitting);
 
+	//UpdateTestVec(Hitting);
+
 	// デバッグ用ダメージ
 	if (Pad::IsTrigger(PAD_INPUT_3))
 	{
@@ -111,100 +113,209 @@ void Player::Update(bool Hitting)
 		{
 			m_blowRate -= 10;
 		}
-		
 	}
 
+	
 	
 }
 
 void Player::Draw()
 {
 	m_pModel->Draw();
+	//PadInputState();
+
+	//DrawFormatString(0, 200, Color::kWhite, "PlayerAngle:%d", m_playerAngleY);
 }
 
-void Player::UpdateVec(bool Hitting)
+void Player::UpdateNoHitVec(bool Hitting)
 {
+	//m_playerRotMtx = MGetRotY(m_playerAngleY);
+	//m_move = VTransform(kPlayerVec, m_playerRotMtx);
 
 	m_isMove = false;
 	// 移動力の初期化
-	m_vec = VGet(0.0f, 0.0f, 0.0f);
+	//m_vec = VGet(0.0f, 0.0f, 0.0f);
 	if (!m_isFall && !Hitting)
 	{
 		// 上下キー
-		if (Pad::IsPress(PAD_INPUT_UP))
-		{
-			if (m_pos.z <= 950)
-			{
-				m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, kTopSpeed));
+		//if (Pad::IsPress(PAD_INPUT_UP))
+		//{
+		//	if (m_pos.z <= 950)
+		//	{
+		//		m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, kTopSpeed));
 
-				m_isMove = true;
-				m_playerAngleY = kAngleUp;
+		//		m_isMove = true;
+		//		m_playerAngleY = kAngleUp;
+		//	}
+
+		//}
+		//if (Pad::IsPress(PAD_INPUT_DOWN))
+		//{
+		//	if (m_pos.z >= -950)
+		//	{
+		//		m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, -kTopSpeed));
+
+		//		m_isMove = true;
+		//		m_playerAngleY = kAngleDown;
+		//	}
+		//}
+		//// 左右キー
+		//if (Pad::IsPress(PAD_INPUT_LEFT))
+		//{
+		//	if (m_pos.x >= -950)
+		//	{
+		//		m_vec = VAdd(m_vec, VGet(-kTopSpeed, 0.0f, 0.0f));
+
+		//		m_isMove = true;
+		//		m_playerAngleY = kAngleLeft;
+		//	}
+		//}
+		//if (Pad::IsPress(PAD_INPUT_RIGHT))
+		//{
+		//	if (m_pos.x <= 950)
+		//	{
+		//		m_vec = VAdd(m_vec, VGet(kTopSpeed, 0.0f, 0.0f));
+
+		//		m_isMove = true;
+		//		m_playerAngleY = kAngleRight;
+		//	}
+
+		//}
+
+		if (input.ThumbLX >= 5000 || input.ThumbLX <= -5000 ||
+			input.ThumbLY >= 5000 || input.ThumbLY <= -5000)
+		{
+			m_pos = VAdd(m_pos, m_move);
+			m_isMove = true;
+
+			// メモ360 = 91, 180 = 182;
+
+			if (input.ThumbLY > 0)
+			{
+				m_playerAngleY = (input.ThumbLX / 182 / 2) * kAnglePI;
+				m_playerAngleY = m_playerAngleY + (-180 * kAnglePI);
 			}
-
-		}
-		if (Pad::IsPress(PAD_INPUT_DOWN))
-		{
-			if (m_pos.z >= -950)
+			else if (input.ThumbLY < 0)
 			{
-				m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, -kTopSpeed));
-
-				m_isMove = true;
-				m_playerAngleY = kAngleDown;
-			}
-		}
-		// 左右キー
-		if (Pad::IsPress(PAD_INPUT_LEFT))
-		{
-			if (m_pos.x >= -950)
-			{
-				m_vec = VAdd(m_vec, VGet(-kTopSpeed, 0.0f, 0.0f));
-
-				m_isMove = true;
-				m_playerAngleY = kAngleLeft;
-			}
-		}
-		if (Pad::IsPress(PAD_INPUT_RIGHT))
-		{
-			if (m_pos.x <= 950)
-			{
-				m_vec = VAdd(m_vec, VGet(kTopSpeed, 0.0f, 0.0f));
-
-				m_isMove = true;
-				m_playerAngleY = kAngleRight;
+				m_playerAngleY = -(input.ThumbLX / 182 / 2) * kAnglePI;
 			}
 
 		}
 	}
 
 	// 正規化移動処理
-	if (VSize(m_vec) > 0)
+	//if (VSize(m_vec) > 0)
+	//{
+	//	m_vec = VNorm(m_vec);
+	//}
+
+	//m_vec = VScale(m_vec, kTopSpeed);
+
+	//m_pos = VAdd(m_pos, m_vec);
+	//if (!m_isFall && !Hitting)
+	//{
+	//	// 斜め入力時の角度
+	//	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
+	//	{
+	//		m_playerAngleY = kAngleUpLeft;
+	//	}
+	//	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_RIGHT))
+	//	{
+	//		m_playerAngleY = kAngleUpRight;
+	//	}
+	//	if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_LEFT))
+	//	{
+	//		m_playerAngleY = kAngleDownLeft;
+	//	}
+	//	if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_RIGHT))
+	//	{
+	//		m_playerAngleY = kAngleDownRight;
+	//	}
+	//}
+}
+
+void Player::UpdateTestVec(bool Hitting)
+{
+	PadInputState();
+	m_pModel->Update();
+
+	// ジャンプ処理
+	m_isJump = true;
+
+	m_jumpAcc += kGravity;
+	m_pos.y += m_jumpAcc;
+	if (m_pos.y <= 0.0f)
 	{
-		m_vec = VNorm(m_vec);
+		m_pos.y = 0.0f;
+		m_jumpAcc = 0.0f;
+		m_isJump = false;
 	}
 
-	m_vec = VScale(m_vec, kTopSpeed);
+	m_playerRotMtx = MGetRotY(m_playerAngleY);
+	m_move = VTransform(kPlayerVec, m_playerRotMtx);
 
-	m_pos = VAdd(m_pos, m_vec);
-	if (!m_isFall && !Hitting)
+	// ジャンプしていないとき
+	if (!m_isJump)
 	{
-		// 斜め入力時の角度
-		if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
+		if (Pad::IsTrigger(PAD_INPUT_1) || Pad::IsTrigger(PAD_INPUT_2))
 		{
-			m_playerAngleY = kAngleUpLeft;
-		}
-		if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_RIGHT))
-		{
-			m_playerAngleY = kAngleUpRight;
-		}
-		if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_LEFT))
-		{
-			m_playerAngleY = kAngleDownLeft;
-		}
-		if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_RIGHT))
-		{
-			m_playerAngleY = kAngleDownRight;
+			m_jumpAcc = kJumpPower;
 		}
 	}
+
+	if (!Hitting)
+	{
+		// 移動処理
+		m_isMove = false;
+		if (!m_isFall && !Hitting)
+		{
+			if (input.ThumbLX >= 5000 || input.ThumbLX <= -5000 ||
+				input.ThumbLY >= 5000 || input.ThumbLY <= -5000)
+			{
+				m_pos = VAdd(m_pos, m_move);
+				m_isMove = true;
+				
+				// メモ360 = 91, 180 = 182;
+
+				// z軸+方向
+				if (input.ThumbLY > 0)
+				{
+					m_playerAngleY = (input.ThumbLX / 182 / 2) * kAnglePI;
+					m_playerAngleY = m_playerAngleY + (-180 * kAnglePI);
+				}
+				// z軸-方向
+				else if(input.ThumbLY < 0)
+				{
+					m_playerAngleY = -(input.ThumbLX / 182 / 2) * kAnglePI;
+				}
+
+			}
+		}
+
+		if (m_isMove)
+		{
+			if (m_AnimNum == kAnimIdle)
+			{
+				// 移動アニメーション
+				m_AnimNum = kAnimRun;
+				m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+			}
+		}
+		else
+		{
+			if (m_AnimNum == kAnimRun)
+			{
+				// 移動からアイドル状態
+				m_AnimNum = kAnimIdle;
+				m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+			}
+		}
+	}
+	
+	
+
+	m_pModel->SetPos(m_pos);
+	m_pModel->SetRot(VGet(0.0f, m_playerAngleY, 0.0f));
 }
 
 void Player::UpdateMotion(bool hit)
@@ -472,6 +583,8 @@ void Player::UpdateIdle()
 // プレイヤーの更新処理
 void Player::UpdateMove(bool Hitting)
 {
+	// パッドの入力状態取得
+	PadInputState();
 	m_pModel->Update();
 
 	// ジャンプ処理
@@ -499,7 +612,7 @@ void Player::UpdateMove(bool Hitting)
 	}
 
 	// 移動処理
-	UpdateVec(Hitting);
+	UpdateNoHitVec(Hitting);
 	
 	// ゲームオーバー処理
 	if ((m_pos.x > 1000.0f || m_pos.x < -1000.0f ||
@@ -535,6 +648,25 @@ void Player::UpdateMove(bool Hitting)
 	m_pModel->SetRot(VGet(0.0f, m_playerAngleY, 0.0f));
 	// プレイヤーの拡大率
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+}
+
+void Player::PadInputState()
+{
+	// 入力状態取得
+	GetJoypadXInputState(DX_INPUT_PAD1, &input);
+	// 画面に XINPUT_STATE の中身を描画
+	/*DrawFormatString(0, 0, Color::kWhite, "LeftTrigger:%d RightTrigger:%d",
+		input.LeftTrigger, input.RightTrigger);
+	DrawFormatString(0, 16, Color::kWhite, "ThumbLX:%d ThumbLY:%d",
+		input.ThumbLX, input.ThumbLY);
+	DrawFormatString(0, 32, Color::kWhite, "ThumbRX:%d ThumbRY:%d",
+		input.ThumbRX, input.ThumbRY);
+	DrawString(0, 64, "Button", Color::kWhite);
+	for (int i = 0; i < 16; i++)
+	{
+		DrawFormatString(64 + i % 8 * 64, 64 + i / 8 * 16, Color::kWhite,
+			"%2d:%d", i, input.Buttons[i]);
+	}*/
 }
 
 // 角度の計算：使ってない

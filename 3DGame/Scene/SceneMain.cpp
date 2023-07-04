@@ -88,6 +88,7 @@ void SceneMain::End()
 // XVˆ—
 SceneBase* SceneMain::Update()
 {
+	
 	(this->*m_updateFunc)();
 
 	if (m_score != 0)
