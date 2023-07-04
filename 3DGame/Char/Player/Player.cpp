@@ -5,7 +5,7 @@
 namespace
 {
 	// プレイヤーハンドル
-	const char* const kPlayerHandle = "Data/Char/Player/Player5.mv1";
+	const char* const kPlayerHandle = "Data/Char/Player/Player2(toonType2).mv1";
 
 	// カメラの初期位置
 	constexpr VECTOR kZero{ 0.0f,0.0f,0.0f };

@@ -91,7 +91,8 @@ SceneBase* SceneMain::Update()
 
 	if (m_score != 0)
 	{
-		if (m_score % 1000 == 0 /*Pad::IsTrigger(PAD_INPUT_7)*/)
+		// スコアが千を超えるたびに敵が増える　(パッドは敵を増やすデバッグ用)
+		if (m_score % 1000 == 0 && m_score <= 12000 /*Pad::IsTrigger(PAD_INPUT_7)*/)
 		{
 			for (int i = 0; i < 10; i++)
 			{
@@ -179,11 +180,11 @@ void SceneMain::Draw()
 	// スコア描画
 	m_pFont->DrawFormat(10, 120, Color::kWhite, "score:%d", m_score);
 
-	// ゲームオーバーになった時の処理
+	// ゲームオーバーになった時の処理(デバッグ用)
 	if (m_pPlayer->GetPos().y < -100.0f)
 	{
 		m_pFont->DrawNoFormat(0, 150, "ゲームオーバー", Color::kWhite);
-		m_pFont->DrawNoFormat(0, 180, "リトライ:PAD_INPUT_4", Color::kWhite);
+		m_pFont->DrawNoFormat(0, 180, "リザルト:PAD_INPUT_4", Color::kWhite);
 
 	}
 
@@ -269,7 +270,7 @@ void SceneMain::UpdatePauseNo()
 	// ゲームが進んでいる間スコアを増やす
 	if (!m_pPlayer->GetIsFall())
 	{
-		m_score++;
+		m_score+=10;
 	}
 	if (m_pushPause)
 	{

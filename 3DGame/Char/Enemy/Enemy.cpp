@@ -6,9 +6,7 @@
 namespace
 {
 	// キャラクターハンドル
-	const char* const kEnemyHandle = "Data/Char/Enemy/enemy.mv1";
-	// プレイヤーハンドル
-	const char* const kPlayerHandle = "Data/Char/Player/Player5.mv1";
+	const char* const kEnemyHandle = "Data/Char/Enemy/Enemy2(toonType2).mv1";
 
 	// エネミーのモーション番号
 	constexpr int kAnimMove = 2;// 移動状態
@@ -169,7 +167,8 @@ void Enemy::DebugDraw()
 		return;
 	}
 
-	DrawFormatString(static_cast<int>(screenPos.x) - 64 / 2, static_cast<int>(screenPos.y),0xffffff, "%d", m_Number);
+	// 敵の配列番号(デバッグ用)
+	//DrawFormatString(static_cast<int>(screenPos.x) - 64 / 2, static_cast<int>(screenPos.y),0xffffff, "%d", m_Number);
 }
 
 bool Enemy::ColFlag()
