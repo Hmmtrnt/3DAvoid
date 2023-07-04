@@ -138,7 +138,7 @@ SceneBase* SceneMain::Update()
 			{
 				//return new SceneMain;// デバッグ用シーン遷移
 
-				StartFadeOut();// 本番用シーン遷移
+				StartFadeOut();// シーン遷移
 			}
 		}
 	}
@@ -270,7 +270,7 @@ void SceneMain::UpdatePauseNo()
 	// ゲームが進んでいる間スコアを増やす
 	if (!m_pPlayer->GetIsFall())
 	{
-		m_score+=10;
+		m_score++;
 	}
 	if (m_pushPause)
 	{

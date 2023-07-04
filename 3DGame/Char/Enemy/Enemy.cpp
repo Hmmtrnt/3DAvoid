@@ -77,6 +77,9 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	// “G‚ÌŒü‚«‚Ì‰Šú‰»
 	m_angle = GetRand(360) * DX_PI_F / 180;
 
+	m_pModel->SetPos(m_pos);
+	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 	
 }
 
