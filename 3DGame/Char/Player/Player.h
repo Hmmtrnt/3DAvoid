@@ -44,7 +44,7 @@ private:// 関数
 
 	void UpdateMove(bool Hitting);// キャラクターの動き+α
 
-	void PadInputState();
+	void PadInputState();// パッドの入力状態取得
 
 	//--------------------------------------------------------
 	// テスト関数

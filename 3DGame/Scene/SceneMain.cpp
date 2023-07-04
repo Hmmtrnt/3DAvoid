@@ -11,7 +11,7 @@
 
 namespace
 {
-	// 画像のファイルの場所
+	// 背景の画像ファイルの場所
 	const char* const kImgName = "Data/BackGround/FieldBackGround.jpg";
 }
 
@@ -152,7 +152,8 @@ SceneBase* SceneMain::Update()
 void SceneMain::Draw()
 {
 	// 背景の描画
-	DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_BackGroundHandle, true);
+	//DrawExtendGraph(0, 0, Game::kScreenWidth, Game::kScreenHeight, m_BackGroundHandle, true);
+	DrawBillboard3D(VGet(-1900.0f, 0.0f, 975.0f), 0.5f, 0.5f, 8000.0f, 0.0f, m_BackGroundHandle, true);
 
 	// プレイヤーの描画
 	if (m_invincibleTime % 3 == 0 || m_pushPause)

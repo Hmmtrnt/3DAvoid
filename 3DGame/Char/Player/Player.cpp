@@ -129,9 +129,6 @@ void Player::Draw()
 
 void Player::UpdateNoHitVec(bool Hitting)
 {
-	//m_playerRotMtx = MGetRotY(m_playerAngleY);
-	//m_move = VTransform(kPlayerVec, m_playerRotMtx);
-
 	m_isMove = false;
 	if (!m_isFall && !Hitting)
 	{
@@ -193,7 +190,6 @@ void Player::UpdateNoHitVec(bool Hitting)
 			{
 				m_playerAngleY = -(input.ThumbLX / 182 / 2) * kAnglePI;
 			}
-
 		}
 	}
 
@@ -202,9 +198,7 @@ void Player::UpdateNoHitVec(bool Hitting)
 	//{
 	//	m_vec = VNorm(m_vec);
 	//}
-
 	//m_vec = VScale(m_vec, kTopSpeed);
-
 	//m_pos = VAdd(m_pos, m_vec);
 	//if (!m_isFall && !Hitting)
 	//{
