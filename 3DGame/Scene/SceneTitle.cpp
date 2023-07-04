@@ -1,12 +1,20 @@
 #include "SceneTitle.h"
 #include "SceneMain.h"
 
-SceneTitle::SceneTitle()
+namespace
 {
+	const char* const kTitleHandle = "Data/2DImg/Title.png";
+}
+
+SceneTitle::SceneTitle() :
+	m_titleHandle(-1)
+{
+	m_titleHandle = LoadGraph(kTitleHandle);
 }
 
 SceneTitle::~SceneTitle()
 {
+	DeleteGraph(m_titleHandle);
 }
 
 void SceneTitle::Init()
@@ -47,6 +55,12 @@ SceneBase* SceneTitle::Update()
 void SceneTitle::Draw()
 {
 	DrawString(0, 0, "Title", 0xffffff);
+
+	//DrawGraph(Game::kScreenWidth, Game::kScreenHeight, m_titleHandle, true);
+
+	//DrawRectRotaGraph(0,0,100,100,100,100,1.0,0.0,m_titleHandle, )
+
+	DrawExtendGraph(300, 300, 700, 500, m_titleHandle, true);
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();

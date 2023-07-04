@@ -12,5 +12,9 @@ public:
 	void End();
 	SceneBase* Update();
 	void Draw();
+
+private:
+	// int
+	int m_titleHandle;// タイトルの画像ハンドル
 };
 
