@@ -24,6 +24,7 @@ SceneMain::SceneMain() :
 	m_score(0),
 	m_BackGroundHandle(-1),
 	m_enemyModelHandle(0),
+	m_fontHandle(-1),
 	m_hit(false),
 	m_hitting(false),
 	m_pushPause(false)
@@ -54,7 +55,7 @@ void SceneMain::Init()
 	m_pSet->InitCamera();
 	m_pPlayer->Init();
 	m_pField->Init();
-	m_pFont->Init(30, 0, -1);
+	m_pFont->Init(m_fontHandle, 30, 0, -1);
 
 	m_hpColor = Color::kWhite;
 
@@ -175,16 +176,16 @@ void SceneMain::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 	// プレイヤーの吹っ飛び率描画
-	m_pFont->DrawFormat(10, 90, m_hpColor, "%d%%", m_pPlayer->GetBlowRate());
+	DrawFormatStringToHandle(10, 90, m_hpColor, m_fontHandle,"%d%%", m_pPlayer->GetBlowRate());
 
 	// スコア描画
-	m_pFont->DrawFormat(10, 120, Color::kWhite, "score:%d", m_score);
+	DrawFormatStringToHandle(10, 120, Color::kWhite, m_fontHandle, "score:%d", m_score);
 
 	// ゲームオーバーになった時の処理(デバッグ用)
 	if (m_pPlayer->GetPos().y < -100.0f)
 	{
-		m_pFont->DrawNoFormat(0, 150, "ゲームオーバー", Color::kWhite);
-		m_pFont->DrawNoFormat(0, 180, "リザルト:PAD_INPUT_4", Color::kWhite);
+		DrawStringToHandle(0, 150, "ゲームオーバー", Color::kWhite, m_fontHandle);
+		DrawStringToHandle(0, 180, "リザルト:PAD_INPUT_4", Color::kWhite, m_fontHandle);
 
 	}
 

@@ -10,7 +10,8 @@
 SceneResult::SceneResult(int score) :
 	m_score(score),
 	m_scoreWriting(0),
-	m_highScore(0)
+	m_highScore(0),
+	m_fontHandle(-1)
 {
 	m_pFont = std::make_shared<StringInit>();
 }
@@ -21,7 +22,7 @@ SceneResult::~SceneResult()
 
 void SceneResult::Init()
 {
-	m_pFont->Init(80, 0, -1);
+	m_pFont->Init(m_fontHandle, 80, 0, -1);
 }
 
 void SceneResult::End()
@@ -67,7 +68,8 @@ void SceneResult::Draw()
 	DrawString(0, 0, "Result", Color::kWhite);
 
 	// スコア描画(仮)
-	m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE :%d", m_score);
+	//m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE :%d", m_score);
+	DrawFormatStringToHandle(10, 50, Color::kWhite, m_fontHandle, "YOUSCORE :%d", m_score);
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();
@@ -97,6 +99,7 @@ void SceneResult::ReadFile()
 		// string型をint型へ
 		m_highScore = atoi(reading_line_buffer.c_str());
 
-		m_pFont->DrawFormat(10, 120, Color::kWhite, "HIGHSCORE:%d", m_highScore);
+		//m_pFont->DrawFormat(10, 120, Color::kWhite, "HIGHSCORE:%d", m_highScore);
+		DrawFormatStringToHandle(10, 120, Color::kWhite, m_fontHandle,"HIGHSCORE:%d", m_highScore);
 	}
 }

@@ -63,6 +63,8 @@ private:
 
 	int m_enemyModelHandle;// 複製するための敵のコピー
 
+	int m_fontHandle;// フォントハンドル
+
 	// bool
 	bool m_hit;// 当たったかどうか
 	bool m_hitting;// 当たっている

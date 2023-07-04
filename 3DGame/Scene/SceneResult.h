@@ -32,5 +32,6 @@ private:
 	int m_score;// ゲームで得たスコア
 	int m_scoreWriting;// 高得点のスコアを書き込む
 	int m_highScore;// ファイルの中にあるハイスコア
+	int m_fontHandle;// フォントハンドル
 };
 

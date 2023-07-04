@@ -4,7 +4,7 @@
 
 namespace
 {
-	const char* const kFontName = "創英角ポップ体";
+	const char* const kFontName = "HG創英角ﾎﾟｯﾌﾟ体";
 }
 
 StringInit::StringInit() :
@@ -18,10 +18,11 @@ StringInit::~StringInit()
 }
 
 // フォントデータ作成
-void StringInit::Init(int fontSize, int fontThick, int fontType)
+void StringInit::Init(int& fontHandle, int fontSize, int fontThick, int fontType)
 {
-	m_fontHandle = CreateFontToHandle(kFontName, fontSize, fontThick, fontType);
-	assert(m_fontHandle != -1);
+	fontHandle = CreateFontToHandle(kFontName, fontSize, fontThick, fontType);
+	m_fontHandle = fontHandle;
+	assert(fontHandle != -1);
 }
 
 // フォントデータ削除
@@ -29,6 +30,8 @@ void StringInit::End()
 {
 	DeleteFontToHandle(m_fontHandle);
 }
+
+// ここから下の関数はボツ
 
 //フォント書式付き文字列描画
 void StringInit::DrawFormat(int x, int y, unsigned int color, const char* string, int num)

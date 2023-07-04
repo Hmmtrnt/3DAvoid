@@ -13,9 +13,12 @@ public:
 	/// <param name="fontSize">サイズ</param>
 	/// <param name="fontThick">太さ</param>
 	/// <param name="fontType">タイプ</param>
-	void Init(int fontSize, int fontThick, int fontType);
+	void Init(int& fontHandle, int fontSize, int fontThick, int fontType);
 	// フォントデータ削除
 	void End();
+
+	// ここから下の関数はボツ
+
 	/// <summary>
 	/// フォント書式付き文字列描画
 	/// </summary>
