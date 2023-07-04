@@ -10,6 +10,7 @@ namespace
 
 	// エネミーのモーション番号
 	constexpr int kAnimMove = 2;// 移動状態
+	//constexpr int kAnimAttack = 3;// 攻撃状態
 
 	constexpr float kSpeed = 5.0f;
 	
@@ -106,7 +107,7 @@ void Enemy::Update()
 void Enemy::Draw()
 {
 	m_pModel->Draw();
-	DebugDraw();
+	//DebugDraw();
 }
 
 void Enemy::UpdateMove()
@@ -171,7 +172,7 @@ void Enemy::DebugDraw()
 	}
 
 	// 敵の配列番号(デバッグ用)
-	//DrawFormatString(static_cast<int>(screenPos.x) - 64 / 2, static_cast<int>(screenPos.y),0xffffff, "%d", m_Number);
+	DrawFormatString(static_cast<int>(screenPos.x) - 64 / 2, static_cast<int>(screenPos.y),0xffffff, "%d", m_Number);
 }
 
 bool Enemy::ColFlag()

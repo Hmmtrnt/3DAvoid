@@ -36,9 +36,6 @@ public:
 	// エネミーの位置取得
 	VECTOR GetPos()const { return m_pos; }
 
-	// 当たり判定の真偽取得
-	bool GetIsCol()const { return m_isCol; }
-
 	// 当たった時の処理
 	void SetPlayerPos(VECTOR playerPos);
 
@@ -65,7 +62,5 @@ private:
 	int m_playerHandle;
 	int m_Number;
 
-	// bool
-	bool m_isCol;// エネミーの当たり判定の真偽
 };
 
