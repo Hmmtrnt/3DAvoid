@@ -223,9 +223,6 @@ void SceneMain::UpdateEnemy()
 	{
 		m_hitting = true;
 		m_pPlayer->UpdateHitVec();
-			
-		
-
 	}
 	// “–‚½‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É–ß‚·
 	if (m_invincibleTime < 110)

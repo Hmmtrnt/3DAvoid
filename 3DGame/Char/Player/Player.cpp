@@ -133,28 +133,25 @@ void Player::UpdateNoHitVec(bool Hitting)
 	//m_move = VTransform(kPlayerVec, m_playerRotMtx);
 
 	m_isMove = false;
-	// 移動力の初期化
-	//m_vec = VGet(0.0f, 0.0f, 0.0f);
 	if (!m_isFall && !Hitting)
 	{
+		// 旧移動処理↓
+
 		// 上下キー
 		//if (Pad::IsPress(PAD_INPUT_UP))
 		//{
 		//	if (m_pos.z <= 950)
 		//	{
 		//		m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, kTopSpeed));
-
 		//		m_isMove = true;
 		//		m_playerAngleY = kAngleUp;
 		//	}
-
 		//}
 		//if (Pad::IsPress(PAD_INPUT_DOWN))
 		//{
 		//	if (m_pos.z >= -950)
 		//	{
 		//		m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, -kTopSpeed));
-
 		//		m_isMove = true;
 		//		m_playerAngleY = kAngleDown;
 		//	}
@@ -165,7 +162,6 @@ void Player::UpdateNoHitVec(bool Hitting)
 		//	if (m_pos.x >= -950)
 		//	{
 		//		m_vec = VAdd(m_vec, VGet(-kTopSpeed, 0.0f, 0.0f));
-
 		//		m_isMove = true;
 		//		m_playerAngleY = kAngleLeft;
 		//	}
@@ -175,11 +171,9 @@ void Player::UpdateNoHitVec(bool Hitting)
 		//	if (m_pos.x <= 950)
 		//	{
 		//		m_vec = VAdd(m_vec, VGet(kTopSpeed, 0.0f, 0.0f));
-
 		//		m_isMove = true;
 		//		m_playerAngleY = kAngleRight;
 		//	}
-
 		//}
 
 		if (input.ThumbLX >= 5000 || input.ThumbLX <= -5000 ||
@@ -267,15 +261,16 @@ void Player::UpdateTestVec(bool Hitting)
 	{
 		// 移動処理
 		m_isMove = false;
-		if (!m_isFall && !Hitting)
+		if (!m_isFall)
 		{
+			// スティックをニュートラル状態にしたときに入力されないように
 			if (input.ThumbLX >= 5000 || input.ThumbLX <= -5000 ||
 				input.ThumbLY >= 5000 || input.ThumbLY <= -5000)
 			{
-				m_pos = VAdd(m_pos, m_move);
+				// 動いている
 				m_isMove = true;
-				
-				// メモ360 = 91, 180 = 182;
+				// 向いている方向に移動
+				m_pos = VAdd(m_pos, m_move);
 
 				// z軸+方向
 				if (input.ThumbLY > 0)
