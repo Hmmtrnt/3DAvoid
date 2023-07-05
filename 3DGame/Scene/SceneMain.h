@@ -66,6 +66,7 @@ private:
 	int m_enemyModelHandle;// 複製するための敵のコピー
 
 	int m_fontHandle;// フォントハンドル
+	int m_selectNum;// ポーズ画面の選択番号
 
 	// bool
 	bool m_hit;// 当たったかどうか

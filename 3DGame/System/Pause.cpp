@@ -9,7 +9,7 @@ Pause::~Pause()
 {
 }
 
-void Pause::Update()
+void Pause::Update(int& selectNum)
 {
 	if (Pad::IsTrigger(PAD_INPUT_UP))
 	{
@@ -17,6 +17,7 @@ void Pause::Update()
 		if (m_posy == 400)
 		{
 			m_posy -= 200;
+			selectNum -= 1;
 		}
 	}
 	else if (Pad::IsTrigger(PAD_INPUT_DOWN))
@@ -24,6 +25,7 @@ void Pause::Update()
 		if (m_posy == 200)
 		{
 			m_posy += 200;
+			selectNum += 1;
 		}
 	}
 	
@@ -32,10 +34,14 @@ void Pause::Update()
 void Pause::Draw()
 {
 	// デバッグ用
-	DrawBox(200, 200, 400, 300, Color::kBlack, true);
-
-	DrawBox(200, 400, 400, 500, Color::kBlack, true);
-	DrawBox(m_posx, m_posy, m_posx + 200, m_posy + 100, Color::kWhite, true);
+	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
+	DrawBox(200, 200, 400, 300, Color::kBlack, true);// 選択肢一
+	DrawBox(200, 400, 400, 500, Color::kBlack, true);// 選択肢二
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	DrawBox(m_posx, m_posy, m_posx + 200, m_posy + 100, Color::kWhite, true);// カーソル
 
 	DrawString(0, 0, "ポーズ", Color::kBlack);
+	// テキスト
+	DrawString(200, 200, "続ける", Color::kRed);
+	DrawString(200, 400, "やり直し", Color::kRed);
 }

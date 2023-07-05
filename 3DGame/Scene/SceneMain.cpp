@@ -26,6 +26,7 @@ SceneMain::SceneMain() :
 	m_BackGroundHandle(-1),
 	m_enemyModelHandle(0),
 	m_fontHandle(-1),
+	m_selectNum(0),
 	m_hit(false),
 	m_hitting(false),
 	m_pushPause(false)
@@ -127,13 +128,26 @@ SceneBase* SceneMain::Update()
 		m_isFadeOut = IsFadingOut();
 		SceneBase::UpdateFade();
 		// フェードアウト終了時
-		if (!IsFading() && m_isFadeOut && !m_isBackScene)
+		// ポーズ画面が開かれているとき
+		if (!IsFading() && m_isFadeOut && !m_isBackScene && m_pushPause)
 		{
+			// リトライ
+			if (m_selectNum == 1)
+			{
+				return (new SceneMain());
+			}
+			// ポーズ画面の項目が増える予定
+		}
+		// ポーズ画面が閉じているとき
+		else if (!IsFading() && m_isFadeOut && !m_isBackScene && !m_pushPause)
+		{
+			// ゲームが終了したとき
 			return (new SceneResult(m_score));
 		}
+
 	}
 
-	if (m_pPlayer->GetIsFall())
+	if (m_pPlayer->GetIsFall() || m_pushPause)
 	{
 		if (!IsFading())
 		{
@@ -279,9 +293,16 @@ void SceneMain::UpdatePauseNo()
 
 void SceneMain::UpdatePause()
 {
-	m_pPause->Update();
+	// フェードインアウトしていなければポーズ画面をいじれる
+	if (!IsFading())
+	{
+		m_pPause->Update(m_selectNum);
+	}
+	
 	if (!m_pushPause)
 	{
 		m_updateFunc = &SceneMain::UpdatePauseNo;
 	}
+	// 選択肢がどこを選んでいるか確認
+	//printfDx("%d", m_selectNum);
 }
