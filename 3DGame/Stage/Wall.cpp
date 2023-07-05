@@ -39,6 +39,7 @@ Wall::Wall()
 		float z = kBlockSideLenght * (i / kBlockNumX) - 
 			kFieldSideLenghtX / 2 + kBlockSideLenght / 2;
 		m_pModel[i]->SetPos(VGet(x, kBlockSideLenght / 2.0f, z));	// è„ñ Ç™ y =0.0Ç…Ç»ÇÈÇÊÇ§Ç…îzíu
+
 	}
 }
 
@@ -60,8 +61,16 @@ void Wall::Update()
 
 void Wall::Draw()
 {
-	for (auto& model : m_pModel)
+	for (int i = 0; i < 10; i++)
 	{
-		model->Draw();
+		m_pModel[i]->Draw();
+	}
+	for (int i = 90; i < 100; i++)
+	{
+		m_pModel[i]->Draw();
+	}
+	for (int i = 10; i < 90; i += 10)
+	{
+		m_pModel[i]->Draw();
 	}
 }
