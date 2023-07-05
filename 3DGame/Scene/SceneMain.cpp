@@ -169,7 +169,7 @@ void SceneMain::Draw()
 	}
 	// ステージ描画
 	m_pField->Draw();
-	m_pWall->Draw();
+	//m_pWall->Draw();
 
 	// 受けたダメージによって色変更
 	UpdateColor();
