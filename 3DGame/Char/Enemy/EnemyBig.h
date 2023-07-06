@@ -19,10 +19,10 @@ public:
 
 	void Init();
 	void End();
-	void Update();
+	void Update(int score);
 	void Draw();
 
-	void UpdateMove();// エネミーの動き
+	void UpdateMove(int score);// エネミーの動き
 
 	void DebugDraw();// デバッグ用描画
 

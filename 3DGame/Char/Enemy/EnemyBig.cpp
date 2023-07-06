@@ -12,8 +12,8 @@ namespace
 	constexpr int kAnimMove = 2;// 移動状態
 	//constexpr int kAnimAttack = 3;// 攻撃状態
 
-	// エネミーの最大スピード
-	constexpr int kSpeed = 5;
+	// エネミーの初期スピード
+	constexpr int kSpeed = 3;
 
 
 	// VECTORの初期化
@@ -38,7 +38,7 @@ namespace
 }
 
 EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
-	m_updateFunc(&EnemyBig::UpdateMove),
+	//m_updateFunc(&EnemyBig::UpdateMove),
 	m_pPlayer(pPlayer),
 	m_angle(0.0f),
 	m_modelHandle(-1),
@@ -64,11 +64,11 @@ EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
 	// 敵の向きの初期化
 	//m_angle = GetRand(360) * DX_PI_F / 180;
 	//m_speed = GetRand(kSpeed) + 2;
-	m_speed = 20;
+	m_speed = kSpeed;
 }
 
 EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
-	m_updateFunc(&EnemyBig::UpdateMove),
+	//m_updateFunc(&EnemyBig::UpdateMove),
 	m_pPlayer(pPlayer),
 	m_angle(0.0f),
 	m_modelHandle(-1),
@@ -93,7 +93,7 @@ EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	m_pModel->SetAnimation(kAnimMove, true, true);
 	// 敵の向きの初期化
 	//m_angle = GetRand(360) * DX_PI_F / 180;
-	m_speed = GetRand(kSpeed) + 2;
+	m_speed = kSpeed;
 
 	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
@@ -115,9 +115,9 @@ void EnemyBig::End()
 {
 }
 
-void EnemyBig::Update()
+void EnemyBig::Update(int score)
 {
-	(this->*m_updateFunc)();
+	UpdateMove(score);
 }
 
 void EnemyBig::Draw()
@@ -126,9 +126,15 @@ void EnemyBig::Draw()
 	//DebugDraw();
 }
 
-void EnemyBig::UpdateMove()
+void EnemyBig::UpdateMove(int score)
 {
 	m_pModel->Update();
+
+	// スコアが上がるたびにエネミーの速度は上がる
+	if (score % 1000 == 0)
+	{
+		m_speed++;
+	}
 
 	// 現在敵が向いている方向のベクトルを生成する
 	MATRIX enemyRotMtx = MGetRotY(m_angle);

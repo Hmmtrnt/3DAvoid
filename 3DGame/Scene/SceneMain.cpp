@@ -77,9 +77,9 @@ void SceneMain::Init()
 		m_pEnemy.back()->Init();
 	}
 
-	// でかいエネミー生成
-	m_pEnemyBig.push_back(std::make_shared<EnemyBig>(m_pPlayer));
-	m_pEnemyBig.back()->Init();
+	// でかいエネミー生成(デバッグ用)
+	/*m_pEnemyBig.push_back(std::make_shared<EnemyBig>(m_pPlayer));
+	m_pEnemyBig.back()->Init();*/
 
 	// シャドウマップの生成
 	m_shadowMap = MakeShadowMap(1024, 1024);
@@ -137,21 +137,21 @@ SceneBase* SceneMain::Update()
 	if (m_score != 0)
 	{
 		// スコアが千を超えるたびに敵が増える　(パッドは敵を増やすデバッグ用)
-		//if (m_score % 1000 == 0 && m_score <= 6000 /*Pad::IsTrigger(PAD_INPUT_7)*/)
-		//{
-		//	for (int i = 0; i < 10; i++)
-		//	{
-		//		m_debugEnemyNum++;
-		//		m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer, m_debugEnemyNum));
-		//		m_pEnemy.back()->Init();
-		//	}
-		//}
-		//else if (m_score % 1000 == 0 && m_score <= 8000 /*Pad::IsTrigger(PAD_INPUT_7)*/)
-		//{
-		//	// でかいエネミー生成
-		//	m_pEnemyBig.push_back(std::make_shared<EnemyBig>(m_pPlayer));
-		//	m_pEnemyBig.back()->Init();
-		//}
+		if (m_score % 1000 == 0 && m_score <= 6000 /*Pad::IsTrigger(PAD_INPUT_7)*/)
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				m_debugEnemyNum++;
+				m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer, m_debugEnemyNum));
+				m_pEnemy.back()->Init();
+			}
+		}
+		else if (m_score % 1000 == 0 && m_score <= 8000 /*Pad::IsTrigger(PAD_INPUT_7)*/)
+		{
+			// でかいエネミー生成
+			m_pEnemyBig.push_back(std::make_shared<EnemyBig>(m_pPlayer));
+			m_pEnemyBig.back()->Init();
+		}
 	}
 	
 
@@ -268,16 +268,19 @@ void SceneMain::UpdateEnemy()
 
 	for (auto& enemies : m_pEnemyBig)
 	{
-		enemies->Update();
+		enemies->Update(m_score);
 		if (m_invincibleTime <= 0)
 		{
 			// 当たった時のダメージ追加
-			if (enemies->ColFlag())
+			if (m_pPlayer->GetIsFall())
 			{
-				DrawString(10, 10, "当たっている\n", 0xff0000);
-				m_pPlayer->UpdateHitDamage(enemies->GetPos(), m_hit);
-				m_hit = true;
-				m_invincibleTime = 120;
+				if (enemies->ColFlag())
+				{
+					DrawString(10, 10, "当たっている\n", 0xff0000);
+					m_pPlayer->UpdateHitDamage(enemies->GetPos(), m_hit);
+					m_hit = true;
+					m_invincibleTime = 120;
+				}
 			}
 		}
 	}
