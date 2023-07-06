@@ -25,6 +25,16 @@ namespace
 
 	// 当たり判定のサイズ
 	constexpr float kColRadius = 50.0f;
+
+	// どこまでいけるかのステージのサイズ
+	constexpr float kColStage = 1200.0f;
+
+	// エネミーのアングル
+	constexpr float kAnglePI = DX_PI_F / 180.0f;
+	constexpr float kAngleUp = 180.0f * kAnglePI;// 上
+	constexpr float kAngleDown = 0.0f * kAnglePI;// 下
+	constexpr float kAngleLeft = 90.0f * kAnglePI;// 左
+	constexpr float kAngleRight = 270.0f * kAnglePI;// 右
 }
 
 EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
@@ -33,7 +43,9 @@ EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
 	m_angle(0.0f),
 	m_modelHandle(-1),
 	m_speed(0),
-	m_Number(0)
+	m_number(0),
+	m_randAngleType(0),
+	m_initPos(true)
 {
 	// 敵の初期位置
 	m_pos.x = 1000;
@@ -50,8 +62,9 @@ EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
 	// 敵のアニメーション設定
 	m_pModel->SetAnimation(kAnimMove, true, true);
 	// 敵の向きの初期化
-	m_angle = GetRand(360) * DX_PI_F / 180;
-	m_speed = GetRand(kSpeed) + 2;
+	//m_angle = GetRand(360) * DX_PI_F / 180;
+	//m_speed = GetRand(kSpeed) + 2;
+	m_speed = 20;
 }
 
 EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
@@ -60,7 +73,8 @@ EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	m_angle(0.0f),
 	m_modelHandle(-1),
 	m_speed(0),
-	m_Number(num)
+	m_number(num),
+	m_initPos(true)
 {
 	// 敵の初期位置
 	m_pos.x = 1000;
@@ -78,7 +92,7 @@ EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	// 敵のアニメーション設定
 	m_pModel->SetAnimation(kAnimMove, true, true);
 	// 敵の向きの初期化
-	m_angle = GetRand(360) * DX_PI_F / 180;
+	//m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = GetRand(kSpeed) + 2;
 
 	m_pModel->SetPos(m_pos);
@@ -124,36 +138,54 @@ void EnemyBig::UpdateMove()
 	// 移動させる
 	m_pos = VAdd(m_pos, m_vec);
 
+	// ステージ外に出た時のエネミーの角度
+	if (m_pos.z < -kColStage || m_pos.z > kColStage || m_pos.x > kColStage || m_pos.x < -kColStage)
+	{
+		m_randAngleType = GetRand(4);
+		m_initPos = false;
+	}
 
 	// 座標の初期化
-	// ステージの下
-	if (m_pos.z < -1000.0f)
+	if (!m_initPos)
 	{
-		m_pos.z = 1000.0f;
-		m_angle = GetRand(180) * DX_PI_F / 180;
-		m_speed = GetRand(kSpeed) + 2;
+		// ステージの下
+		if (m_randAngleType == 0)
+		{
+			m_pos.z = -1200.0f;
+			m_pos.x = static_cast<float>(GetRand(2000) - 1000);
+			m_angle = kAngleUp;
+			//m_speed = GetRand(kSpeed) + 2;
+			m_initPos = true;
+		}
+		// ステージの上
+		if (m_randAngleType == 1)
+		{
+			m_pos.z = 1200.0f;
+			m_pos.x = static_cast<float>(GetRand(2000) - 1000);
+			m_angle = kAngleRight;
+			//m_speed = GetRand(kSpeed) + 2;
+			m_initPos = true;
+		}
+		// ステージの右
+		if (m_randAngleType == 2)
+		{
+			m_pos.x = static_cast<float>(GetRand(2000) - 1000);
+			m_pos.z = 1200.0f;
+			m_angle = kAngleRight;
+			//m_speed = GetRand(kSpeed) + 2;
+			m_initPos = true;
+		}
+		// ステージの左
+		if (m_randAngleType == 3)
+		{
+			m_pos.x = static_cast<float>(GetRand(2000) - 1000);
+			m_pos.z = -1200.0f;
+			m_angle = kAngleLeft;
+			//m_speed = GetRand(kSpeed) + 2;
+			m_initPos = true;
+		}
 	}
-	// ステージの上
-	if (m_pos.z > 1000.0f)
-	{
-		m_pos.z = -1000.0f;
-		m_angle = GetRand(360) * DX_PI_F / 180;
-		m_speed = GetRand(kSpeed) + 2;
-	}
-	// ステージの右
-	if (m_pos.x > 1000.0f)
-	{
-		m_pos.x = -1000.0f;
-		m_angle = GetRand(360) * DX_PI_F / 180;
-		m_speed = GetRand(kSpeed) + 2;
-	}
-	// ステージの左
-	if (m_pos.x < -1000.0f)
-	{
-		m_pos.x = 1000.0f;
-		m_angle = GetRand(360) * DX_PI_F / 180;
-		m_speed = GetRand(kSpeed) + 2;
-	}
+	
 
 	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
@@ -178,7 +210,7 @@ void EnemyBig::DebugDraw()
 	}
 
 	// 敵の配列番号(デバッグ用)
-	DrawFormatString(static_cast<int>(screenPos.x) - 64 / 2, static_cast<int>(screenPos.y), 0xffffff, "%d", m_Number);
+	DrawFormatString(static_cast<int>(screenPos.x) - 64 / 2, static_cast<int>(screenPos.y), 0xffffff, "%d", m_number);
 }
 
 bool EnemyBig::ColFlag()

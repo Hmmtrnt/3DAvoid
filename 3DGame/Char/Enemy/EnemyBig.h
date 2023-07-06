@@ -59,6 +59,10 @@ private:
 
 	// int
 	int m_modelHandle;	// エネミーのモデルハンドル
-	int m_Number;
+	int m_number;
+	int m_randAngleType;	// エネミーがステージ外に出た時のアングルタイプ
+
+	// bool 
+	bool m_initPos;		// 座標を初期化したかどうか
 };
 
