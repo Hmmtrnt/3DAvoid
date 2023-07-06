@@ -1,4 +1,5 @@
 #pragma once
+// エネミーの処理
 #include "../../Util/common.h"
 #include <memory>
 
