@@ -40,20 +40,9 @@ namespace
 EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
 	//m_updateFunc(&EnemyBig::UpdateMove),
 	m_pPlayer(pPlayer),
-	m_angle(0.0f),
-	m_modelHandle(-1),
-	m_speed(0),
-	m_number(0),
 	m_randAngleType(0),
 	m_initPos(true)
 {
-	// 敵の初期位置
-	m_pos.x = 1000;
-	//m_pos.x = 500.0f;
-	m_pos.y = 0.0f;
-	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
-	//m_pos.z = 0;
-
 	// モデルのロード
 	m_modelHandle = MV1LoadModel(kEnemyHandle);
 
@@ -62,18 +51,14 @@ EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
 	// 敵のアニメーション設定
 	m_pModel->SetAnimation(kAnimMove, true, true);
 	// 敵の向きの初期化
-	//m_angle = GetRand(360) * DX_PI_F / 180;
+	m_angle = kAngleRight;
 	//m_speed = GetRand(kSpeed) + 2;
 	m_speed = kSpeed;
 }
 
-EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
+EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer) :
 	//m_updateFunc(&EnemyBig::UpdateMove),
 	m_pPlayer(pPlayer),
-	m_angle(0.0f),
-	m_modelHandle(-1),
-	m_speed(0),
-	m_number(num),
 	m_initPos(true)
 {
 	// 敵の初期位置
@@ -107,14 +92,6 @@ EnemyBig::~EnemyBig()
 	MV1DeleteModel(m_modelHandle);
 }
 
-void EnemyBig::Init()
-{
-}
-
-void EnemyBig::End()
-{
-}
-
 void EnemyBig::Update(int score)
 {
 	UpdateMove(score);
@@ -123,7 +100,6 @@ void EnemyBig::Update(int score)
 void EnemyBig::Draw()
 {
 	m_pModel->Draw();
-	//DebugDraw();
 }
 
 void EnemyBig::UpdateMove(int score)
@@ -196,27 +172,6 @@ void EnemyBig::UpdateMove(int score)
 	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
 	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));
-}
-
-void EnemyBig::DebugDraw()
-{
-	// モデルのハンドル取得
-	int handle = m_pModel->getModelHandle();
-
-	// モデル内にあるHPバーを表示する座標のデータを取得する
-	int frameNo = MV1SearchFrame(handle, "Head3_end");
-	// HPバーを表示する座標データのワールド座標を取得する
-	VECTOR hpPos = MV1GetFramePosition(handle, frameNo);
-	// HPバー表示位置のワールド座標をスクリーン座標に変換する
-	VECTOR screenPos = ConvWorldPosToScreenPos(hpPos);
-	if ((screenPos.z <= 0.0f) || (screenPos.z >= 1.0f))
-	{
-		// 表示範囲外の場合何も表示しない
-		return;
-	}
-
-	// 敵の配列番号(デバッグ用)
-	DrawFormatString(static_cast<int>(screenPos.x) - 64 / 2, static_cast<int>(screenPos.y), 0xffffff, "%d", m_number);
 }
 
 bool EnemyBig::ColFlag()

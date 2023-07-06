@@ -1,30 +1,27 @@
 #pragma once
 // エネミーの処理
+#include "EnemyBase.h"
 #include "../../Util/common.h"
 #include <memory>
 
 class Player;
 class Model;
 
-class Enemy
+class Enemy : public EnemyBase
 {
 public:
 	// ロードするモデルを指定→指定されたモデルをロードして生成
 	Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer);
 
 	// すでにロードされているモデルのハンドルを指定→Duplicateして生成
-	Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num);
+	Enemy(int orgModel, std::shared_ptr<Player> pPlayer);
 
 	virtual ~Enemy();
 
-	void Init();
-	void End();
 	void Update();
 	void Draw();
 
 	void UpdateMove();// エネミーの動き
-
-	void DebugDraw();// デバッグ用描画
 
 	bool ColFlag();// 当たり判定のテスト
 
@@ -48,18 +45,7 @@ private:
 	std::shared_ptr<Model> m_pModel;// モデル
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 
-	// VECTOR
-	VECTOR m_pos;		// エネミー座標
-	VECTOR m_dir;		// エネミーの方向
-	VECTOR m_vec;		// エネミーの移動
-
-	// float
-	float m_angle;		// エネミーのアングル
-	float m_speed;		// エネミーのスピード
-
-	// int
-	int m_modelHandle;	// エネミーのモデルハンドル
-	int m_Number;
+	
 
 };
 

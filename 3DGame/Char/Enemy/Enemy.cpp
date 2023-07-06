@@ -29,18 +29,9 @@ namespace
 
 Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	m_updateFunc(&Enemy::UpdateMove),
-	m_pPlayer(pPlayer),
-	m_angle(0.0f),
-	m_modelHandle(-1),
-	m_speed(0),
-	m_Number(0)
+	m_pPlayer(pPlayer)
 {
-	// 敵の初期位置
-	m_pos.x = 1000;
-	//m_pos.x = 500.0f;
-	m_pos.y = 0.0f;
-	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
-	//m_pos.z = 0;
+	
 
 	// モデルのロード
 	m_modelHandle = MV1LoadModel(kEnemyHandle);
@@ -51,16 +42,12 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	m_pModel->SetAnimation(kAnimMove, true, true);
 	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
-	m_speed = GetRand(kSpeed) + 2;
+	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 }
 
-Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
+Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
 	m_updateFunc(&Enemy::UpdateMove),
-	m_pPlayer(pPlayer),
-	m_angle(0.0f),
-	m_modelHandle(-1),
-	m_speed(0),
-	m_Number(num)
+	m_pPlayer(pPlayer)
 {
 	// 敵の初期位置
 	m_pos.x = 1000;
@@ -79,7 +66,7 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	m_pModel->SetAnimation(kAnimMove, true, true);
 	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
-	m_speed = GetRand(kSpeed) + 2;
+	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 
 	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
@@ -93,23 +80,14 @@ Enemy::~Enemy()
 	MV1DeleteModel(m_modelHandle);
 }
 
-void Enemy::Init()
-{
-}
-
-void Enemy::End()
-{
-}
-
 void Enemy::Update()
 {
-	(this->*m_updateFunc)();
+	UpdateMove();
 }
 
 void Enemy::Draw()
 {
 	m_pModel->Draw();
-	//DebugDraw();
 }
 
 void Enemy::UpdateMove()
@@ -131,54 +109,33 @@ void Enemy::UpdateMove()
 	{
 		m_pos.z = 1000.0f;
 		m_angle = GetRand(180) * DX_PI_F / 180;
-		m_speed = GetRand(kSpeed) + 2;
+		m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 	}
 	// ステージの上
 	if (m_pos.z > 1000.0f)
 	{
 		m_pos.z = -1000.0f;
 		m_angle = GetRand(360) * DX_PI_F / 180;
-		m_speed = GetRand(kSpeed) + 2;
+		m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 	}
 	// ステージの右
 	if (m_pos.x > 1000.0f)
 	{
 		m_pos.x = -1000.0f;
 		m_angle = GetRand(360) * DX_PI_F / 180;
-		m_speed = GetRand(kSpeed) + 2;
+		m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 	}
 	// ステージの左
 	if (m_pos.x < -1000.0f)
 	{
 		m_pos.x = 1000.0f;
 		m_angle = GetRand(360) * DX_PI_F / 180;
-		m_speed = GetRand(kSpeed) + 2;
+		m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 	}
 
 	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f,m_angle,0.0f));
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
-}
-
-void Enemy::DebugDraw()
-{
-	// モデルのハンドル取得
-	int handle = m_pModel->getModelHandle();
-
-	// モデル内にあるHPバーを表示する座標のデータを取得する
-	int frameNo = MV1SearchFrame(handle, "Head3_end");
-	// HPバーを表示する座標データのワールド座標を取得する
-	VECTOR hpPos = MV1GetFramePosition(handle, frameNo);
-	// HPバー表示位置のワールド座標をスクリーン座標に変換する
-	VECTOR screenPos = ConvWorldPosToScreenPos(hpPos);
-	if ((screenPos.z <= 0.0f) || (screenPos.z >= 1.0f))
-	{
-		// 表示範囲外の場合何も表示しない
-		return;
-	}
-
-	// 敵の配列番号(デバッグ用)
-	DrawFormatString(static_cast<int>(screenPos.x) - 64 / 2, static_cast<int>(screenPos.y),0xffffff, "%d", m_Number);
 }
 
 bool Enemy::ColFlag()

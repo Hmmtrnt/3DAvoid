@@ -72,8 +72,7 @@ void SceneMain::Init()
 	m_enemyModelHandle = m_pEnemy.back()->GetModelHandle();
 	for (int i = 0; i < 19; i++)
 	{
-		m_debugEnemyNum++;
-		m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer, m_debugEnemyNum));
+		m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer));
 		m_pEnemy.back()->Init();
 	}
 
@@ -141,8 +140,7 @@ SceneBase* SceneMain::Update()
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				m_debugEnemyNum++;
-				m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer, m_debugEnemyNum));
+				m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer));
 				m_pEnemy.back()->Init();
 			}
 		}
@@ -272,7 +270,7 @@ void SceneMain::UpdateEnemy()
 		if (m_invincibleTime <= 0)
 		{
 			// “–‚½‚Á‚½Žž‚Ìƒ_ƒ[ƒW’Ç‰Á
-			if (m_pPlayer->GetIsFall())
+			if (!m_pPlayer->GetIsFall())
 			{
 				if (enemies->ColFlag())
 				{
