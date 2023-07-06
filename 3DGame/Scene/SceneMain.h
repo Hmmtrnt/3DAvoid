@@ -57,22 +57,18 @@ private:
 	unsigned int m_hpColor;// Hpのカラー
 	int m_score;// ゲームのスコア
 	int m_BackGroundHandle;// 背景のハンドル
-
 	int m_debugEnemyNum = 0;// デバッグ用変数敵の番号を見る
-
 	int m_red;// 赤の値
 	int m_decreaseColor;// 色が消えていく変数
-
 	int m_enemyModelHandle;// 複製するための敵のコピー
-
 	int m_fontHandle;// フォントハンドル
 	int m_selectNum;// ポーズ画面の選択番号
 
 	// bool
 	bool m_hit;// 当たったかどうか
 	bool m_hitting;// 当たっている
-
 	bool m_pushPause;// ポーズボタンを押したかどうか
+	bool m_isNoteOpen;// 注意書きを開いているかどうか
 
 
 	XINPUT_STATE  input;// パッド状態取得変数

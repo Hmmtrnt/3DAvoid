@@ -55,4 +55,5 @@ void Pause::DrawNote()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	// 注意書きの仮テキスト
 	DrawString(Game::kScreenWidth / 2 - 100, Game::kScreenHeight / 2 - 100, "注意書き(やり直しを押したときのみ描画)", Color::kRed);
+	DrawString(Game::kScreenWidth / 2 - 100, Game::kScreenHeight / 2 - 70, "記録は保存されません", Color::kRed);
 }

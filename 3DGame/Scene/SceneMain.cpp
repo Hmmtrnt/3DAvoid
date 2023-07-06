@@ -29,7 +29,8 @@ SceneMain::SceneMain() :
 	m_selectNum(0),
 	m_hit(false),
 	m_hitting(false),
-	m_pushPause(false)
+	m_pushPause(false),
+	m_isNoteOpen(false)
 {
 	// ポインタのメモリ確保後で自動的に解放される
 	m_pSet = std::make_shared<GameSetting>();
@@ -91,7 +92,40 @@ void SceneMain::End()
 // 更新処理
 SceneBase* SceneMain::Update()
 {
-	
+	// フェードインアウトしている
+	if (IsFading())
+	{
+		m_isFadeOut = IsFadingOut();
+		SceneBase::UpdateFade();
+		// フェードアウト終了時
+		// ポーズ画面が開かれているとき
+		if (!IsFading() && m_isFadeOut && !m_isBackScene && m_isNoteOpen)
+		{
+			// リトライ
+			return (new SceneMain());
+			// ポーズ画面の項目が増える予定
+		}
+		// ポーズ画面が閉じているとき
+		else if (!IsFading() && m_isFadeOut && !m_isBackScene && !m_isNoteOpen)
+		{
+			// ゲームが終了したとき
+			return (new SceneResult(m_score));
+		}
+
+	}
+
+	if (!IsFading())
+	{
+		// キャラが落ちたらまたは注意書きではいを押したらシーン遷移
+		if (m_pPlayer->GetIsFall() || (Pad::IsTrigger(PAD_INPUT_1) && m_isNoteOpen))
+		{
+			//return new SceneMain;// デバッグ用シーン遷移
+
+			StartFadeOut();// シーン遷移
+		}
+	}
+
+
 	(this->*m_updateFunc)();
 
 	if (m_score != 0)
@@ -114,42 +148,23 @@ SceneBase* SceneMain::Update()
 	{
 		m_pushPause = true;
 	}
-
-	// フェードインアウトしている
-	if (IsFading())
+	// やり直すを押したときの処理
+	if (m_selectNum == 1 && Pad::IsTrigger(PAD_INPUT_1))
 	{
-		m_isFadeOut = IsFadingOut();
-		SceneBase::UpdateFade();
-		// フェードアウト終了時
-		// ポーズ画面が開かれているとき
-		if (!IsFading() && m_isFadeOut && !m_isBackScene && m_pushPause)
-		{
-			// リトライ
-			if (m_selectNum == 1)
-			{
-				return (new SceneMain());
-			}
-			// ポーズ画面の項目が増える予定
-		}
-		// ポーズ画面が閉じているとき
-		else if (!IsFading() && m_isFadeOut && !m_isBackScene && !m_pushPause)
-		{
-			// ゲームが終了したとき
-			return (new SceneResult(m_score));
-		}
-
+		m_isNoteOpen = true;
+		
 	}
 
-	if (!IsFading())
+	if (m_isNoteOpen)
 	{
-			//TODO:PAD_INPUT_1に戻す(デバッグが終わったら)
-		if (m_pPlayer->GetIsFall() || (Pad::IsTrigger(PAD_INPUT_1) && m_pushPause && m_selectNum == 1))
+		if (Pad::IsTrigger(PAD_INPUT_2))
 		{
-			//return new SceneMain;// デバッグ用シーン遷移
-
-			StartFadeOut();// シーン遷移
+			m_isNoteOpen = false;
 		}
 	}
+	
+
+	
 
 	return this;
 }
@@ -197,10 +212,18 @@ void SceneMain::Draw()
 
 	}*/
 
+	// ポーズ画面描画
 	if (m_pushPause)
 	{
 		m_pPause->DrawPause();
-		m_pPause->DrawNote();
+
+		if (m_isNoteOpen)
+		{
+			printfDx("通っている\n");
+			m_pPause->DrawNote();
+		}
+
+		
 	}
 
 	// フェードインアウトのフィルター
@@ -318,7 +341,10 @@ void SceneMain::UpdatePause()
 	// フェードインアウトしていなければポーズ画面をいじれる
 	if (!IsFading())
 	{
-		m_pPause->Update(m_selectNum);
+		if (!m_isNoteOpen)
+		{
+			m_pPause->Update(m_selectNum);
+		}
 	}
 	
 	if (!m_pushPause)
