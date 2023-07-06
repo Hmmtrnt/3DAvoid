@@ -141,7 +141,7 @@ void EnemyBig::UpdateMove()
 	// ステージ外に出た時のエネミーの角度
 	if (m_pos.z < -kColStage || m_pos.z > kColStage || m_pos.x > kColStage || m_pos.x < -kColStage)
 	{
-		m_randAngleType = GetRand(4);
+		m_randAngleType = GetRand(3);
 		m_initPos = false;
 	}
 
@@ -151,8 +151,8 @@ void EnemyBig::UpdateMove()
 		// ステージの下
 		if (m_randAngleType == 0)
 		{
-			m_pos.z = -1200.0f;
 			m_pos.x = static_cast<float>(GetRand(2000) - 1000);
+			m_pos.z = -1200.0f;
 			m_angle = kAngleUp;
 			//m_speed = GetRand(kSpeed) + 2;
 			m_initPos = true;
@@ -160,27 +160,27 @@ void EnemyBig::UpdateMove()
 		// ステージの上
 		if (m_randAngleType == 1)
 		{
-			m_pos.z = 1200.0f;
-			m_pos.x = static_cast<float>(GetRand(2000) - 1000);
-			m_angle = kAngleRight;
-			//m_speed = GetRand(kSpeed) + 2;
-			m_initPos = true;
-		}
-		// ステージの右
-		if (m_randAngleType == 2)
-		{
 			m_pos.x = static_cast<float>(GetRand(2000) - 1000);
 			m_pos.z = 1200.0f;
-			m_angle = kAngleRight;
+			m_angle = kAngleDown;
 			//m_speed = GetRand(kSpeed) + 2;
 			m_initPos = true;
 		}
 		// ステージの左
+		if (m_randAngleType == 2)
+		{
+			m_pos.x = 1200.0f;
+			m_pos.z = static_cast<float>(GetRand(2000) - 1000);
+			m_angle = kAngleLeft;
+			//m_speed = GetRand(kSpeed) + 2;
+			m_initPos = true;
+		}
+		// ステージの右
 		if (m_randAngleType == 3)
 		{
-			m_pos.x = static_cast<float>(GetRand(2000) - 1000);
-			m_pos.z = -1200.0f;
-			m_angle = kAngleLeft;
+			m_pos.x = -1200.0f;
+			m_pos.z = static_cast<float>(GetRand(2000) - 1000);
+			m_angle = kAngleRight;
 			//m_speed = GetRand(kSpeed) + 2;
 			m_initPos = true;
 		}
