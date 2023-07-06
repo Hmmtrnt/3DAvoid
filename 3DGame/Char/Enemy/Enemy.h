@@ -59,7 +59,6 @@ private:
 
 	// int
 	int m_modelHandle;	// エネミーのモデルハンドル
-	int m_playerHandle;
 	int m_Number;
 
 };

@@ -4,6 +4,7 @@
 #include "../Util/GameSetting.h"
 #include "../Char/Player/Player.h"
 #include "../Char/Enemy/Enemy.h"
+#include "../Char/Enemy/EnemyBig.h"
 #include "../Stage/Field.h"
 #include "../Stage/Wall.h"
 #include <cassert>
@@ -76,9 +77,14 @@ void SceneMain::Init()
 		m_pEnemy.back()->Init();
 	}
 
+	// でかいエネミー生成
+	m_pEnemyBig.push_back(std::make_shared<EnemyBig>(m_pPlayer));
+	m_pEnemyBig.back()->Init();
+
 	// シャドウマップの生成
 	m_shadowMap = MakeShadowMap(1024, 1024);
 	SetShadowMapLightDirection(m_shadowMap, GetLightDirection());
+
 }
 
 void SceneMain::End()
@@ -186,6 +192,11 @@ void SceneMain::Draw()
 	{
 		enemies->Draw();
 	}
+	for (auto& enemiesBig : m_pEnemyBig)
+	{
+		enemiesBig->Draw();
+	}
+	
 	// ステージ描画
 	m_pField->Draw();
 	//m_pWall->Draw();
@@ -235,6 +246,22 @@ void SceneMain::UpdateEnemy()
 	// 当たった時の処理
 	for (auto& enemies : m_pEnemy)
 	{
+		//enemies->Update();
+		if (m_invincibleTime <= 0)
+		{
+			// 当たった時のダメージ追加
+			if (enemies->ColFlag())
+			{
+				DrawString(10, 10, "当たっている\n", 0xff0000);
+				m_pPlayer->UpdateHitDamage(enemies->GetPos(), m_hit);
+				m_hit = true;
+				m_invincibleTime = 120;
+			}
+		}
+	}
+
+	for (auto& enemies : m_pEnemyBig)
+	{
 		enemies->Update();
 		if (m_invincibleTime <= 0)
 		{
@@ -248,6 +275,7 @@ void SceneMain::UpdateEnemy()
 			}
 		}
 	}
+
 	// 当たった時のプレイヤーの座標処理
 	if(m_invincibleTime >= 110)
 	{

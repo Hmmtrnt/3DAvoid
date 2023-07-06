@@ -155,6 +155,7 @@
     <ClCompile Include="Char\Model.cpp" />
     <ClCompile Include="Char\Enemy\Enemy.cpp" />
     <ClCompile Include="Effect\ParticleBase.cpp" />
+    <ClCompile Include="Char\Enemy\EnemyBig.cpp" />
     <ClCompile Include="System\Pause.cpp" />
     <ClCompile Include="Scene\SceneResult.cpp" />
     <ClCompile Include="Stage\Field.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Char\Model.h" />
     <ClInclude Include="Char\Enemy\Enemy.h" />
     <ClInclude Include="Effect\ParticleBase.h" />
+    <ClInclude Include="Char\Enemy\EnemyBig.h" />
     <ClInclude Include="System\Pause.h" />
     <ClInclude Include="Scene\SceneResult.h" />
     <ClInclude Include="Stage\Field.h" />

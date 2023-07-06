@@ -91,7 +91,6 @@ Enemy::~Enemy()
 {
 	// ƒ‚ƒfƒ‹‚Ìƒƒ‚ƒŠíœ
 	MV1DeleteModel(m_modelHandle);
-	MV1DeleteModel(m_playerHandle);
 }
 
 void Enemy::Init()
