@@ -2,14 +2,19 @@
 
 namespace
 {
+	// VECTOR
+	// xyzともに0.0f
+	VECTOR kZero = VGet(0.0f, 0.0f, 0.0f);
+
 	// エネミーのモーション番号
 	constexpr int kAnimMove = 2;// 移動状態
 }
 
 EnemyBase::EnemyBase() :
-	m_pos(VGet(0.0f,0.0f,0.0f)),
-	m_dir(VGet(0.0f, 0.0f, 0.0f)),
-	m_vec(VGet(0.0f, 0.0f, 0.0f)),
+	m_pos(kZero),
+	m_dir(kZero),
+	m_vec(kZero),
+	m_scale(kZero),
 	m_angle(0.0f),
 	m_speed(0.0f),
 	m_modelHandle(-1)
@@ -25,4 +30,9 @@ EnemyBase::EnemyBase() :
 
 EnemyBase::~EnemyBase()
 {
+}
+
+int EnemyBase::GetModelHandle() const
+{
+	return m_modelHandle;
 }

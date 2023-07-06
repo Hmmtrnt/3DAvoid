@@ -38,7 +38,6 @@ namespace
 }
 
 EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
-	//m_updateFunc(&EnemyBig::UpdateMove),
 	m_pPlayer(pPlayer),
 	m_randAngleType(0),
 	m_initPos(true)
@@ -51,24 +50,18 @@ EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
 	// 敵のアニメーション設定
 	m_pModel->SetAnimation(kAnimMove, true, true);
 	// 敵の向きの初期化
-	m_angle = kAngleRight;
-	//m_speed = GetRand(kSpeed) + 2;
+	m_angle = kAngleLeft;
 	m_speed = kSpeed;
+
+	m_pModel->SetPos(m_pos);
+	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
 EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer) :
-	//m_updateFunc(&EnemyBig::UpdateMove),
 	m_pPlayer(pPlayer),
 	m_initPos(true)
 {
-	// 敵の初期位置
-	m_pos.x = 1000;
-	//m_pos.x = -500.0f;
-	//m_pos.x = static_cast<float>(GetRand(1000) -1000);
-	m_pos.y = 0.0f;
-	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
-	//m_pos.z = 0;
-
 	// モデルのロード
 	m_modelHandle = MV1LoadModel(kEnemyHandle);
 
@@ -82,7 +75,7 @@ EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer) :
 
 	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));
 
 }
 
@@ -185,18 +178,4 @@ bool EnemyBig::ColFlag()
 		return true;
 	}
 	return false;
-}
-
-int EnemyBig::GetModelHandle() const
-{
-	return m_modelHandle;
-}
-
-float EnemyBig::GetColRadius()
-{
-	return kColRadius;
-}
-
-void EnemyBig::SetPlayerPos(VECTOR playerPos)
-{
 }

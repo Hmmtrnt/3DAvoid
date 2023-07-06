@@ -25,18 +25,6 @@ public:
 
 	bool ColFlag();// 当たり判定のテスト
 
-	// モデルの取得
-	int GetModelHandle()const;
-
-	// 当たり判定の半径
-	float GetColRadius();
-
-	// エネミーの位置取得
-	VECTOR GetPos()const { return m_pos; }
-
-	// 当たった時の処理
-	void SetPlayerPos(VECTOR playerPos);
-
 	// メンバ関数ポインタ
 	void(EnemyBig::* m_updateFunc)();
 

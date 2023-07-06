@@ -28,11 +28,8 @@ namespace
 }
 
 Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
-	m_updateFunc(&Enemy::UpdateMove),
 	m_pPlayer(pPlayer)
 {
-	
-
 	// モデルのロード
 	m_modelHandle = MV1LoadModel(kEnemyHandle);
 
@@ -46,17 +43,8 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 }
 
 Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
-	m_updateFunc(&Enemy::UpdateMove),
 	m_pPlayer(pPlayer)
 {
-	// 敵の初期位置
-	m_pos.x = 1000;
-	//m_pos.x = -500.0f;
-	//m_pos.x = static_cast<float>(GetRand(1000) -1000);
-	m_pos.y = 0.0f;
-	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
-	//m_pos.z = 0;
-
 	// モデルのロード
 	m_modelHandle = MV1LoadModel(kEnemyHandle);
 
@@ -150,18 +138,4 @@ bool Enemy::ColFlag()
 		return true;
 	}
 	return false;
-}
-
-int Enemy::GetModelHandle() const
-{
-	return m_modelHandle;
-}
-
-float Enemy::GetColRadius()
-{
-	return kColRadius;
-}
-
-void Enemy::SetPlayerPos(VECTOR playerPos)
-{
 }
