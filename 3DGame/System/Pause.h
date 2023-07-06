@@ -9,8 +9,9 @@ public:
 	virtual ~Pause();// デストラクタ
 
 	void Update(int& selectNum);// 更新処理
-	void Draw();// 描画処理　
+	void DrawPause();// ポーズ描画処理
 
+	void DrawNote();// 注意書き描画
 
 private:
 	// テスト変数

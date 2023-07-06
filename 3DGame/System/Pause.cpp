@@ -31,7 +31,7 @@ void Pause::Update(int& selectNum)
 	
 }
 
-void Pause::Draw()
+void Pause::DrawPause()
 {
 	// デバッグ用
 	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
@@ -41,7 +41,18 @@ void Pause::Draw()
 	DrawBox(m_posx, m_posy, m_posx + 200, m_posy + 100, Color::kWhite, true);// カーソル
 
 	DrawString(0, 0, "ポーズ", Color::kBlack);
-	// テキスト
+	// 選択肢の仮テキスト
 	DrawString(200, 200, "続ける", Color::kRed);
 	DrawString(200, 400, "やり直し", Color::kRed);
+}
+
+void Pause::DrawNote()
+{
+	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
+	// 注意書き仮置き
+	DrawBox(Game::kScreenWidth / 2 - 100, Game::kScreenHeight / 2 - 100, 
+		Game::kScreenHeight / 2 + 500, Game::kScreenHeight / 2 + 100, Color::kBlack, true);// 選択肢一
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	// 注意書きの仮テキスト
+	DrawString(Game::kScreenWidth / 2 - 100, Game::kScreenHeight / 2 - 100, "注意書き(やり直しを押したときのみ描画)", Color::kRed);
 }

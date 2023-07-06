@@ -112,14 +112,7 @@ SceneBase* SceneMain::Update()
 	// ポーズボタンを押したときの処理
 	if (Pad::IsTrigger(PAD_INPUT_8))
 	{
-		if (!m_pushPause)
-		{
-			m_pushPause = true;
-		}
-		else
-		{
-			m_pushPause = false;
-		}
+		m_pushPause = true;
 	}
 
 	// フェードインアウトしている
@@ -147,17 +140,14 @@ SceneBase* SceneMain::Update()
 
 	}
 
-	if (m_pPlayer->GetIsFall() || m_pushPause)
+	if (!IsFading())
 	{
-		if (!IsFading())
-		{
 			//TODO:PAD_INPUT_1に戻す(デバッグが終わったら)
-			if (Pad::IsTrigger(PAD_INPUT_1))
-			{
-				//return new SceneMain;// デバッグ用シーン遷移
+		if (m_pPlayer->GetIsFall() || (Pad::IsTrigger(PAD_INPUT_1) && m_pushPause && m_selectNum == 1))
+		{
+			//return new SceneMain;// デバッグ用シーン遷移
 
-				StartFadeOut();// シーン遷移
-			}
+			StartFadeOut();// シーン遷移
 		}
 	}
 
@@ -200,16 +190,17 @@ void SceneMain::Draw()
 	DrawFormatStringToHandle(10, 120, Color::kWhite, m_fontHandle, "score:%d", m_score);
 
 	// ゲームオーバーになった時の処理(デバッグ用)
-	if (m_pPlayer->GetPos().y < -100.0f)
+	/*if (m_pPlayer->GetPos().y < -100.0f)
 	{
 		DrawStringToHandle(0, 150, "ゲームオーバー", Color::kWhite, m_fontHandle);
 		DrawStringToHandle(0, 180, "リザルト:PAD_INPUT_1", Color::kWhite, m_fontHandle);
 
-	}
+	}*/
 
 	if (m_pushPause)
 	{
-		m_pPause->Draw();
+		m_pPause->DrawPause();
+		m_pPause->DrawNote();
 	}
 
 	// フェードインアウトのフィルター
@@ -262,15 +253,46 @@ void SceneMain::UpdateEnemy()
 
 void SceneMain::UpdateColor()
 {
-	m_hpColor = GetColor(m_red, m_decreaseColor, m_decreaseColor);
+	// -------------------------
+	// ボツの可能性あり
+	// -------------------------
+	// ダメージによって色を変更
+	//m_hpColor = GetColor(m_red, m_decreaseColor, m_decreaseColor);
 
-	if (m_decreaseColor < 0)
+	//// 体力表記の色バグを防ぐ
+	//if (m_decreaseColor < 0)
+	//{
+	//	m_decreaseColor = 0;
+	//}
+	//else if(m_decreaseColor != 0)
+	//{
+	//	m_decreaseColor = 255 - (m_pPlayer->GetBlowRate() * 2);
+	//}
+
+	// -------------------------
+	// 新しい色表記
+	// -------------------------
+	// ダメージによって色を変更
+
+	if (m_pPlayer->GetBlowRate() < 10)
 	{
-		m_decreaseColor = 0;
+		m_hpColor = Color::kWhite;
 	}
-	else if(m_decreaseColor != 0)
+	else if (m_pPlayer->GetBlowRate() < 30)
 	{
-		m_decreaseColor = 255 - (m_pPlayer->GetBlowRate() * 2);
+		m_hpColor = Color::kCoral;
+	}
+	else if (m_pPlayer->GetBlowRate() < 59)
+	{
+		m_hpColor = Color::kTomato;
+	}
+	else if (m_pPlayer->GetBlowRate() < 79)
+	{
+		m_hpColor = Color::kOrangered;
+	}
+	else if (m_pPlayer->GetBlowRate() < 100)
+	{
+		m_hpColor = Color::kRed;
 	}
 
 }
@@ -303,6 +325,12 @@ void SceneMain::UpdatePause()
 	{
 		m_updateFunc = &SceneMain::UpdatePauseNo;
 	}
+
+	if (m_selectNum == 0 && Pad::IsTrigger(PAD_INPUT_1))
+	{
+		m_pushPause = false;
+	}
+
 	// 選択肢がどこを選んでいるか確認
 	//printfDx("%d", m_selectNum);
 }
