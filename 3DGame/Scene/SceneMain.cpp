@@ -273,27 +273,27 @@ void SceneMain::UpdateColor()
 	// 新しい色表記
 	// -------------------------
 	// ダメージによって色を変更
-
-	if (m_pPlayer->GetBlowRate() < 10)
+	if (m_pPlayer->GetBlowRate() < 11)
 	{
 		m_hpColor = Color::kWhite;
 	}
-	else if (m_pPlayer->GetBlowRate() < 30)
+	else if (m_pPlayer->GetBlowRate() < 31)
 	{
 		m_hpColor = Color::kCoral;
 	}
-	else if (m_pPlayer->GetBlowRate() < 59)
+	else if (m_pPlayer->GetBlowRate() < 61)
 	{
 		m_hpColor = Color::kTomato;
 	}
-	else if (m_pPlayer->GetBlowRate() < 79)
+	else if (m_pPlayer->GetBlowRate() < 81)
 	{
 		m_hpColor = Color::kOrangered;
 	}
-	else if (m_pPlayer->GetBlowRate() < 100)
+	else if (m_pPlayer->GetBlowRate() < 101)
 	{
 		m_hpColor = Color::kRed;
 	}
+	
 
 }
 
