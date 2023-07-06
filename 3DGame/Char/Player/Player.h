@@ -67,6 +67,7 @@ private:// 変数
 	VECTOR m_hitVec;	// 当たった時のプレイヤーの移動
 	VECTOR m_angle;		// プレイヤーアングル
 	VECTOR m_move;		// プレイヤーの動き
+	VECTOR m_testVec = VGet(50.0f, 0.0f, 50.0f);	// テスト移動
 
 	// MATRIX
 	MATRIX m_cameraRotMtx;	// 水平移動の行列取得

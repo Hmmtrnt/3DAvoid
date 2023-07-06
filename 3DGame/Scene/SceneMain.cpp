@@ -219,7 +219,6 @@ void SceneMain::Draw()
 
 		if (m_isNoteOpen)
 		{
-			printfDx("’Ê‚Á‚Ä‚¢‚é\n");
 			m_pPause->DrawNote();
 		}
 

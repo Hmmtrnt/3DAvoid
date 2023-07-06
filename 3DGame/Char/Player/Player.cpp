@@ -363,18 +363,47 @@ void Player::UpdateHitDamage(VECTOR enemyPos, bool hit)
 		}
 		m_hitVec = VScale(m_hitVec, 1);
 	}
+
+	float blowRate = m_blowRate * 0.8f;
+
+	m_hitVec.x = m_hitVec.x * blowRate;
+	m_hitVec.y = m_hitVec.y * blowRate;
+	m_hitVec.z = m_hitVec.z * blowRate;
 }
 
 // 当たった時のプレイヤーの移動
 void Player::UpdateHitVec()
 {
 	// 吹っ飛び率
-	float blowRate = m_blowRate * 0.8f;
-	m_pos = VSub(m_pos,
-		VGet(m_hitVec.x * blowRate,
-			m_hitVec.y * blowRate,
-			m_hitVec.z * blowRate));
+	
 
+	m_pos = VSub(m_pos, VGet(m_hitVec.x, m_hitVec.y, m_hitVec.z));
+
+	// -------------------------
+	// テスト処理
+	// -------------------------
+	/*m_pos = VSub(m_pos, m_testVec);
+	m_testVec.x-=10;
+	m_testVec.z-=10;*/
+
+
+	/*if (m_hitVec.x > 0)
+	{
+		m_hitVec.x -= (m_blowRate * 0.8f) / 2;
+	}
+	else if (m_hitVec.x < 0)
+	{
+		m_hitVec.x += (m_blowRate * 0.8f) / 2;
+	}
+	if (m_hitVec.z > 0)
+	{
+		m_hitVec.z -= (m_blowRate * 0.8f) / 2;
+	}
+	else if (m_hitVec.z < 0)
+	{
+		m_hitVec.z += (m_blowRate * 0.8f) / 2;
+	}*/
+	
 	// 敵に当たった時のコントローラーの振動
 	StartJoypadVibration(DX_INPUT_PAD1, m_blowRate + 200, 100, -1);
 }

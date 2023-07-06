@@ -12,7 +12,8 @@ namespace
 	constexpr int kAnimMove = 2;// 移動状態
 	//constexpr int kAnimAttack = 3;// 攻撃状態
 
-	constexpr float kSpeed = 5.0f;
+	// エネミーの最大スピード
+	constexpr int kSpeed = 5;
 	
 
 	// VECTORの初期化
@@ -31,7 +32,7 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	m_pPlayer(pPlayer),
 	m_angle(0.0f),
 	m_modelHandle(-1),
-	m_playerPos(kZero),
+	m_speed(0),
 	m_Number(0)
 {
 	// 敵の初期位置
@@ -50,6 +51,7 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	m_pModel->SetAnimation(kAnimMove, true, true);
 	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
+	m_speed = GetRand(kSpeed) + 2;
 }
 
 Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
@@ -57,7 +59,7 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	m_pPlayer(pPlayer),
 	m_angle(0.0f),
 	m_modelHandle(-1),
-	m_playerPos(kZero),
+	m_speed(0),
 	m_Number(num)
 {
 	// 敵の初期位置
@@ -77,6 +79,7 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer, int num) :
 	m_pModel->SetAnimation(kAnimMove, true, true);
 	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
+	m_speed = GetRand(kSpeed) + 2;
 
 	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
@@ -118,7 +121,7 @@ void Enemy::UpdateMove()
 	MATRIX enemyRotMtx = MGetRotY(m_angle);
 	m_dir = VTransform(kEnemyDir, enemyRotMtx);
 	// 移動速度を反映させる
-	m_vec = VScale(m_dir, kSpeed);
+	m_vec = VScale(m_dir, m_speed);
 	// 移動させる
 	m_pos = VAdd(m_pos, m_vec);
 
@@ -129,24 +132,28 @@ void Enemy::UpdateMove()
 	{
 		m_pos.z = 1000.0f;
 		m_angle = GetRand(180) * DX_PI_F / 180;
+		m_speed = GetRand(kSpeed) + 2;
 	}
 	// ステージの上
 	if (m_pos.z > 1000.0f)
 	{
 		m_pos.z = -1000.0f;
 		m_angle = GetRand(360) * DX_PI_F / 180;
+		m_speed = GetRand(kSpeed) + 2;
 	}
 	// ステージの右
 	if (m_pos.x > 1000.0f)
 	{
 		m_pos.x = -1000.0f;
 		m_angle = GetRand(360) * DX_PI_F / 180;
+		m_speed = GetRand(kSpeed) + 2;
 	}
 	// ステージの左
 	if (m_pos.x < -1000.0f)
 	{
 		m_pos.x = 1000.0f;
 		m_angle = GetRand(360) * DX_PI_F / 180;
+		m_speed = GetRand(kSpeed) + 2;
 	}
 
 	m_pModel->SetPos(m_pos);
@@ -201,5 +208,4 @@ float Enemy::GetColRadius()
 
 void Enemy::SetPlayerPos(VECTOR playerPos)
 {
-	m_playerPos = playerPos;
 }
