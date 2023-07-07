@@ -6,6 +6,7 @@
 
 class GameSetting;
 class Player;
+class EnemyBase;
 class Enemy;
 class EnemyBig;
 class Field;
@@ -49,6 +50,9 @@ private:
 	std::shared_ptr<Wall> m_pWall;// 壁
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
 	std::vector<std::shared_ptr<EnemyBig>> m_pEnemyBig;// エネミー
+
+	std::vector<std::shared_ptr<EnemyBase>> m_pEnemyTest;// テスト変数エネミー
+
 	std::shared_ptr<StringInit> m_pFont;// フォント
 	std::shared_ptr<Pause> m_pPause;
 
