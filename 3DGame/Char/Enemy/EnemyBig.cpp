@@ -11,17 +11,6 @@ namespace
 	// エネミーの初期スピード
 	constexpr int kSpeed = 3;
 
-
-	// VECTORの初期化
-	constexpr VECTOR kZero{ 0.0f,0.0f,0.0f };
-	constexpr VECTOR kInitPos{ 0.0f,0.0f,1000.0f };
-
-	// エネミーの向いている方向
-	constexpr VECTOR kEnemyDir{ 0.0f,0.0f,-1.0f };
-
-	// 当たり判定のサイズ
-	constexpr float kColRadius = 50.0f;
-
 	// どこまでいけるかのステージのサイズ
 	constexpr float kColStage = 1200.0f;
 
@@ -51,7 +40,7 @@ EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
 
 	m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));
 }
 
 EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer) :
@@ -77,8 +66,6 @@ EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer) :
 
 EnemyBig::~EnemyBig()
 {
-	// モデルのメモリ削除
-	MV1DeleteModel(m_modelHandle);
 }
 
 void EnemyBig::Update(int score)
@@ -102,12 +89,7 @@ void EnemyBig::UpdateMove(int score)
 	}
 
 	// 現在敵が向いている方向のベクトルを生成する
-	MATRIX enemyRotMtx = MGetRotY(m_angle);
-	m_dir = VTransform(kEnemyDir, enemyRotMtx);
-	// 移動速度を反映させる
-	m_vec = VScale(m_dir, m_speed);
-	// 移動させる
-	m_pos = VAdd(m_pos, m_vec);
+	EnemyBase::EnemyMove();
 
 	// ステージ外に出た時のエネミーの角度
 	if (m_pos.z < -kColStage || m_pos.z > kColStage || m_pos.x > kColStage || m_pos.x < -kColStage)

@@ -10,17 +10,6 @@ namespace
 
 	// エネミーの最大スピード
 	constexpr int kSpeed = 5;
-	
-
-	// VECTORの初期化
-	constexpr VECTOR kZero{ 0.0f,0.0f,0.0f };
-	constexpr VECTOR kInitPos{ 0.0f,0.0f,1000.0f };
-
-	// エネミーの向いている方向
-	constexpr VECTOR kEnemyDir{ 0.0f,0.0f,-1.0f };
-
-	// 当たり判定のサイズ
-	constexpr float kColRadius = 50.0f;
 }
 
 Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
@@ -36,6 +25,10 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
+
+	m_pModel->SetPos(m_pos);
+	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
 Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
@@ -60,8 +53,6 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
 
 Enemy::~Enemy()
 {
-	// モデルのメモリ削除
-	MV1DeleteModel(m_modelHandle);
 }
 
 void Enemy::Update()
@@ -79,13 +70,7 @@ void Enemy::UpdateMove()
 	m_pModel->Update();
 
 	// 現在敵が向いている方向のベクトルを生成する
-	MATRIX enemyRotMtx = MGetRotY(m_angle);
-	m_dir = VTransform(kEnemyDir, enemyRotMtx);
-	// 移動速度を反映させる
-	m_vec = VScale(m_dir, m_speed);
-	// 移動させる
-	m_pos = VAdd(m_pos, m_vec);
-
+	EnemyBase::EnemyMove();
 
 	// 座標の初期化
 	// ステージの下

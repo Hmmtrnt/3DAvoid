@@ -35,6 +35,16 @@ Model::Model(int orgModel) :
 	ClearAnimeData(m_animNext);
 }
 
+Model::Model() :
+	m_isUseCollision(false),
+	m_isUpdateCollision(false),
+	m_colFrameIndex(-1),
+	m_animChangeFrame(0),
+	m_animChangeFrameTotal(0)
+{
+
+}
+
 Model::~Model()
 {
 	if (m_isUseCollision)

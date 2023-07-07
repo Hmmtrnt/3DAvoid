@@ -8,6 +8,8 @@ public:
 	Model(const char* fileName);
 	// 指定されたハンドルのモデルをDuplicateして生成する
 	Model(int orgModel);
+	// 空のインスタンス
+	Model();
 
 	virtual ~Model();
 
