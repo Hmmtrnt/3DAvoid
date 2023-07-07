@@ -20,7 +20,6 @@ public:
 	// エネミーの動き
 	void EnemyMove();
 
-
 	// モデルの取得
 	int GetModelHandle()const;
 
@@ -28,9 +27,6 @@ public:
 	VECTOR GetPos()const { return m_pos; }
 
 protected:
-	// ポインタ
-	std::shared_ptr<Model> m_pModel;// モデル
-
 	// VECTOR
 	VECTOR m_pos;		// エネミー座標
 	VECTOR m_dir;		// エネミーの方向

@@ -30,7 +30,6 @@ EnemyBase::EnemyBase() :
 	m_pos.y = 0.0f;
 	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
 	//m_pos.z = 0;
-
 }
 
 EnemyBase::~EnemyBase()
