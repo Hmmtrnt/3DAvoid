@@ -8,10 +8,6 @@ namespace
 	// キャラクターハンドル
 	const char* const kEnemyHandle = "Data/Char/Enemy/Enemy2(toonType2).mv1";
 
-	// エネミーのモーション番号
-	constexpr int kAnimMove = 2;// 移動状態
-	//constexpr int kAnimAttack = 3;// 攻撃状態
-
 	// エネミーの最大スピード
 	constexpr int kSpeed = 5;
 	
@@ -36,7 +32,7 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	// ポインタのメモリ確保
 	m_pModel = std::make_shared<Model>(m_modelHandle);
 	// 敵のアニメーション設定
-	m_pModel->SetAnimation(kAnimMove, true, true);
+	m_pModel->SetAnimation(m_animMove, true, true);
 	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
@@ -51,7 +47,7 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
 	// ポインタのメモリ確保
 	m_pModel = std::make_shared<Model>(m_modelHandle);
 	// 敵のアニメーション設定
-	m_pModel->SetAnimation(kAnimMove, true, true);
+	m_pModel->SetAnimation(m_animMove, true, true);
 	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);

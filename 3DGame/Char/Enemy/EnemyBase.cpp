@@ -17,7 +17,8 @@ EnemyBase::EnemyBase() :
 	m_scale(kZero),
 	m_angle(0.0f),
 	m_speed(0.0f),
-	m_modelHandle(-1)
+	m_modelHandle(-1),
+	m_animMove(kAnimMove)
 {
 	// “G‚Ì‰ŠúˆÊ’u
 	m_pos.x = 1000;

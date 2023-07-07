@@ -37,5 +37,6 @@ protected:
 
 	// int
 	int m_modelHandle;	// エネミーのモデルハンドル
+	int m_animMove;		// エネミーのモーション番号
 };
 
