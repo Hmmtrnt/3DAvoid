@@ -11,18 +11,15 @@ public:
 	Player();
 	virtual ~Player();
 
-	void Init();
-	void End();
+	void Init();// 初期化
+	void End();// 終了
 	/// <summary>
 	/// 更新処理
 	/// </summary>
 	/// <param name="Hitting">当たっている</param>
 	void Update(bool Hitting);
-	void Draw();
-
+	void Draw();// 描画
 	
-	void UpdateTestVec(bool Hitting);// 移動テスト処理
-	void UpdateMotion(bool hit);
 	void UpdateHitDamage(VECTOR enemyPos, bool hit);// ダメージ
 	void UpdateHitVec();// エネミーとプレイヤーが当たったときの処理
 
@@ -38,10 +35,8 @@ public:
 	
 private:// 関数
 	void UpdatePlayerPos();// キャラクター操作
-	void UpdateCamera();// カメラの更新処理
-	void UpdateVec();// キャラクターの加速度
-	void UpdateIdle();// キャラクターのアイドル状態
 	void UpdateNoHitVec(bool Hitting);// 移動処理
+	void UpdateMotion(bool hit);
 	void UpdateMove(bool Hitting);// キャラクターの動き+α
 
 	void PadInputState();// パッドの入力状態取得
