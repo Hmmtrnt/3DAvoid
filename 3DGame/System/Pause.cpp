@@ -29,6 +29,11 @@ void Pause::Update(int& selectNum)
 			m_posy -= 200;
 			selectNum -= 1;
 		}
+		else
+		{
+			m_posy = kDownPos;
+			selectNum = 2;
+		}
 	}
 	else if (Pad::IsTrigger(PAD_INPUT_DOWN))
 	{
@@ -36,6 +41,11 @@ void Pause::Update(int& selectNum)
 		{
 			m_posy += 200;
 			selectNum += 1;
+		}
+		else
+		{
+			m_posy = kUpPos;
+			selectNum = 0;
 		}
 	}
 	

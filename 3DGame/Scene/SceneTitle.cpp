@@ -5,7 +5,7 @@
 
 namespace
 {
-	const char* const kTitleHandle = "Data/2DImg/Title.png";
+	const char* const kTitleHandle = "Data/2D/Title.png";
 	const char* const kImgName = "Data/3D/BackGround/FieldBackGround.jpg";
 }
 
@@ -71,7 +71,7 @@ void SceneTitle::Draw()
 
 	//DrawRectRotaGraph(0,0,100,100,100,100,1.0,0.0,m_titleHandle, )
 
-	DrawExtendGraph(300, 300, 700, 500, m_titleHandle, true);
+	DrawExtendGraph(350, 200, 900, 400, m_titleHandle, true);
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();
