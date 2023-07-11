@@ -16,6 +16,8 @@ public:
 	// すでにロードされているモデルのハンドルを指定→Duplicateして生成
 	Enemy(int orgModel, std::shared_ptr<Player> pPlayer);
 
+	Enemy();
+
 	virtual ~Enemy();
 
 	void Update();

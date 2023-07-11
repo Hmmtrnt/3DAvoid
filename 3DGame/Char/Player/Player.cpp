@@ -164,7 +164,7 @@ void Player::UpdateHitVec()
 void Player::RoundShadow()
 {
 	// ŠÛ‰e‚Ì‘å‚«‚³
-	float m_scale;
+	//float m_scale;
 
 	DrawBillboard3D(
 		VGet(m_pos.x, 10.0f, m_pos.z),
