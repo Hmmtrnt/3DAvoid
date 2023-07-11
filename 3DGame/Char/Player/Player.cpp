@@ -89,6 +89,7 @@ Player::Player() :
 Player::~Player()
 {
 	DeleteGraph(m_roundShadowHandle);
+	MV1DeleteModel(m_playerHandle);// モデルデータの削除
 }
 
 void Player::Init()
@@ -97,7 +98,6 @@ void Player::Init()
 
 void Player::End()
 {
-	MV1DeleteModel(m_playerHandle);// モデルデータの削除
 }
 
 void Player::Update(bool Hitting)
@@ -123,8 +123,6 @@ void Player::Draw()
 {
 	//RoundShadow();
 	m_pModel->Draw();
-
-
 }
 
 // 当たった時のダメージ

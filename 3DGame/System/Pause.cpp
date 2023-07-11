@@ -1,7 +1,17 @@
 #include "Pause.h"
 #include "../Util/common.h"
 
-Pause::Pause()
+namespace
+{
+	const int kUpPos = 100;// 一番上の座標
+
+	const int kDownPos = 500;// 一番下の座標
+}
+
+Pause::Pause() :
+	m_posx(200),
+	m_posy(kUpPos),
+	m_selectNum(0)
 {
 }
 
@@ -14,7 +24,7 @@ void Pause::Update(int& selectNum)
 	if (Pad::IsTrigger(PAD_INPUT_UP))
 	{
 		
-		if (m_posy == 400)
+		if (m_posy != kUpPos)
 		{
 			m_posy -= 200;
 			selectNum -= 1;
@@ -22,7 +32,7 @@ void Pause::Update(int& selectNum)
 	}
 	else if (Pad::IsTrigger(PAD_INPUT_DOWN))
 	{
-		if (m_posy == 200)
+		if (m_posy != kDownPos)
 		{
 			m_posy += 200;
 			selectNum += 1;
@@ -35,8 +45,9 @@ void Pause::DrawPause()
 {
 	// デバッグ用
 	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
-	DrawBox(200, 200, 400, 300, Color::kBlack, true);// 選択肢一
-	DrawBox(200, 400, 400, 500, Color::kBlack, true);// 選択肢二
+	DrawBox(200, 100, 400, 200, Color::kBlack, true);// 選択肢一
+	DrawBox(200, 300, 400, 400, Color::kBlack, true);// 選択肢二
+	DrawBox(200, 500, 400, 600, Color::kBlack, true);// 選択肢三
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	DrawBox(m_posx, m_posy, m_posx + 200, m_posy + 100, Color::kWhite, true);// カーソル
 
@@ -44,6 +55,7 @@ void Pause::DrawPause()
 	// 選択肢の仮テキスト
 	DrawString(200, 200, "続ける", Color::kRed);
 	DrawString(200, 400, "やり直し", Color::kRed);
+	DrawString(200, 600, "あきらめる", Color::kRed);
 }
 
 void Pause::DrawNote()

@@ -60,7 +60,7 @@ private:
 	int m_hpRedColor;// Hpのカラー赤
 	unsigned int m_hpColor;// Hpのカラー
 	int m_score;// ゲームのスコア
-	int m_BackGroundHandle;// 背景のハンドル
+	int m_backGroundHandle;// 背景のハンドル
 	int m_red;// 赤の値
 	int m_decreaseColor;// 色が消えていく変数
 	int m_enemyModelHandle;// 複製するための敵のコピー

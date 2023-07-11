@@ -15,9 +15,9 @@ public:
 
 private:
 	// テスト変数
-	int m_posx = 200;// カーソル座標X
-	int m_posy = 200;// カーソル座標Y
-	int m_selectNum = 0;// カーソルが選択している場所
+	int m_posx;// カーソル座標X
+	int m_posy;// カーソル座標Y
+	int m_selectNum;// カーソルが選択している場所
 
 
 };

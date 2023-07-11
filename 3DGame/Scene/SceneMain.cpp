@@ -23,7 +23,7 @@ SceneMain::SceneMain() :
 	m_hpRedColor(0),
 	m_hpColor(0),
 	m_score(0),
-	m_BackGroundHandle(-1),
+	m_backGroundHandle(-1),
 	m_enemyModelHandle(0),
 	m_fontHandle(-1),
 	m_selectNum(0),
@@ -39,8 +39,8 @@ SceneMain::SceneMain() :
 	m_pFont = std::make_shared<StringInit>();
 	m_pPause = std::make_shared<Pause>();
 	
-	m_BackGroundHandle = LoadGraph(kImgName);
-	assert(m_BackGroundHandle != -1);
+	m_backGroundHandle = LoadGraph(kImgName);
+	assert(m_backGroundHandle != -1);
 
 	m_red = 255;
 
@@ -49,7 +49,7 @@ SceneMain::SceneMain() :
 
 SceneMain::~SceneMain()
 {
-	DeleteGraph(m_BackGroundHandle);
+	DeleteGraph(m_backGroundHandle);
 }
 
 void SceneMain::Init()
@@ -101,15 +101,15 @@ SceneBase* SceneMain::Update()
 		m_isFadeOut = IsFadingOut();
 		SceneBase::UpdateFade();
 		// フェードアウト終了時
-		// ポーズ画面が開かれているとき
+		// ゲームをやり直すとき
 		if (!IsFading() && m_isFadeOut && !m_isBackScene && m_isNoteOpen)
 		{
 			// リトライ
 			return (new SceneMain());
 			// ポーズ画面の項目が増える予定
 		}
-		// ポーズ画面が閉じているとき
-		else if (!IsFading() && m_isFadeOut && !m_isBackScene && !m_isNoteOpen)
+		// ゲームをあきらめる時
+		else if (!IsFading() && m_isFadeOut && !m_isBackScene && (m_selectNum == 2 || m_pPlayer->GetIsFall()))
 		{
 			// ゲームが終了したとき
 			return (new SceneResult(m_score));
@@ -120,7 +120,7 @@ SceneBase* SceneMain::Update()
 	if (!IsFading())
 	{
 		// キャラが落ちたらまたは注意書きではいを押したらシーン遷移
-		if (m_pPlayer->GetIsFall() || (Pad::IsTrigger(PAD_INPUT_1) && m_isNoteOpen))
+		if (m_pPlayer->GetIsFall() || (Pad::IsTrigger(PAD_INPUT_1) && m_isNoteOpen) || (Pad::IsTrigger(PAD_INPUT_1) && m_selectNum == 2))
 		{
 			//return new SceneMain;// デバッグ用シーン遷移
 
@@ -181,7 +181,7 @@ SceneBase* SceneMain::Update()
 void SceneMain::Draw()
 {
 	// 背景の描画
-	DrawBillboard3D(VGet(-1900.0f, 0.0f, 975.0f), 0.5f, 0.5f, 8000.0f, 0.0f, m_BackGroundHandle, true);
+	DrawBillboard3D(VGet(-1900.0f, 0.0f, 975.0f), 0.5f, 0.5f, 8000.0f, 0.0f, m_backGroundHandle, true);
 
 	// ステージ描画
 	m_pField->Draw();
