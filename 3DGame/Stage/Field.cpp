@@ -5,7 +5,7 @@
 namespace
 {
 	// モデルのファイル名
-	const char* const kFileName = "Data/Field/Field1(toonType2).mv1";
+	const char* const kFileName = "Data/3D/Field/Field3(toonType2).mv1";
 	// 地面に敷き詰めるブロックの数
 	constexpr int kBlockNumX = 10;
 	constexpr int kBlockNumZ = 10;

@@ -4,8 +4,9 @@
 
 namespace
 {
-	// プレイヤーハンドル
-	const char* const kPlayerHandle = "Data/Char/Player/Player2(toonType2).mv1";
+	// ハンドル
+	const char* const kPlayerHandle = "Data/3D/Char/Player/Player3(toonType2).mv1";// プレイヤー
+	const char* const kRoundShadowHandle = "Data/2D/RoundShadow5.png";// 丸影
 
 	// カメラの初期位置
 	constexpr VECTOR kZero{ 0.0f,0.0f,0.0f };
@@ -62,12 +63,12 @@ Player::Player() :
 	m_cameraRotMtx(),
 	m_playerRotMtx(),
 	m_playerHandle(-1),
-	m_AnimNum(kAnimIdle),
+	m_animNum(kAnimIdle),
 	m_playerAngle2(0.0f),
 	m_playerAngleY(0.0f),
 	m_cameraAngle(m_playerAngle2),
-	m_AnimTotalTime(0.0f),
-	m_AnimPlay(0.0f),
+	m_animTotalTime(0.0f),
+	m_animPlay(0.0f),
 	m_jumpAcc(0.0f),
 	m_pressUp(false),
 	m_pressDown(false),
@@ -78,13 +79,16 @@ Player::Player() :
 	m_isFall(false),
 	m_blowRate(0)
 {
-	m_pModel = std::make_shared<Model>(kPlayerHandle);
-	m_pEnemy = std::make_shared<Enemy>(m_pPlayer);
-	m_pModel->SetAnimation(m_AnimNum, true, true);// アニメーション設定
+	// メモリ確保
+	m_pModel = std::make_shared<Model>(kPlayerHandle);// モデル
+	m_pEnemy = std::make_shared<Enemy>(m_pPlayer);// エネミー
+	m_roundShadowHandle = LoadGraph(kRoundShadowHandle);// 丸影画像ロード
+	m_pModel->SetAnimation(m_animNum, true, true);// アニメーション設定
 }
 
 Player::~Player()
 {
+	DeleteGraph(m_roundShadowHandle);
 }
 
 void Player::Init()
@@ -117,7 +121,10 @@ void Player::Update(bool Hitting)
 // プレイヤー描画
 void Player::Draw()
 {
+	//RoundShadow();
 	m_pModel->Draw();
+
+
 }
 
 // 当たった時のダメージ
@@ -154,14 +161,30 @@ void Player::UpdateHitVec()
 	StartJoypadVibration(DX_INPUT_PAD1, m_blowRate + 200, 100, -1);
 }
 
+// プレイヤーの丸影
+void Player::RoundShadow()
+{
+	// 丸影の大きさ
+	float m_scale;
+
+	DrawBillboard3D(
+		VGet(m_pos.x, 10.0f, m_pos.z),
+		0.5f, 0.5f,
+		120.0f, 2.0f,
+		m_roundShadowHandle,
+		true
+	);
+
+}
+
 void Player::UpdateNoHitVec(bool Hitting)
 {
 	m_isMove = false;
 	// プレイヤーに何も起こっていない状態
 	if (!m_isFall && !Hitting)
 	{
-		if (input.ThumbLX >= 5000 || input.ThumbLX <= -5000 ||
-			input.ThumbLY >= 5000 || input.ThumbLY <= -5000)
+		if (m_input.ThumbLX >= 5000 || m_input.ThumbLX <= -5000 ||
+			m_input.ThumbLY >= 5000 || m_input.ThumbLY <= -5000)
 		{
 			// スティックを傾けただけで移動
 			m_pos = VAdd(m_pos, m_move);
@@ -170,15 +193,15 @@ void Player::UpdateNoHitVec(bool Hitting)
 			// メモ360 = 91, 180 = 182;
 
 			// 180度回転
-			if (input.ThumbLY > 0)
+			if (m_input.ThumbLY > 0)
 			{
-				m_playerAngleY = (input.ThumbLX / 182 / 2) * kAnglePI;
+				m_playerAngleY = (m_input.ThumbLX / 182 / 2) * kAnglePI;
 				m_playerAngleY = m_playerAngleY + (-180 * kAnglePI);
 			}
 			// 180度以降回転を反転
-			else if (input.ThumbLY < 0)
+			else if (m_input.ThumbLY < 0)
 			{
-				m_playerAngleY = -(input.ThumbLX / 182 / 2) * kAnglePI;
+				m_playerAngleY = -(m_input.ThumbLX / 182 / 2) * kAnglePI;
 			}
 		}
 	}
@@ -189,36 +212,36 @@ void Player::UpdateMotion(bool hit)
 	if (hit)
 	{
 		// ダメージ状態
-		m_AnimNum = kAnimDamage;
-		m_pModel->ChangeAnimation(m_AnimNum, false, true, 10);
+		m_animNum = kAnimDamage;
+		m_pModel->ChangeAnimation(m_animNum, false, true, 10);
 	}
 	else
 	{
 		if (m_isMove && !m_isJump && !m_isFall)
 		{
-			if (m_AnimNum != kAnimRun)
+			if (m_animNum != kAnimRun)
 			{
 				// 移動アニメーション
-				m_AnimNum = kAnimRun;
-				m_pModel->ChangeAnimation(m_AnimNum, true, true, 5);
+				m_animNum = kAnimRun;
+				m_pModel->ChangeAnimation(m_animNum, true, true, 5);
 			}
 		}
 		else if (m_isJump)
 		{
-			if (m_AnimNum != kAnimJump)
+			if (m_animNum != kAnimJump)
 			{
 				// ジャンプアニメーション
-				m_AnimNum = kAnimJump;
-				m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+				m_animNum = kAnimJump;
+				m_pModel->ChangeAnimation(m_animNum, true, true, 10);
 			}
 		}
 		else if (!m_isMove && !m_isJump)
 		{
-			if (m_AnimNum != kAnimIdle)
+			if (m_animNum != kAnimIdle)
 			{
 				// 移動からアイドル状態
-				m_AnimNum = kAnimIdle;
-				m_pModel->ChangeAnimation(m_AnimNum, true, true, 10);
+				m_animNum = kAnimIdle;
+				m_pModel->ChangeAnimation(m_animNum, true, true, 10);
 			}
 		}
 	}
@@ -264,8 +287,8 @@ void Player::UpdateMove(bool Hitting)
 		m_pos.y <= 0.0f)
 	{
 		// 落下アニメーション
-		m_AnimNum = kAnimFall;
-		m_pModel->ChangeAnimation(m_AnimNum, false, true, 5);
+		m_animNum = kAnimFall;
+		m_pModel->ChangeAnimation(m_animNum, false, true, 5);
 
 		// 落下
 		m_pos.y-=1.0f;
@@ -289,7 +312,7 @@ void Player::UpdateMove(bool Hitting)
 	// プレイヤーの座標
 	m_pModel->SetPos(m_pos);
 	// プレイヤーの回転率
-	m_pModel->SetRot(VGet(0.0f, m_playerAngleY, 0.0f));
+	m_pModel->SetRot(VGet(0.5f, m_playerAngleY, 0.0f));
 	// プレイヤーの拡大率
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
@@ -297,7 +320,7 @@ void Player::UpdateMove(bool Hitting)
 void Player::PadInputState()
 {
 	// 入力状態取得
-	GetJoypadXInputState(DX_INPUT_PAD1, &input);
+	GetJoypadXInputState(DX_INPUT_PAD1, &m_input);
 	// 画面に XINPUT_STATE の中身を描画
 	/*DrawFormatString(0, 0, Color::kWhite, "LeftTrigger:%d RightTrigger:%d",
 		input.LeftTrigger, input.RightTrigger);
@@ -313,8 +336,4 @@ void Player::PadInputState()
 	}*/
 }
 
-// プレイヤーの丸影
-void Player::RoundShadow()
-{
 
-}

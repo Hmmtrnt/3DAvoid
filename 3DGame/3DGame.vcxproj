@@ -156,6 +156,7 @@
     <ClCompile Include="Char\Enemy\Enemy.cpp" />
     <ClCompile Include="Char\Enemy\EnemyBig.cpp" />
     <ClCompile Include="Char\Enemy\EnemyBase.cpp" />
+    <ClCompile Include="Util\ShadowMap.cpp" />
     <ClCompile Include="System\Pause.cpp" />
     <ClCompile Include="Scene\SceneResult.cpp" />
     <ClCompile Include="Stage\Field.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Char\Enemy\Enemy.h" />
     <ClInclude Include="Char\Enemy\EnemyBig.h" />
     <ClInclude Include="Char\Enemy\EnemyBase.h" />
+    <ClInclude Include="Util\ShadowMap.h" />
     <ClInclude Include="System\Pause.h" />
     <ClInclude Include="Scene\SceneResult.h" />
     <ClInclude Include="Stage\Field.h" />

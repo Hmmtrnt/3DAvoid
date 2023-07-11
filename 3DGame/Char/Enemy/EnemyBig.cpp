@@ -6,7 +6,7 @@
 namespace
 {
 	// キャラクターハンドル
-	const char* const kEnemyHandle = "Data/Char/Enemy/Enemy3(toonType2).mv1";
+	const char* const kEnemyHandle = "Data/3D/Char/Enemy/Enemy3(toonType2).mv1";
 
 	// エネミーの初期スピード
 	constexpr int kSpeed = 3;
@@ -75,6 +75,7 @@ void EnemyBig::Update(int score)
 
 void EnemyBig::Draw()
 {
+	RoundShadow(500.0f);
 	m_pModel->Draw();
 }
 
@@ -141,7 +142,7 @@ void EnemyBig::UpdateMove(int score)
 	
 
 	m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
+	m_pModel->SetRot(VGet(0.5f, m_angle, 0.0f));
 	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));
 }
 

@@ -20,6 +20,10 @@ public:
 	// エネミーの動き
 	void EnemyMove();
 
+	// 丸影描画
+
+	void RoundShadow(int scale);
+
 	// モデルの取得
 	int GetModelHandle()const;
 
@@ -41,5 +45,6 @@ protected:
 	// int
 	int m_modelHandle;	// エネミーのモデルハンドル
 	int m_animMove;		// エネミーのモーション番号
+	int m_roundShadowHandle;// 丸影ハンドル
 };
 

@@ -13,7 +13,7 @@
 namespace
 {
 	// ”wŒi‚Ì‰æ‘œƒtƒ@ƒCƒ‹‚ÌêŠ
-	const char* const kImgName = "Data/BackGround/FieldBackGround.jpg";
+	const char* const kImgName = "Data/3D/BackGround/FieldBackGround.jpg";
 }
 
 SceneMain::SceneMain() :
@@ -183,26 +183,31 @@ void SceneMain::Draw()
 	// ”wŒi‚Ì•`‰æ
 	DrawBillboard3D(VGet(-1900.0f, 0.0f, 975.0f), 0.5f, 0.5f, 8000.0f, 0.0f, m_BackGroundHandle, true);
 
+	// ƒXƒe[ƒW•`‰æ
+	m_pField->Draw();
+
 	// ƒvƒŒƒCƒ„[‚Ì•`‰æ
 	if (m_invincibleTime % 3 == 0 || m_pushPause)
 	{
 		m_pPlayer->Draw();
 	}
+	if (m_pPlayer->GetPos().x < 1000.0f && m_pPlayer->GetPos().x > -1000.0f &&
+		m_pPlayer->GetPos().z < 1000.0f && m_pPlayer->GetPos().z > -1000.0f)
+	{
+		m_pPlayer->RoundShadow();
+	}
 
 	// “G‚Ì•`‰æ
-	for (auto& enemies : m_pEnemy)
-	{
-		enemies->Draw();
-	}
 	for (auto& enemiesBig : m_pEnemyBig)
 	{
 		enemiesBig->Draw();
 	}
+	for (auto& enemies : m_pEnemy)
+	{
+		enemies->Draw();
+	}
 	
-	// ƒXƒe[ƒW•`‰æ
-	m_pField->Draw();
-	//m_pWall->Draw();
-
+	
 	// Žó‚¯‚½ƒ_ƒ[ƒW‚É‚æ‚Á‚ÄF•ÏX
 	UpdateColor();
 
@@ -361,8 +366,8 @@ void SceneMain::UpdatePauseNo()
 	if (!m_pPlayer->GetIsFall())
 	{
 #ifdef _DEBUG
-		m_score++;
-		//m_score+=10;
+		//m_score++;
+		m_score+=10;
 #else
 		m_score++;
 #endif

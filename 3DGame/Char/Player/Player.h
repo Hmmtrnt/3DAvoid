@@ -22,6 +22,7 @@ public:
 	
 	void UpdateHitDamage(VECTOR enemyPos, bool hit);// ダメージ
 	void UpdateHitVec();// エネミーとプレイヤーが当たったときの処理
+	void RoundShadow();// プレイヤーの丸影
 
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }
@@ -33,14 +34,12 @@ public:
 	// 落ちているかどうかの真偽
 	bool GetIsFall()const { return m_isFall; }
 	
+	
 private:// 関数
 	void UpdateNoHitVec(bool Hitting);// 移動処理
 	void UpdateMotion(bool hit);
 	void UpdateMove(bool Hitting);// キャラクターの動き+α
-
 	void PadInputState();// パッドの入力状態取得
-	
-	void RoundShadow();// プレイヤーの丸影
 
 	// メンバ関数ポインタ
 	//void (Player::* m_updateFunc)();
@@ -65,7 +64,9 @@ private:// 変数
 
 	// int
 	int m_playerHandle;		// キャラクターハンドル
-	int m_AnimNum;			// アニメーションの番号
+	int m_roundShadowHandle;// キャラクターの丸影ハンドル
+
+	int m_animNum;			// アニメーションの番号
 	int m_blowRate;			// 吹っ飛び率
 
 	// float
@@ -73,8 +74,8 @@ private:// 変数
 	float m_playerAngleY;	// プレイヤーのY軸回転
 	float m_cameraAngle;	// カメラアングル
 
-	float m_AnimTotalTime;	// アニメーションの全体フレーム
-	float m_AnimPlay;		// アニメーションの再生
+	float m_animTotalTime;	// アニメーションの全体フレーム
+	float m_animPlay;		// アニメーションの再生
 
 	float m_jumpAcc;		// ジャンプ加速度
 
@@ -89,6 +90,6 @@ private:// 変数
 	bool m_isFall;			// ステージ外に出たかどうか
 
 	// テスト
-	XINPUT_STATE input;// パッド状態取得変数
+	XINPUT_STATE m_input;// パッド状態取得変数
 };
 

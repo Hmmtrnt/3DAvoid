@@ -2,6 +2,9 @@
 
 namespace
 {
+	// 丸影ハンドル
+	const char* const kRoundShadowHandle = "Data/2D/RoundShadow5.png";// 丸影
+
 	// エネミーのモーション番号
 	constexpr int kAnimMove = 2;// 移動状態
 
@@ -30,12 +33,16 @@ EnemyBase::EnemyBase() :
 	m_pos.y = 0.0f;
 	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
 	//m_pos.z = 0;
+
+	m_roundShadowHandle = LoadGraph(kRoundShadowHandle);// 丸影画像ロード
 }
 
 EnemyBase::~EnemyBase()
 {
 	// モデルのメモリ削除
 	MV1DeleteModel(m_modelHandle);
+	// ハンドルデータのメモリ削除
+	DeleteGraph(m_roundShadowHandle);
 }
 
 void EnemyBase::EnemyMove()
@@ -47,6 +54,17 @@ void EnemyBase::EnemyMove()
 	m_vec = VScale(m_dir, m_speed);
 	// 移動させる
 	m_pos = VAdd(m_pos, m_vec);
+}
+
+void EnemyBase::RoundShadow(int scale)
+{
+	DrawBillboard3D(
+		VGet(m_pos.x, 20.0f, m_pos.z),
+		0.5f, 0.5f,
+		scale, 0.0f,
+		m_roundShadowHandle,
+		true
+	);
 }
 
 int EnemyBase::GetModelHandle() const
