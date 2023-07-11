@@ -49,7 +49,7 @@ private:
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
 	std::vector<std::shared_ptr<EnemyBig>> m_pEnemyBig;// エネミー
 
-	std::vector<std::shared_ptr<EnemyBase>> m_pEnemyTest;// テスト変数エネミー
+	//std::vector<std::shared_ptr<EnemyBase>> m_pEnemyTest;// テスト変数エネミー
 
 	std::shared_ptr<StringInit> m_pFont;// フォント
 	std::shared_ptr<Pause> m_pPause;

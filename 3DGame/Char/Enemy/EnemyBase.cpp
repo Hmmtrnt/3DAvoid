@@ -56,7 +56,7 @@ void EnemyBase::EnemyMove()
 	m_pos = VAdd(m_pos, m_vec);
 }
 
-void EnemyBase::RoundShadow(int scale)
+void EnemyBase::RoundShadow(float scale)
 {
 	DrawBillboard3D(
 		VGet(m_pos.x, 20.0f, m_pos.z),

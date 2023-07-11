@@ -35,10 +35,10 @@ Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
 	m_pPlayer(pPlayer)
 {
 	// モデルのロード
-	m_modelHandle = MV1LoadModel(kEnemyHandle);
+	//m_modelHandle = MV1LoadModel(kEnemyHandle);
 
 	// ポインタのメモリ確保
-	m_pModel = std::make_shared<Model>(m_modelHandle);
+	m_pModel = std::make_shared<Model>(orgModel);
 	// 敵のアニメーション設定
 	m_pModel->SetAnimation(m_animMove, true, true);
 	// 敵の向きの初期化
@@ -58,6 +58,21 @@ Enemy::Enemy()
 
 	// ポインタのメモリ確保
 	m_pModel = std::make_shared<Model>(m_modelHandle);
+	// 敵のアニメーション設定
+	m_pModel->SetAnimation(m_animMove, true, true);
+	// 敵の向きの初期化
+	m_angle = GetRand(360) * DX_PI_F / 180;
+	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
+
+	m_pModel->SetPos(m_pos);
+	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+}
+
+Enemy::Enemy(int orgModel)
+{
+	// ポインタのメモリ確保
+	m_pModel = std::make_shared<Model>(orgModel);
 	// 敵のアニメーション設定
 	m_pModel->SetAnimation(m_animMove, true, true);
 	// 敵の向きの初期化
@@ -131,8 +146,8 @@ void Enemy::UpdateTitle()
 
 	m_pModel->Update();
 
-	m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.5f, m_angle, 0.0f));
+	m_pModel->SetPos(VGet(0.0f,0.0f,0.0f));
+	m_pModel->SetRot(VGet(0.0f, 0.0f, 0.0f));
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 

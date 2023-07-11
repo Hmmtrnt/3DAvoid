@@ -18,7 +18,15 @@ SceneTitle::SceneTitle() :
 
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
-	m_pEnemy = std::make_shared<Enemy>();
+	// 一体目のエネミー生成
+	m_pEnemy.push_back(std::make_shared<Enemy>(m_pPlayer));
+	m_pEnemy.back()->Init();
+
+	m_enemyHandle = m_pEnemy.back()->GetModelHandle();
+
+	m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyHandle));
+	m_pEnemy.back()->Init();
+
 }
 
 SceneTitle::~SceneTitle()
@@ -62,6 +70,11 @@ SceneBase* SceneTitle::Update()
 	
 	m_pPlayer->UpdateTitle();
 
+	for (auto& enemies : m_pEnemy) {
+		enemies->UpdateTitle();
+	}
+	
+
 	return this;
 }
 
@@ -70,6 +83,10 @@ void SceneTitle::Draw()
 	DrawBillboard3D(VGet(-1900.0f, 0.0f, 975.0f), 0.5f, 0.5f, 8000.0f, 0.0f, m_backGroundHandle, true);
 
 	m_pPlayer->Draw();
+	for (auto& enemies : m_pEnemy) {
+		enemies->Draw();
+	}
+	
 
 	DrawString(0, 0, "Title", 0xffffff);
 

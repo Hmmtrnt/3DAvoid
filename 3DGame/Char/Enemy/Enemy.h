@@ -16,7 +16,10 @@ public:
 	// すでにロードされているモデルのハンドルを指定→Duplicateして生成
 	Enemy(int orgModel, std::shared_ptr<Player> pPlayer);
 
+	// タイトル画面で使用
 	Enemy();
+	// 二体目以降を複製
+	Enemy(int orgModel);
 
 	virtual ~Enemy();
 

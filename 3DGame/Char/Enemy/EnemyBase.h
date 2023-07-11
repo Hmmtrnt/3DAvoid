@@ -22,7 +22,7 @@ public:
 
 	// ŠÛ‰e•`‰æ
 
-	void RoundShadow(int scale);
+	void RoundShadow(float scale);
 
 	// ƒ‚ƒfƒ‹‚ÌŽæ“¾
 	int GetModelHandle()const;
