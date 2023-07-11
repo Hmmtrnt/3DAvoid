@@ -100,7 +100,7 @@ void Player::Update(bool Hitting)
 {
 	UpdateMove(Hitting);
 
-	// デバッグ用ダメージ
+	// デバッグ確認用ダメージ
 	if (Pad::IsTrigger(PAD_INPUT_3))
 	{
 		m_blowRate += 10;
@@ -112,9 +112,9 @@ void Player::Update(bool Hitting)
 			m_blowRate -= 10;
 		}
 	}
-	
 }
 
+// プレイヤー描画
 void Player::Draw()
 {
 	m_pModel->Draw();
@@ -154,13 +154,6 @@ void Player::UpdateHitVec()
 	StartJoypadVibration(DX_INPUT_PAD1, m_blowRate + 200, 100, -1);
 }
 
-// 使ってない
-void Player::UpdatePlayerPos()
-{
-	m_pos.z += m_vec.z;
-	m_pos.x += m_vec.x;
-}
-
 void Player::UpdateNoHitVec(bool Hitting)
 {
 	m_isMove = false;
@@ -175,11 +168,13 @@ void Player::UpdateNoHitVec(bool Hitting)
 
 			// メモ360 = 91, 180 = 182;
 
+			// 180度回転
 			if (input.ThumbLY > 0)
 			{
 				m_playerAngleY = (input.ThumbLX / 182 / 2) * kAnglePI;
 				m_playerAngleY = m_playerAngleY + (-180 * kAnglePI);
 			}
+			// 180度以降回転を反転
 			else if (input.ThumbLY < 0)
 			{
 				m_playerAngleY = -(input.ThumbLX / 182 / 2) * kAnglePI;
@@ -316,12 +311,3 @@ void Player::PadInputState()
 			"%2d:%d", i, input.Buttons[i]);
 	}*/
 }
-
-// 角度の計算：使ってない
-int Player::TestCalculate()
-{
-	m_testRusult = m_angleTest - m_playerAngleY;
-
-	return static_cast<int>(m_testRusult);
-}
-

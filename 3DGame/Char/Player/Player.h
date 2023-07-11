@@ -34,19 +34,12 @@ public:
 	bool GetIsFall()const { return m_isFall; }
 	
 private:// 関数
-	void UpdatePlayerPos();// キャラクター操作
 	void UpdateNoHitVec(bool Hitting);// 移動処理
 	void UpdateMotion(bool hit);
 	void UpdateMove(bool Hitting);// キャラクターの動き+α
 
 	void PadInputState();// パッドの入力状態取得
-
-	//--------------------------------------------------------
-	// テスト関数
-	//--------------------------------------------------------
-
-	int TestCalculate();// アングルの計算
-
+	
 	// メンバ関数ポインタ
 	//void (Player::* m_updateFunc)();
 	
@@ -83,7 +76,6 @@ private:// 変数
 
 	float m_jumpAcc;		// ジャンプ加速度
 
-
 	// bool
 	bool m_pressUp;			// 上キーを押し続けたかどうか
 	bool m_pressDown;		// 下キーを押し続けたかどうか
@@ -95,13 +87,6 @@ private:// 変数
 	bool m_isFall;			// ステージ外に出たかどうか
 
 	// テスト
-	float m_angleTest = 0.0f;// 回転最大値
-	
-	float m_testRusult = 0.0f;// 計算結果
-
-	bool m_isFlag = false;// 回転
-
-
 	XINPUT_STATE input;// パッド状態取得変数
 };
 
