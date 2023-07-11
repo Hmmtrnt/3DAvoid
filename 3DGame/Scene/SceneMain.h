@@ -10,7 +10,6 @@ class EnemyBase;
 class Enemy;
 class EnemyBig;
 class Field;
-class Wall;
 class StringInit;
 class Pause;
 
@@ -47,7 +46,6 @@ private:
 	std::shared_ptr<GameSetting> m_pSet;// 環境設定
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 	std::shared_ptr<Field> m_pField;// ステージ
-	std::shared_ptr<Wall> m_pWall;// 壁
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
 	std::vector<std::shared_ptr<EnemyBig>> m_pEnemyBig;// エネミー
 

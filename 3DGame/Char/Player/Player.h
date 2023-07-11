@@ -20,7 +20,7 @@ public:
 	void Update(bool Hitting);
 	void Draw();
 
-	void UpdateNoHitVec(bool Hitting);// 移動処理
+	
 	void UpdateTestVec(bool Hitting);// 移動テスト処理
 	void UpdateMotion(bool hit);
 	void UpdateHitDamage(VECTOR enemyPos, bool hit);// ダメージ
@@ -41,7 +41,7 @@ private:// 関数
 	void UpdateCamera();// カメラの更新処理
 	void UpdateVec();// キャラクターの加速度
 	void UpdateIdle();// キャラクターのアイドル状態
-
+	void UpdateNoHitVec(bool Hitting);// 移動処理
 	void UpdateMove(bool Hitting);// キャラクターの動き+α
 
 	void PadInputState();// パッドの入力状態取得

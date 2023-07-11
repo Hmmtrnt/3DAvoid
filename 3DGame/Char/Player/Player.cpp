@@ -127,100 +127,7 @@ void Player::Draw()
 	//DrawFormatString(0, 200, Color::kWhite, "PlayerAngle:%d", m_playerAngleY);
 }
 
-void Player::UpdateNoHitVec(bool Hitting)
-{
-	m_isMove = false;
-	if (!m_isFall && !Hitting)
-	{
-		// 旧移動処理↓
 
-		// 上下キー
-		//if (Pad::IsPress(PAD_INPUT_UP))
-		//{
-		//	if (m_pos.z <= 950)
-		//	{
-		//		m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, kTopSpeed));
-		//		m_isMove = true;
-		//		m_playerAngleY = kAngleUp;
-		//	}
-		//}
-		//if (Pad::IsPress(PAD_INPUT_DOWN))
-		//{
-		//	if (m_pos.z >= -950)
-		//	{
-		//		m_vec = VAdd(m_vec, VGet(0.0f, 0.0f, -kTopSpeed));
-		//		m_isMove = true;
-		//		m_playerAngleY = kAngleDown;
-		//	}
-		//}
-		//// 左右キー
-		//if (Pad::IsPress(PAD_INPUT_LEFT))
-		//{
-		//	if (m_pos.x >= -950)
-		//	{
-		//		m_vec = VAdd(m_vec, VGet(-kTopSpeed, 0.0f, 0.0f));
-		//		m_isMove = true;
-		//		m_playerAngleY = kAngleLeft;
-		//	}
-		//}
-		//if (Pad::IsPress(PAD_INPUT_RIGHT))
-		//{
-		//	if (m_pos.x <= 950)
-		//	{
-		//		m_vec = VAdd(m_vec, VGet(kTopSpeed, 0.0f, 0.0f));
-		//		m_isMove = true;
-		//		m_playerAngleY = kAngleRight;
-		//	}
-		//}
-
-		if (input.ThumbLX >= 5000 || input.ThumbLX <= -5000 ||
-			input.ThumbLY >= 5000 || input.ThumbLY <= -5000)
-		{
-			m_pos = VAdd(m_pos, m_move);
-			m_isMove = true;
-
-			// メモ360 = 91, 180 = 182;
-
-			if (input.ThumbLY > 0)
-			{
-				m_playerAngleY = (input.ThumbLX / 182 / 2) * kAnglePI;
-				m_playerAngleY = m_playerAngleY + (-180 * kAnglePI);
-			}
-			else if (input.ThumbLY < 0)
-			{
-				m_playerAngleY = -(input.ThumbLX / 182 / 2) * kAnglePI;
-			}
-		}
-	}
-
-	// 正規化移動処理
-	//if (VSize(m_vec) > 0)
-	//{
-	//	m_vec = VNorm(m_vec);
-	//}
-	//m_vec = VScale(m_vec, kTopSpeed);
-	//m_pos = VAdd(m_pos, m_vec);
-	//if (!m_isFall && !Hitting)
-	//{
-	//	// 斜め入力時の角度
-	//	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_LEFT))
-	//	{
-	//		m_playerAngleY = kAngleUpLeft;
-	//	}
-	//	if (Pad::IsPress(PAD_INPUT_UP) && Pad::IsPress(PAD_INPUT_RIGHT))
-	//	{
-	//		m_playerAngleY = kAngleUpRight;
-	//	}
-	//	if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_LEFT))
-	//	{
-	//		m_playerAngleY = kAngleDownLeft;
-	//	}
-	//	if (Pad::IsPress(PAD_INPUT_DOWN) && Pad::IsPress(PAD_INPUT_RIGHT))
-	//	{
-	//		m_playerAngleY = kAngleDownRight;
-	//	}
-	//}
-}
 
 void Player::UpdateTestVec(bool Hitting)
 {
@@ -599,6 +506,33 @@ void Player::UpdateIdle()
 	m_pModel->SetRot(VGet(0.0f,m_playerAngleY,0.0f));
 
 	//UpdateCamera();
+}
+
+void Player::UpdateNoHitVec(bool Hitting)
+{
+	m_isMove = false;
+	// プレイヤーに何も起こっていない状態
+	if (!m_isFall && !Hitting)
+	{
+		if (input.ThumbLX >= 5000 || input.ThumbLX <= -5000 ||
+			input.ThumbLY >= 5000 || input.ThumbLY <= -5000)
+		{
+			m_pos = VAdd(m_pos, m_move);
+			m_isMove = true;
+
+			// メモ360 = 91, 180 = 182;
+
+			if (input.ThumbLY > 0)
+			{
+				m_playerAngleY = (input.ThumbLX / 182 / 2) * kAnglePI;
+				m_playerAngleY = m_playerAngleY + (-180 * kAnglePI);
+			}
+			else if (input.ThumbLY < 0)
+			{
+				m_playerAngleY = -(input.ThumbLX / 182 / 2) * kAnglePI;
+			}
+		}
+	}
 }
 
 // プレイヤーの更新処理

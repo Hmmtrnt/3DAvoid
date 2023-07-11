@@ -102,9 +102,6 @@
     <ClCompile Include="System\Pause.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="Stage\Wall.cpp">
-      <Filter>ソース ファイル\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="Char\Enemy\EnemyBase.cpp">
       <Filter>ソース ファイル\Char\Enemy</Filter>
     </ClCompile>
@@ -160,9 +157,6 @@
     </ClInclude>
     <ClInclude Include="System\Pause.h">
       <Filter>ヘッダー ファイル\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage\Wall.h">
-      <Filter>ヘッダー ファイル\Stage</Filter>
     </ClInclude>
     <ClInclude Include="Char\Enemy\EnemyBase.h">
       <Filter>ヘッダー ファイル\Char\Enemy</Filter>

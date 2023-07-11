@@ -6,7 +6,6 @@
 #include "../Char/Enemy/Enemy.h"
 #include "../Char/Enemy/EnemyBig.h"
 #include "../Stage/Field.h"
-#include "../Stage/Wall.h"
 #include <cassert>
 #include "../Util/FontFunction.h"
 #include "../System/Pause.h"
@@ -37,7 +36,6 @@ SceneMain::SceneMain() :
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
 	m_pField = std::make_shared<Field>();
-	m_pWall = std::make_shared<Wall>();
 	m_pFont = std::make_shared<StringInit>();
 	m_pPause = std::make_shared<Pause>();
 	
