@@ -24,6 +24,8 @@ public:
 	void UpdateHitVec();// エネミーとプレイヤーが当たったときの処理
 	void RoundShadow();// プレイヤーの丸影
 
+	void UpdateTitle();// タイトル画面のプレイヤーの更新処理
+
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }
 	VECTOR GetVec()const { return m_vec; }

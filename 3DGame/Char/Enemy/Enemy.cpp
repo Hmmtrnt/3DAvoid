@@ -108,6 +108,16 @@ void Enemy::UpdateMove()
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
+void Enemy::UpdateTitle()
+{
+
+	m_pModel->Update();
+
+	m_pModel->SetPos(m_pos);
+	m_pModel->SetRot(VGet(0.5f, m_angle, 0.0f));
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+}
+
 bool Enemy::ColFlag()
 {
 	float colx = m_pPlayer->GetPos().x - m_pos.x;

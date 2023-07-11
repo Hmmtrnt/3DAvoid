@@ -2,6 +2,7 @@
 #include "SceneMain.h"
 #include "../Util/GameSetting.h"
 #include "../Char/Player/Player.h"
+#include "../Char/Enemy/Enemy.h"
 
 namespace
 {
@@ -17,6 +18,7 @@ SceneTitle::SceneTitle() :
 
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
+	m_pEnemy = std::make_shared<Enemy>();
 }
 
 SceneTitle::~SceneTitle()
@@ -28,7 +30,7 @@ SceneTitle::~SceneTitle()
 void SceneTitle::Init()
 {
 	m_pSet->Init3D();
-	m_pSet->InitCamera();
+	m_pSet->InitSceneTitleCamera();
 }
 
 void SceneTitle::End()
@@ -58,6 +60,7 @@ SceneBase* SceneTitle::Update()
 		}
 	}
 	
+	m_pPlayer->UpdateTitle();
 
 	return this;
 }
@@ -65,6 +68,9 @@ SceneBase* SceneTitle::Update()
 void SceneTitle::Draw()
 {
 	DrawBillboard3D(VGet(-1900.0f, 0.0f, 975.0f), 0.5f, 0.5f, 8000.0f, 0.0f, m_backGroundHandle, true);
+
+	m_pPlayer->Draw();
+
 	DrawString(0, 0, "Title", 0xffffff);
 
 	//DrawGraph(Game::kScreenWidth, Game::kScreenHeight, m_titleHandle, true);

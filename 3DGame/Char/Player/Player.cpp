@@ -18,7 +18,7 @@ namespace
 	constexpr int kAnimIdle = 3;// アイドル状態
 	constexpr int kAnimWalk = 14;// 歩く状態
 	constexpr int kAnimRun = 11;// 走る状態
-	constexpr int kAnimJump = 7;// ジャンプ状態
+	constexpr int kAnimJump = 7;// ジャンプアイドル状態
 	constexpr int kAnimDamage = 2;// 敵に当たった時の状態
 
 	// プレイヤーの移動
@@ -88,8 +88,9 @@ Player::Player() :
 
 Player::~Player()
 {
-	DeleteGraph(m_roundShadowHandle);
-	MV1DeleteModel(m_playerHandle);// モデルデータの削除
+	// データの削除
+	DeleteGraph(m_roundShadowHandle);// 丸影ハンドル
+	MV1DeleteModel(m_playerHandle);// モデル
 }
 
 void Player::Init()
@@ -173,6 +174,21 @@ void Player::RoundShadow()
 		true
 	);
 
+}
+
+// タイトル更新処理
+void Player::UpdateTitle()
+{
+	// プレイヤーのタイトルでのアニメーション
+	m_pModel->ChangeAnimation(kAnimJump, true, true, 10);
+	m_pModel->Update();
+
+	// プレイヤーの座標
+	m_pModel->SetPos(VGet(-150.0f,-170.0f,0.0f));
+	// プレイヤーの回転率
+	m_pModel->SetRot(VGet(0.0f, 0.4f, 0.0f));
+	// プレイヤーの拡大率
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
 void Player::UpdateNoHitVec(bool Hitting)

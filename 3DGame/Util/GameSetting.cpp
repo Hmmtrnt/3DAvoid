@@ -12,7 +12,7 @@ void GameSetting::Init3D()
 }
 
 //カメラの設定
-void GameSetting::InitCamera()
+void GameSetting::InitSceneMainCamera()
 {
 	// near,far
 	SetCameraNearFar(5.0f, 2800.0f);
@@ -20,4 +20,14 @@ void GameSetting::InitCamera()
 	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
 	// カメラの位置、どこを見ているかを設定する
 	SetCameraPositionAndTarget_UpVecY(VGet(0, 1700, -400), VGet(0.0f, 0.0f, -100.0f));
+}
+
+void GameSetting::InitSceneTitleCamera()
+{
+	// near,far
+	SetCameraNearFar(5.0f, 2800.0f);
+	// カメラの視野角を設定（ラジアン）
+	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
+	// カメラの位置、どこを見ているかを設定する
+	SetCameraPositionAndTarget_UpVecY(VGet(0, 0, -400), VGet(0.0f, 0.0f, 0.0f));
 }

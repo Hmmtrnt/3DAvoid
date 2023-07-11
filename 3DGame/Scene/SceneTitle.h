@@ -5,6 +5,7 @@
 
 class GameSetting;
 class Player;
+class Enemy;
 
 class SceneTitle : public SceneBase
 {
@@ -21,6 +22,7 @@ private:
 	// ポインタ
 	std::shared_ptr<GameSetting> m_pSet;// 環境設定
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
+	std::shared_ptr<Enemy> m_pEnemy;// エネミー
 
 	// int
 	int m_titleHandle;// タイトルの画像ハンドル
