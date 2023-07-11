@@ -40,6 +40,8 @@ private:// 関数
 
 	void PadInputState();// パッドの入力状態取得
 	
+	void RoundShadow();// プレイヤーの丸影
+
 	// メンバ関数ポインタ
 	//void (Player::* m_updateFunc)();
 	

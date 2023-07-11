@@ -163,6 +163,7 @@ void Player::UpdateNoHitVec(bool Hitting)
 		if (input.ThumbLX >= 5000 || input.ThumbLX <= -5000 ||
 			input.ThumbLY >= 5000 || input.ThumbLY <= -5000)
 		{
+			// スティックを傾けただけで移動
 			m_pos = VAdd(m_pos, m_move);
 			m_isMove = true;
 
@@ -310,4 +311,10 @@ void Player::PadInputState()
 		DrawFormatString(64 + i % 8 * 64, 64 + i / 8 * 16, Color::kWhite,
 			"%2d:%d", i, input.Buttons[i]);
 	}*/
+}
+
+// プレイヤーの丸影
+void Player::RoundShadow()
+{
+
 }
