@@ -146,8 +146,8 @@ void Enemy::UpdateTitle()
 
 	m_pModel->Update();
 
-	m_pModel->SetPos(VGet(150.0f,-130.0f,0.0f));
-	m_pModel->SetRot(VGet(0.0f, 0.0f, 0.0f));
+	m_pModel->SetPos(VGet(150.0f,-130.0f,100.0f));
+	m_pModel->SetRot(VGet(0.0f, 1.0f, 0.0f));
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
