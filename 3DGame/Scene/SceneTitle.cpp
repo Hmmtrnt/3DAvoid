@@ -84,7 +84,7 @@ void SceneTitle::Draw()
 
 	m_pPlayer->Draw();
 	for (auto& enemies : m_pEnemy) {
-		enemies->Draw();
+		enemies->DrawTitle();
 	}
 	
 

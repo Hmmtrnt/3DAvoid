@@ -29,6 +29,8 @@ public:
 	void UpdateMove();// エネミーの動き
 	void UpdateTitle();// エネミーのタイトルの動き
 
+	void DrawTitle();// エネミーのタイトル画面の描画
+
 	bool ColFlag();// 当たり判定のテスト
 
 private:
