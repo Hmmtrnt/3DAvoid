@@ -11,9 +11,7 @@
 namespace
 {
 	const char* const kTitleHandle = "Data/2D/Title.png";// タイトルロゴ
-	const char* const kImgName = "Data/3D/BackGround/FieldBackGround.jpg";// 背景
 	const char* const kRoundShadowHandle = "Data/2D/RoundShadow5.png";// 丸影
-
 
 	// 丸影描画座標
 	// プレイヤー
@@ -35,7 +33,6 @@ SceneTitle::SceneTitle() :
 	m_titleHandle(-1)
 {
 	m_titleHandle = LoadGraph(kTitleHandle);
-	m_backGroundHandle = LoadGraph(kImgName);
 
 	// ゲームの状態
 	m_pSet = std::make_shared<GameSetting>();
@@ -70,7 +67,6 @@ SceneTitle::SceneTitle() :
 SceneTitle::~SceneTitle()
 {
 	DeleteGraph(m_titleHandle);
-	DeleteGraph(m_backGroundHandle);
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -105,10 +101,10 @@ SceneBase* SceneTitle::Update()
 	if (!IsFading())
 	{
 		// フェードアウト開始
-		/*if (Pad::IsTrigger(PAD_INPUT_1))
+		if (Pad::IsTrigger(PAD_INPUT_1))
 		{
 			StartFadeOut();
-		}*/
+		}
 	}
 	// 背景スクロール
 	m_pBackDrop->Update();

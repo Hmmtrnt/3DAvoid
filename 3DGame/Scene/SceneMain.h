@@ -10,6 +10,7 @@ class EnemyBase;
 class Enemy;
 class EnemyBig;
 class Field;
+class BackDrop;
 class StringInit;
 class Pause;
 
@@ -46,13 +47,11 @@ private:
 	std::shared_ptr<GameSetting> m_pSet;// 環境設定
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 	std::shared_ptr<Field> m_pField;// ステージ
+	std::shared_ptr<BackDrop> m_pBackDrop;// 背景
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
-	std::vector<std::shared_ptr<EnemyBig>> m_pEnemyBig;// エネミー
-
-	//std::vector<std::shared_ptr<EnemyBase>> m_pEnemyTest;// テスト変数エネミー
-
+	std::vector<std::shared_ptr<EnemyBig>> m_pEnemyBig;// 大きいエネミー
 	std::shared_ptr<StringInit> m_pFont;// フォント
-	std::shared_ptr<Pause> m_pPause;
+	std::shared_ptr<Pause> m_pPause;// ポーズ画面
 
 	// int
 	int m_shadowMap; // シャドウマップ
@@ -60,7 +59,6 @@ private:
 	int m_hpRedColor;// Hpのカラー赤
 	unsigned int m_hpColor;// Hpのカラー
 	int m_score;// ゲームのスコア
-	int m_backGroundHandle;// 背景のハンドル
 	int m_red;// 赤の値
 	int m_decreaseColor;// 色が消えていく変数
 	// 複製するためのコピー

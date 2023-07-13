@@ -6,14 +6,13 @@
 #include "../Char/Enemy/Enemy.h"
 #include "../Char/Enemy/EnemyBig.h"
 #include "../Stage/Field.h"
+#include "../Stage/BackDrop.h"
 #include <cassert>
 #include "../Util/FontFunction.h"
 #include "../System/Pause.h"
 
 namespace
 {
-	// ”wŒi‚Ì‰æ‘œƒtƒ@ƒCƒ‹‚ÌêŠ
-	const char* const kImgName = "Data/3D/BackGround/FieldBackGround.jpg";
 }
 
 SceneMain::SceneMain() :
@@ -23,7 +22,6 @@ SceneMain::SceneMain() :
 	m_hpRedColor(0),
 	m_hpColor(0),
 	m_score(0),
-	m_backGroundHandle(-1),
 	m_enemyModelHandle(-1),
 	m_shadowHandle(-1),
 	m_fontHandle(-1),
@@ -37,11 +35,9 @@ SceneMain::SceneMain() :
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
 	m_pField = std::make_shared<Field>();
+	m_pBackDrop = std::make_shared<BackDrop>();
 	m_pFont = std::make_shared<StringInit>();
 	m_pPause = std::make_shared<Pause>();
-	
-	m_backGroundHandle = LoadGraph(kImgName);
-	assert(m_backGroundHandle != -1);
 
 	m_red = 255;
 
@@ -50,7 +46,6 @@ SceneMain::SceneMain() :
 
 SceneMain::~SceneMain()
 {
-	DeleteGraph(m_backGroundHandle);
 }
 
 void SceneMain::Init()
@@ -130,7 +125,8 @@ SceneBase* SceneMain::Update()
 		}
 	}
 
-
+	// ”wŒi‚ğƒXƒNƒ[ƒ‹
+	m_pBackDrop->Update();
 	(this->*m_updateFunc)();
 
 	if (m_score != 0)
@@ -183,7 +179,7 @@ SceneBase* SceneMain::Update()
 void SceneMain::Draw()
 {
 	// ”wŒi‚Ì•`‰æ
-	DrawBillboard3D(VGet(-1900.0f, 0.0f, 975.0f), 0.5f, 0.5f, 8000.0f, 0.0f, m_backGroundHandle, true);
+	m_pBackDrop->Draw();
 
 	// ƒXƒe[ƒW•`‰æ
 	m_pField->DrawMain();
@@ -368,8 +364,8 @@ void SceneMain::UpdatePauseNo()
 	if (!m_pPlayer->GetIsFall())
 	{
 #ifdef _DEBUG
-		//m_score++;
-		m_score+=10;
+		m_score++;
+		//m_score+=10;
 #else
 		m_score++;
 #endif

@@ -33,7 +33,6 @@ private:
 
 	// int
 	int m_titleHandle;// タイトルの画像ハンドル
-	int m_backGroundHandle;// 背景ハンドル
 	int m_enemyHandle;// エネミーハンドル
 	int m_roundShadowHandle[4];// 丸影ハンドル
 };
