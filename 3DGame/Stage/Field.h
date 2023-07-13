@@ -16,6 +16,7 @@ public:
 	void Draw();
 
 private:
-	std::vector<std::shared_ptr<Model>> m_pModel;
+	// ポインタ
+	std::vector<std::shared_ptr<Model>> m_pModel;// モデル
 };
 

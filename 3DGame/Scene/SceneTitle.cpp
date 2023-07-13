@@ -5,6 +5,7 @@
 #include "../Char/Enemy/Enemy.h"
 #include "../Char/Enemy/EnemyBig.h"
 #include "../Char/Enemy/EnemyBase.h"
+#include "../Stage/Field.h"
 
 namespace
 {
@@ -30,6 +31,8 @@ SceneTitle::SceneTitle() :
 	m_pEnemy.back()->Init();
 
 	m_pEnemyBig = std::make_shared<EnemyBig>();
+
+	m_pField = std::make_shared<Field>();
 }
 
 SceneTitle::~SceneTitle()
@@ -91,6 +94,7 @@ void SceneTitle::Draw()
 		enemies->DrawTitle();
 	}
 	m_pEnemyBig->Draw();
+	m_pField->Draw();
 
 	//DrawGraph(Game::kScreenWidth, Game::kScreenHeight, m_titleHandle, true);
 
