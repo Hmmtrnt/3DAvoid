@@ -13,7 +13,8 @@ public:
 	void Init();
 	void End();
 	void Update();
-	void Draw();
+	void DrawMain();
+	void DrawTitle();
 
 private:
 	// ƒ|ƒCƒ“ƒ^

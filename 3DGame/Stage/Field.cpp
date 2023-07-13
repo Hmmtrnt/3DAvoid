@@ -57,7 +57,7 @@ void Field::Update()
 {
 }
 
-void Field::Draw()
+void Field::DrawMain()
 {
 	// 地面に並べる
 	for (int i = 0; i < m_pModel.size(); i++)
@@ -65,6 +65,22 @@ void Field::Draw()
 		float x = kBlockSideLenght * (i % kBlockNumX) - kFieldSideLenghtX / 2 + kBlockSideLenght / 2;			//地面の位置が合うように設定
 		float z = kBlockSideLenght * (i / kBlockNumX) - kFieldSideLenghtX / 2 + kBlockSideLenght / 2;
 		m_pModel[i]->SetPos(VGet(x, -kBlockSideLenght / 2.0f, z));	// 上面が y =0.0になるように配置
+	}
+
+	for (auto& model : m_pModel)
+	{
+		model->Draw();
+	}
+}
+
+void Field::DrawTitle()
+{
+	// 地面に並べる
+	for (int i = 0; i < m_pModel.size(); i++)
+	{
+		float x = kBlockSideLenght * (i % kBlockNumX) - kFieldSideLenghtX / 2 + kBlockSideLenght / 2;			//地面の位置が合うように設定
+		float z = kBlockSideLenght * (i / kBlockNumX) - kFieldSideLenghtX / 2 + kBlockSideLenght / 2;
+		m_pModel[i]->SetPos(VGet(x, -300.0f, z));	// 上面が y =0.0になるように配置
 	}
 
 	for (auto& model : m_pModel)

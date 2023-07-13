@@ -186,7 +186,7 @@ void SceneMain::Draw()
 	DrawBillboard3D(VGet(-1900.0f, 0.0f, 975.0f), 0.5f, 0.5f, 8000.0f, 0.0f, m_backGroundHandle, true);
 
 	// ステージ描画
-	m_pField->Draw();
+	m_pField->DrawMain();
 
 	// プレイヤーの描画
 	if (m_invincibleTime % 3 == 0 || m_pushPause)

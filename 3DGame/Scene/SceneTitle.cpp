@@ -94,13 +94,7 @@ void SceneTitle::Draw()
 		enemies->DrawTitle();
 	}
 	m_pEnemyBig->Draw();
-	m_pField->Draw();
-
-	//DrawGraph(Game::kScreenWidth, Game::kScreenHeight, m_titleHandle, true);
-
-	//DrawRectRotaGraph(0,0,100,100,100,100,1.0,0.0,m_titleHandle, )
-
-	//DrawExtendGraph(350, 200, 900, 400, m_titleHandle, true);
+	m_pField->DrawTitle();
 
 	DrawGraph(250, 100, m_titleHandle, true);
 

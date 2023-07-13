@@ -181,11 +181,13 @@ void Enemy::UpdateTitle()
 	
 }
 
+// ƒ^ƒCƒgƒ‹‰æ–Ê‚É•`‰æ
 void Enemy::DrawTitle()
 {
 	m_pModel->Draw();
 }
 
+// ‹…‚Ç‚¤‚µ“–‚½‚è”»’è
 bool Enemy::ColFlag()
 {
 	float colx = m_pPlayer->GetPos().x - m_pos.x;

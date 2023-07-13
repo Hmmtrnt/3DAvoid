@@ -25,7 +25,7 @@ void GameSetting::InitSceneMainCamera()
 void GameSetting::InitSceneTitleCamera()
 {
 	// near,far
-	SetCameraNearFar(5.0f, 2800.0f);
+	SetCameraNearFar(5.0f, 2000.0f);
 	// カメラの視野角を設定（ラジアン）
 	SetupCamera_Perspective(60.0f * DX_PI_F / 180.0f);
 	// カメラの位置、どこを見ているかを設定する
