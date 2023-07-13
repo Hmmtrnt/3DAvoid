@@ -40,9 +40,12 @@ Model::Model() :
 	m_isUpdateCollision(false),
 	m_colFrameIndex(-1),
 	m_animChangeFrame(0),
-	m_animChangeFrameTotal(0)
+	m_animChangeFrameTotal(0),
+	m_modelHandle(-1)
 {
-
+	// アニメーションデータのクリア
+	ClearAnimeData(m_animPrev);
+	ClearAnimeData(m_animNext);
 }
 
 Model::~Model()

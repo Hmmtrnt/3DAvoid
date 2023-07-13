@@ -11,7 +11,7 @@ class Enemy : public EnemyBase
 {
 public:
 	// ロードするモデルを指定→指定されたモデルをロードして生成
-	Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer);
+	Enemy(std::shared_ptr<Player> pPlayer);
 
 	// すでにロードされているモデルのハンドルを指定→Duplicateして生成
 	Enemy(int orgModel, int roundShadow, std::shared_ptr<Player> pPlayer);
@@ -26,17 +26,22 @@ public:
 	void Update();
 	void Draw();
 
-	void UpdateMove();// エネミーの動き
-	void UpdateTitle();// エネミーのタイトルの動き
+	void UpdateMove();	// エネミーの動き
+	void UpdateTitle();	// エネミーのタイトルの動き
 
-	void DrawTitle();// エネミーのタイトル画面の描画
+	void DrawTitle();	// エネミーのタイトル画面の描画
 
-	bool ColFlag();// 当たり判定のテスト
+	bool ColFlag();		// 当たり判定のテスト
 
+// 関数
+private:
+	void InitState(VECTOR pos, VECTOR rot, VECTOR scale);
+
+// 変数
 private:
 	// ポインタ
-	std::shared_ptr<Model> m_pModel;// モデル
-	std::shared_ptr<Player> m_pPlayer;// プレイヤー
+	std::shared_ptr<Model> m_pModel;	// モデル
+	std::shared_ptr<Player> m_pPlayer;	// プレイヤー
 
 	
 

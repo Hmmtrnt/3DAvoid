@@ -30,19 +30,16 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 
-	m_pModel->SetPos(m_pos);
+	/*m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
+
+	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 }
 
 Enemy::Enemy(int orgModel, int roundShadow, std::shared_ptr<Player> pPlayer) :
 	m_pPlayer(pPlayer)
 {
-	// モデルのロード
-	//m_modelHandle = MV1LoadModel(kEnemyHandle);
-
-	//m_roundShadowHandle = LoadGraph(kRoundShadowHandle);
-
 	// ポインタのメモリ確保:敵の複製
 	m_pModel = std::make_shared<Model>(orgModel);
 	// 丸影の複製
@@ -54,9 +51,11 @@ Enemy::Enemy(int orgModel, int roundShadow, std::shared_ptr<Player> pPlayer) :
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 
-	m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+	//m_pModel->SetPos(m_pos);						// 座標
+	//m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));	// 回転
+	//m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));		// 大きさ
+
+	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 	
 }
 
@@ -73,9 +72,11 @@ Enemy::Enemy()
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 
-	m_pModel->SetPos(m_pos);
+	/*m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
+
+	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 }
 
 Enemy::Enemy(int orgModel)
@@ -145,9 +146,12 @@ void Enemy::UpdateMove()
 		m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 	}
 
-	m_pModel->SetPos(m_pos);
+	/*m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.5f,m_angle,0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
+
+	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
+
 }
 
 void Enemy::UpdateTitle()
@@ -155,9 +159,11 @@ void Enemy::UpdateTitle()
 
 	m_pModel->Update();
 
-	m_pModel->SetPos(VGet(150.0f,-130.0f,100.0f));
-	m_pModel->SetRot(VGet(0.0f, 1.0f, 0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+	//m_pModel->SetPos(VGet(150.0f,-130.0f,100.0f));	// 座標
+	//m_pModel->SetRot(VGet(0.0f, 1.0f, 0.0f));		// 回転
+	//m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));		// 大きさ
+
+	InitState(VGet(150.0f, -130.0f, 100.0f), VGet(0.0f, 1.0f, 0.0f), m_scale);
 }
 
 void Enemy::DrawTitle()
@@ -177,4 +183,11 @@ bool Enemy::ColFlag()
 		return true;
 	}
 	return false;
+}
+
+void Enemy::InitState(VECTOR pos, VECTOR rot, VECTOR scale)
+{
+	m_pModel->SetPos(pos);
+	m_pModel->SetRot(rot);
+	m_pModel->SetScale(scale);
 }

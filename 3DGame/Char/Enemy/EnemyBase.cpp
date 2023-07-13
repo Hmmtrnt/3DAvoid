@@ -11,6 +11,7 @@ namespace
 	// VECTORの初期化
 	constexpr VECTOR kZero{ 0.0f,0.0f,0.0f };
 	constexpr VECTOR kInitPos{ 0.0f,0.0f,1000.0f };
+	constexpr VECTOR kScale{ 0.5f,0.5f,0.5f };
 
 	// エネミーの向いている方向
 	constexpr VECTOR kEnemyDir{ 0.0f,0.0f,-1.0f };
@@ -20,7 +21,7 @@ EnemyBase::EnemyBase() :
 	m_pos(kZero),
 	m_dir(kZero),
 	m_vec(kZero),
-	m_scale(kZero),
+	m_scale(kScale),
 	m_EnemyDir(kEnemyDir),
 	m_angle(0.0f),
 	m_speed(0.0f),
