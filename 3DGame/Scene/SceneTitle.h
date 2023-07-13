@@ -7,6 +7,7 @@
 class GameSetting;
 class Player;
 class Enemy;
+class EnemyBig;
 
 class SceneTitle : public SceneBase
 {
@@ -24,6 +25,7 @@ private:
 	std::shared_ptr<GameSetting> m_pSet;// 環境設定
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
+	std::shared_ptr<EnemyBig> m_pEnemyBig;// 大きいエネミー
 
 	// int
 	int m_titleHandle;// タイトルの画像ハンドル

@@ -35,6 +35,12 @@ public:
 
 // 関数
 private:
+	/// <summary>
+	/// 座標、回転、大きさ設定
+	/// </summary>
+	/// <param name="pos">座標</param>
+	/// <param name="rot">回転</param>
+	/// <param name="scale">大きさ</param>
 	void InitState(VECTOR pos, VECTOR rot, VECTOR scale);
 
 // 変数

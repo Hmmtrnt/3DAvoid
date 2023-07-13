@@ -16,6 +16,8 @@ public:
 	// すでにロードされているモデルのハンドルを指定→Duplicateして生成
 	EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer);
 
+	EnemyBig();
+
 	virtual ~EnemyBig();
 
 	void Update(int score);
@@ -25,9 +27,17 @@ public:
 
 	bool ColFlag();// 当たり判定のテスト
 
-	// メンバ関数ポインタ
-	void(EnemyBig::* m_updateFunc)();
+// 関数
+private:
+	/// <summary>
+	/// 座標、回転、大きさ設定
+	/// </summary>
+	/// <param name="pos">座標</param>
+	/// <param name="rot">回転</param>
+	/// <param name="scale">大きさ</param>
+	void InitState(VECTOR pos, VECTOR rot, VECTOR scale);
 
+// 変数
 private:
 	// ポインタ
 	std::shared_ptr<Model> m_pModel;// モデル

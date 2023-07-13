@@ -5,10 +5,14 @@
 
 namespace
 {
+	// 大きさ
+	constexpr VECTOR kScale{ 0.5f,0.5f,0.5f };
+
 	// キャラクターハンドル
 	const char* const kEnemyHandle = "Data/3D/Char/Enemy/Enemy2(toonType2).mv1";
 	// 丸影ハンドル
 	const char* const kRoundShadowHandle = "Data/2D/RoundShadow5.png";
+
 
 	// エネミーの最大スピード
 	constexpr int kSpeed = 5;
@@ -34,6 +38,8 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
 
+	m_scale = kScale;
+
 	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 }
 
@@ -55,6 +61,8 @@ Enemy::Enemy(int orgModel, int roundShadow, std::shared_ptr<Player> pPlayer) :
 	//m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));	// 回転
 	//m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));		// 大きさ
 
+	m_scale = kScale;
+
 	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 	
 }
@@ -75,6 +83,8 @@ Enemy::Enemy()
 	/*m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
+
+	m_scale = kScale;
 
 	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 }
@@ -185,6 +195,7 @@ bool Enemy::ColFlag()
 	return false;
 }
 
+// 座標、回転、大きさ設定
 void Enemy::InitState(VECTOR pos, VECTOR rot, VECTOR scale)
 {
 	m_pModel->SetPos(pos);

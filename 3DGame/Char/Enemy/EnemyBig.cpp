@@ -5,6 +5,9 @@
 
 namespace
 {
+	// 大きさ
+	constexpr VECTOR kScale{ 3.0f,3.0f,3.0f };
+
 	// キャラクターハンドル
 	const char* const kEnemyHandle = "Data/3D/Char/Enemy/Enemy3(toonType2).mv1";
 
@@ -38,9 +41,14 @@ EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
 	m_angle = kAngleLeft;
 	m_speed = kSpeed;
 
-	m_pModel->SetPos(m_pos);
+	/*m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));
+	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));*/
+
+	m_scale = kScale;
+
+	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
+
 }
 
 EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer) :
@@ -48,7 +56,7 @@ EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer) :
 	m_initPos(true)
 {
 	// モデルのロード
-	m_modelHandle = MV1LoadModel(kEnemyHandle);
+	m_pModel = std::make_shared<Model>(orgModel);
 
 	// ポインタのメモリ確保
 	m_pModel = std::make_shared<Model>(m_modelHandle);
@@ -58,10 +66,38 @@ EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer) :
 	//m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = kSpeed;
 
-	m_pModel->SetPos(m_pos);
+	/*m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));
+	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));*/
 
+	m_scale = kScale;
+
+	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
+
+}
+
+EnemyBig::EnemyBig() :
+	m_randAngleType(0),
+	m_initPos(false)
+{
+	// モデルのロード
+	m_modelHandle = MV1LoadModel(kEnemyHandle);
+
+	// ポインタのメモリ確保
+	m_pModel = std::make_shared<Model>(m_modelHandle);
+	// 敵のアニメーション設定
+	m_pModel->SetAnimation(m_animMove, true, true);
+	// 敵の向きの初期化
+	m_angle = kAngleLeft;
+	m_speed = kSpeed;
+
+	/*m_pModel->SetPos(m_pos);
+	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
+	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));*/
+
+	m_scale = kScale;
+
+	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 }
 
 EnemyBig::~EnemyBig()
@@ -141,9 +177,10 @@ void EnemyBig::UpdateMove(int score)
 	}
 	
 
-	m_pModel->SetPos(m_pos);
+	/*m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.5f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));
+	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));*/
+	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 }
 
 bool EnemyBig::ColFlag()
@@ -157,4 +194,11 @@ bool EnemyBig::ColFlag()
 		return true;
 	}
 	return false;
+}
+
+void EnemyBig::InitState(VECTOR pos, VECTOR rot, VECTOR scale)
+{
+	m_pModel->SetPos(pos);
+	m_pModel->SetRot(rot);
+	m_pModel->SetScale(scale);
 }

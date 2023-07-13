@@ -3,6 +3,7 @@
 #include "../Util/GameSetting.h"
 #include "../Char/Player/Player.h"
 #include "../Char/Enemy/Enemy.h"
+#include "../Char/Enemy/EnemyBase.h"
 
 namespace
 {
@@ -27,6 +28,7 @@ SceneTitle::SceneTitle() :
 	m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyHandle));
 	m_pEnemy.back()->Init();
 
+	//m_pEnemyBig = std::make_shared<EnemyBig>();
 }
 
 SceneTitle::~SceneTitle()
@@ -68,11 +70,14 @@ SceneBase* SceneTitle::Update()
 		}
 	}
 	
+	// キャラクターたちのタイトルでのモーション
 	m_pPlayer->UpdateTitle();
-
 	for (auto& enemies : m_pEnemy) {
 		enemies->UpdateTitle();
 	}
+	/*for (auto& enemiesBig : m_pEnemyBig) {
+
+	}*/
 	
 
 	return this;
