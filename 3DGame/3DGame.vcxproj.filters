@@ -108,6 +108,9 @@
     <ClCompile Include="Char\Enemy\EnemyBig.cpp">
       <Filter>ソース ファイル\Char\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Stage\BackDrop.cpp">
+      <Filter>ソース ファイル\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Vec2.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Char\Enemy\EnemyBig.h">
       <Filter>ヘッダー ファイル\Char\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage\BackDrop.h">
+      <Filter>ヘッダー ファイル\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

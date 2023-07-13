@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Stage\BackDrop.cpp" />
     <ClCompile Include="Char\Player\Player.cpp" />
     <ClCompile Include="Char\Model.cpp" />
     <ClCompile Include="Char\Enemy\Enemy.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Stage\BackDrop.h" />
     <ClInclude Include="Char\Player\Player.h" />
     <ClInclude Include="Char\Model.h" />
     <ClInclude Include="Char\Enemy\Enemy.h" />

@@ -6,6 +6,7 @@
 #include "../Char/Enemy/EnemyBig.h"
 #include "../Char/Enemy/EnemyBase.h"
 #include "../Stage/Field.h"
+#include "../Stage/BackDrop.h"
 
 namespace
 {
@@ -36,17 +37,27 @@ SceneTitle::SceneTitle() :
 	m_titleHandle = LoadGraph(kTitleHandle);
 	m_backGroundHandle = LoadGraph(kImgName);
 
+	// ゲームの状態
 	m_pSet = std::make_shared<GameSetting>();
+
+	// プレイヤー
 	m_pPlayer = std::make_shared<Player>();
-	// 一体目のエネミー生成
+
+	// 一体目のエネミー
 	m_pEnemy.push_back(std::make_shared<Enemy>());
 	m_pEnemy.back()->Init();
+
+	// 二体目複製
 	m_enemyHandle = m_pEnemy.back()->GetModelHandle();
 	m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyHandle));
 	m_pEnemy.back()->Init();
+
+	// 大きいエネミー
 	m_pEnemyBig = std::make_shared<EnemyBig>();
 	m_pField = std::make_shared<Field>();
 
+	// 背景
+	m_pBackDrop = std::make_shared<BackDrop>();
 
 	// 丸影ハンドルロード
 	for (int i = 0; i < 4; i++)
@@ -99,7 +110,9 @@ SceneBase* SceneTitle::Update()
 			StartFadeOut();
 		}*/
 	}
-	
+	// 背景スクロール
+	m_pBackDrop->Update();
+
 	// キャラクターたちのタイトルでのモーション
 	m_pPlayer->UpdateTitle();
 	for (auto& enemies : m_pEnemy) {
@@ -113,10 +126,8 @@ SceneBase* SceneTitle::Update()
 
 void SceneTitle::Draw()
 {
-	//DrawBillboard3D(VGet(-1900.0f, 0.0f, 975.0f), 0.5f, 0.5f, 8000.0f, 0.0f, m_backGroundHandle, true);
-	
-	DrawGraph(0, 0, m_backGroundHandle, true);
-
+	// 背景描画
+	m_pBackDrop->Draw();
 
 	// 地面描画
 	m_pField->DrawTitle();

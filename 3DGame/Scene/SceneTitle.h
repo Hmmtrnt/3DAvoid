@@ -9,6 +9,7 @@ class Player;
 class Enemy;
 class EnemyBig;
 class Field;
+class BackDrop;
 
 class SceneTitle : public SceneBase
 {
@@ -28,6 +29,7 @@ private:
 	std::vector<std::shared_ptr<Enemy>> m_pEnemy;// エネミー
 	std::shared_ptr<EnemyBig> m_pEnemyBig;// 大きいエネミー
 	std::shared_ptr<Field> m_pField;// ステージ
+	std::shared_ptr<BackDrop> m_pBackDrop;// 背景
 
 	// int
 	int m_titleHandle;// タイトルの画像ハンドル
