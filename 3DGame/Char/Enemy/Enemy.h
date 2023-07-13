@@ -27,7 +27,7 @@ public:
 	void Draw();
 
 	void UpdateMove();	// エネミーの動き
-	void UpdateTitle();	// エネミーのタイトルの動き
+	void UpdateTitle();	// タイトルの動き
 
 	void DrawTitle();	// エネミーのタイトル画面の描画
 

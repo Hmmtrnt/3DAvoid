@@ -24,6 +24,7 @@ public:
 	void Draw();
 
 	void UpdateMove(int score);// エネミーの動き
+	void UpdateTitle();// タイトルの動き
 
 	bool ColFlag();// 当たり判定のテスト
 

@@ -183,6 +183,19 @@ void EnemyBig::UpdateMove(int score)
 	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 }
 
+void EnemyBig::UpdateTitle()
+{
+	m_pModel->Update();
+
+	//m_pModel->SetPos(VGet(150.0f,-130.0f,100.0f));	// À•W
+	//m_pModel->SetRot(VGet(0.0f, 1.0f, 0.0f));		// ‰ñ“]
+	//m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));		// ‘å‚«‚³
+
+	m_scale = VGet(2.0f, 2.0f, 2.0f);
+
+	InitState(VGet(300.0f, -130.0f, 500.0f), VGet(0.0f, 0.5f, 0.0f), m_scale);
+}
+
 bool EnemyBig::ColFlag()
 {
 	float colx = m_pPlayer->GetPos().x - m_pos.x;

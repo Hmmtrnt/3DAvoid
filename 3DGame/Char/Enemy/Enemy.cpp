@@ -85,8 +85,8 @@ Enemy::Enemy()
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
 
 	m_scale = kScale;
-
-	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
+	InitState(VGet(250.0f, -130.0f, 100.0f), VGet(0.0f, 0.8f, 0.0f), m_scale);
+	
 }
 
 Enemy::Enemy(int orgModel)
@@ -99,9 +99,12 @@ Enemy::Enemy(int orgModel)
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 
-	m_pModel->SetPos(m_pos);
+	/*m_pModel->SetPos(m_pos);
 	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
+
+	m_scale = kScale;
+	InitState(VGet(80.0f, -130.0f, 100.0f), VGet(0.0f, 0.4f, 0.0f), m_scale);
 }
 
 Enemy::~Enemy()
@@ -173,7 +176,9 @@ void Enemy::UpdateTitle()
 	//m_pModel->SetRot(VGet(0.0f, 1.0f, 0.0f));		// ‰ñ“]
 	//m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));		// ‘å‚«‚³
 
-	InitState(VGet(150.0f, -130.0f, 100.0f), VGet(0.0f, 1.0f, 0.0f), m_scale);
+	//InitState(VGet(200.0f, -130.0f, 100.0f), VGet(0.0f, 0.8f, 0.0f), m_scale);
+	//InitState(VGet(0.0f, -130.0f, 100.0f), VGet(0.0f, 0.4f, 0.0f), m_scale);
+	
 }
 
 void Enemy::DrawTitle()

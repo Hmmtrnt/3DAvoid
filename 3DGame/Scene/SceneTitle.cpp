@@ -3,6 +3,7 @@
 #include "../Util/GameSetting.h"
 #include "../Char/Player/Player.h"
 #include "../Char/Enemy/Enemy.h"
+#include "../Char/Enemy/EnemyBig.h"
 #include "../Char/Enemy/EnemyBase.h"
 
 namespace
@@ -20,7 +21,7 @@ SceneTitle::SceneTitle() :
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
 	// 一体目のエネミー生成
-	m_pEnemy.push_back(std::make_shared<Enemy>(m_pPlayer));
+	m_pEnemy.push_back(std::make_shared<Enemy>());
 	m_pEnemy.back()->Init();
 
 	m_enemyHandle = m_pEnemy.back()->GetModelHandle();
@@ -28,7 +29,7 @@ SceneTitle::SceneTitle() :
 	m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyHandle));
 	m_pEnemy.back()->Init();
 
-	//m_pEnemyBig = std::make_shared<EnemyBig>();
+	m_pEnemyBig = std::make_shared<EnemyBig>();
 }
 
 SceneTitle::~SceneTitle()
@@ -75,9 +76,7 @@ SceneBase* SceneTitle::Update()
 	for (auto& enemies : m_pEnemy) {
 		enemies->UpdateTitle();
 	}
-	/*for (auto& enemiesBig : m_pEnemyBig) {
-
-	}*/
+	m_pEnemyBig->UpdateTitle();
 	
 
 	return this;
@@ -91,15 +90,15 @@ void SceneTitle::Draw()
 	for (auto& enemies : m_pEnemy) {
 		enemies->DrawTitle();
 	}
-	
-
-	DrawString(0, 0, "Title", 0xffffff);
+	m_pEnemyBig->Draw();
 
 	//DrawGraph(Game::kScreenWidth, Game::kScreenHeight, m_titleHandle, true);
 
 	//DrawRectRotaGraph(0,0,100,100,100,100,1.0,0.0,m_titleHandle, )
 
-	DrawExtendGraph(350, 200, 900, 400, m_titleHandle, true);
+	//DrawExtendGraph(350, 200, 900, 400, m_titleHandle, true);
+
+	DrawGraph(250, 100, m_titleHandle, true);
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();
