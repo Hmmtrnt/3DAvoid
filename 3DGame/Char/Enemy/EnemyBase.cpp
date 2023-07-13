@@ -25,7 +25,8 @@ EnemyBase::EnemyBase() :
 	m_angle(0.0f),
 	m_speed(0.0f),
 	m_modelHandle(-1),
-	m_animMove(kAnimMove)
+	m_animMove(kAnimMove),
+	m_roundShadowHandle(-1)
 {
 	// “G‚Ì‰ŠúˆÊ’u
 	m_pos.x = 1000;
@@ -34,7 +35,7 @@ EnemyBase::EnemyBase() :
 	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
 	//m_pos.z = 0;
 
-	m_roundShadowHandle = LoadGraph(kRoundShadowHandle);// ŠÛ‰e‰æ‘œƒ[ƒh
+	//m_roundShadowHandle = LoadGraph(kRoundShadowHandle);// ŠÛ‰e‰æ‘œƒ[ƒh
 }
 
 EnemyBase::~EnemyBase()
@@ -70,4 +71,9 @@ void EnemyBase::RoundShadow(float scale)
 int EnemyBase::GetModelHandle() const
 {
 	return m_modelHandle;
+}
+
+int EnemyBase::GetShadowHandle() const
+{
+	return m_roundShadowHandle;
 }

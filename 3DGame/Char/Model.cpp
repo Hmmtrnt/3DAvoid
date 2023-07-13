@@ -56,7 +56,7 @@ Model::~Model()
 	MV1DeleteModel(m_modelHandle);
 }
 
-void Model::setUseCollision(bool isUse, bool isNeedUpdate)
+void Model::SetUseCollision(bool isUse, bool isNeedUpdate)
 {
 	// 当たり判定を使わないのに当たり判定の更新を毎フレーム行いたい、をはじく
 	assert(isUse || (!isNeedUpdate));

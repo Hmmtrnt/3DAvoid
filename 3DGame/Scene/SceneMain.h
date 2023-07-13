@@ -63,7 +63,9 @@ private:
 	int m_backGroundHandle;// 背景のハンドル
 	int m_red;// 赤の値
 	int m_decreaseColor;// 色が消えていく変数
-	int m_enemyModelHandle;// 複製するための敵のコピー
+	// 複製するためのコピー
+	int m_enemyModelHandle;// エネミー
+	int m_shadowHandle;// 丸影
 	int m_fontHandle;// フォントハンドル
 	int m_selectNum;// ポーズ画面の選択番号
 

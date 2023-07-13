@@ -14,7 +14,7 @@ public:
 	Enemy(/*const char* fileName, */std::shared_ptr<Player> pPlayer);
 
 	// すでにロードされているモデルのハンドルを指定→Duplicateして生成
-	Enemy(int orgModel, std::shared_ptr<Player> pPlayer);
+	Enemy(int orgModel, int roundShadow, std::shared_ptr<Player> pPlayer);
 
 	// タイトル画面で使用
 	Enemy();

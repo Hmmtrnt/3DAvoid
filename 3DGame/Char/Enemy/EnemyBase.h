@@ -25,7 +25,8 @@ public:
 	void RoundShadow(float scale);
 
 	// モデルの取得
-	int GetModelHandle()const;
+	int GetModelHandle()const;// エネミー
+	int GetShadowHandle()const;// 丸影
 
 	// エネミーの位置取得
 	VECTOR GetPos()const { return m_pos; }

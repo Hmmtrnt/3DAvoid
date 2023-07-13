@@ -7,6 +7,8 @@ namespace
 {
 	// キャラクターハンドル
 	const char* const kEnemyHandle = "Data/3D/Char/Enemy/Enemy2(toonType2).mv1";
+	// 丸影ハンドル
+	const char* const kRoundShadowHandle = "Data/2D/RoundShadow5.png";
 
 	// エネミーの最大スピード
 	constexpr int kSpeed = 5;
@@ -17,6 +19,8 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 {
 	// モデルのロード
 	m_modelHandle = MV1LoadModel(kEnemyHandle);
+	// 丸影画像のロード
+	m_roundShadowHandle = LoadGraph(kRoundShadowHandle);
 
 	// ポインタのメモリ確保
 	m_pModel = std::make_shared<Model>(m_modelHandle);
@@ -31,14 +35,19 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
 }
 
-Enemy::Enemy(int orgModel, std::shared_ptr<Player> pPlayer) :
+Enemy::Enemy(int orgModel, int roundShadow, std::shared_ptr<Player> pPlayer) :
 	m_pPlayer(pPlayer)
 {
 	// モデルのロード
 	//m_modelHandle = MV1LoadModel(kEnemyHandle);
 
-	// ポインタのメモリ確保
+	//m_roundShadowHandle = LoadGraph(kRoundShadowHandle);
+
+	// ポインタのメモリ確保:敵の複製
 	m_pModel = std::make_shared<Model>(orgModel);
+	// 丸影の複製
+	m_roundShadowHandle = roundShadow;
+
 	// 敵のアニメーション設定
 	m_pModel->SetAnimation(m_animMove, true, true);
 	// 敵の向きの初期化

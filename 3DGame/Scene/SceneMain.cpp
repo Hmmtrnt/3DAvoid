@@ -24,7 +24,8 @@ SceneMain::SceneMain() :
 	m_hpColor(0),
 	m_score(0),
 	m_backGroundHandle(-1),
-	m_enemyModelHandle(0),
+	m_enemyModelHandle(-1),
+	m_shadowHandle(-1),
 	m_fontHandle(-1),
 	m_selectNum(0),
 	m_hit(false),
@@ -68,9 +69,10 @@ void SceneMain::Init()
 
 	// “ñ‘Ì–ÚˆÈ~‚Íˆê‘Ì–Ú‚ðƒRƒs[
 	m_enemyModelHandle = m_pEnemy.back()->GetModelHandle();
+	m_shadowHandle = m_pEnemy.back()->GetShadowHandle();
 	for (int i = 0; i < 19; i++)
 	{
-		m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer));
+		m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_shadowHandle,m_pPlayer));
 		m_pEnemy.back()->Init();
 	}
 
@@ -138,7 +140,7 @@ SceneBase* SceneMain::Update()
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_pPlayer));
+				m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_shadowHandle, m_pPlayer));
 				m_pEnemy.back()->Init();
 			}
 		}

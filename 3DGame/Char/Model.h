@@ -14,16 +14,16 @@ public:
 	virtual ~Model();
 
 	// 当たり判定設定
-	void setUseCollision(bool isUse, bool isNeedUpdate);
+	void SetUseCollision(bool isUse, bool isNeedUpdate);
 
 	void Update();
 
 	void Draw();
 
 	// モデルのハンドル取得
-	int getModelHandle() const { return m_modelHandle; }
+	int GetModelHandle() const { return m_modelHandle; }
 	// 当たり判定に使用するフレームインデックスを取得する
-	int getColFrameIndex() const { return m_colFrameIndex; }
+	int GetColFrameIndex() const { return m_colFrameIndex; }
 
 	// 表示位置の設定
 	void SetPos(VECTOR pos);
