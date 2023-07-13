@@ -31,8 +31,10 @@ namespace
 	// 回転速度
 	constexpr float kRotationSpeed = 0.1f;
 
-	// テスト：プレイヤーの移動
+	// プレイヤーの移動
 	constexpr VECTOR kPlayerVec{ 0.0f,0.0f,-10.0f };
+	// 大きさ
+	constexpr VECTOR kScale{ 0.5f,0.5f,0.5f };
 
 	constexpr float kAnglePI = DX_PI_F / 180.0f;
 
@@ -60,6 +62,7 @@ Player::Player() :
 	m_vec(kZero),
 	m_hitVec(kZero),
 	m_move(kZero),
+	m_scale(kScale),
 	m_cameraRotMtx(),
 	m_playerRotMtx(),
 	m_playerHandle(-1),
@@ -163,9 +166,6 @@ void Player::UpdateHitVec()
 // プレイヤーの丸影
 void Player::RoundShadow()
 {
-	// 丸影の大きさ
-	//float m_scale;
-
 	DrawBillboard3D(
 		VGet(m_pos.x, 10.0f, m_pos.z),
 		0.5f, 0.5f,
@@ -183,12 +183,8 @@ void Player::UpdateTitle()
 	m_pModel->ChangeAnimation(kAnimJump, true, true, 10);
 	m_pModel->Update();
 
-	// プレイヤーの座標
-	m_pModel->SetPos(VGet(-150.0f,-170.0f,0.0f));
-	// プレイヤーの回転率
-	m_pModel->SetRot(VGet(0.0f, 0.4f, 0.0f));
-	// プレイヤーの拡大率
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+
+	InitState(VGet(-200.0f, -170.0f, 0.0f), VGet(0.0f, 0.2f, 0.0f), m_scale);
 }
 
 void Player::UpdateNoHitVec(bool Hitting)
@@ -323,31 +319,20 @@ void Player::UpdateMove(bool Hitting)
 		UpdateMotion(Hitting);
 	}
 
-	// プレイヤーの座標
-	m_pModel->SetPos(m_pos);
-	// プレイヤーの回転率
-	m_pModel->SetRot(VGet(0.5f, m_playerAngleY, 0.0f));
-	// プレイヤーの拡大率
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));
+	InitState(m_pos, VGet(0.5f, m_playerAngleY, 0.0f), m_scale);
 }
 
 void Player::PadInputState()
 {
 	// 入力状態取得
 	GetJoypadXInputState(DX_INPUT_PAD1, &m_input);
-	// 画面に XINPUT_STATE の中身を描画
-	/*DrawFormatString(0, 0, Color::kWhite, "LeftTrigger:%d RightTrigger:%d",
-		input.LeftTrigger, input.RightTrigger);
-	DrawFormatString(0, 16, Color::kWhite, "ThumbLX:%d ThumbLY:%d",
-		input.ThumbLX, input.ThumbLY);
-	DrawFormatString(0, 32, Color::kWhite, "ThumbRX:%d ThumbRY:%d",
-		input.ThumbRX, input.ThumbRY);
-	DrawString(0, 64, "Button", Color::kWhite);
-	for (int i = 0; i < 16; i++)
-	{
-		DrawFormatString(64 + i % 8 * 64, 64 + i / 8 * 16, Color::kWhite,
-			"%2d:%d", i, input.Buttons[i]);
-	}*/
+}
+
+void Player::InitState(VECTOR pos, VECTOR rot, VECTOR scale)
+{
+	m_pModel->SetPos(pos);// 座標
+	m_pModel->SetRot(rot);// 回転
+	m_pModel->SetScale(scale);// 大きさ
 }
 
 

@@ -36,17 +36,23 @@ public:
 	// 落ちているかどうかの真偽
 	bool GetIsFall()const { return m_isFall; }
 	
-	
-private:// 関数
+// 関数
+private:
 	void UpdateNoHitVec(bool Hitting);// 移動処理
 	void UpdateMotion(bool hit);
 	void UpdateMove(bool Hitting);// キャラクターの動き+α
 	void PadInputState();// パッドの入力状態取得
 
-	// メンバ関数ポインタ
-	//void (Player::* m_updateFunc)();
+	/// <summary>
+	/// 座標、回転、大きさ設定
+	/// </summary>
+	/// <param name="pos">座標</param>
+	/// <param name="rot">回転</param>
+	/// <param name="scale">大きさ</param>
+	void InitState(VECTOR pos, VECTOR rot, VECTOR scale);
 	
-private:// 変数
+// 変数
+private:
 	// ポインタ
 	std::shared_ptr<Model> m_pModel;
 	std::shared_ptr<Enemy> m_pEnemy;
@@ -58,7 +64,7 @@ private:// 変数
 	VECTOR m_hitVec;	// 当たった時のプレイヤーの移動
 	VECTOR m_angle;		// プレイヤーアングル
 	VECTOR m_move;		// プレイヤーの動き
-	VECTOR m_testVec = VGet(50.0f, 0.0f, 50.0f);	// テスト移動
+	VECTOR m_scale;		// 大きさ
 
 	// MATRIX
 	MATRIX m_cameraRotMtx;	// 水平移動の行列取得
