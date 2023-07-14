@@ -24,11 +24,17 @@ public:
 
 // 関数
 private:
+	// void
 	// タイトルロゴの更新処理
 	void UpdateTitleLogo();
+	// インターバルを進める
+	void IntervalAdvance(int topNum);
 
+	// bool
 	// press any bottonの点滅処理
 	bool DrawInterval();
+	// ボタンを押したときのインターバル
+	bool DrawPushInterval();
 
 // 変数
 private:
@@ -52,11 +58,16 @@ private:
 	int m_titleScaleX;// 幅
 	int m_titleScaleY;// 高さ
 
-	// 点滅描画する時の時間
-	int m_drawflashingInterval;
+	
+	int m_drawFlashingInterval;// 点滅描画する時の時間
+	int m_topNumInterval;// 点滅描画するときの時間を初期化するタイミング
 
 	// αブレンドのパラメータ
 	int m_alphaParameter;
+
+	// bool
+	bool m_isDraw;// 描画されるかどうか
+	bool m_isPush;// ボタンが押されたかどうか
 
 	// -------------------------
 	// テスト変数

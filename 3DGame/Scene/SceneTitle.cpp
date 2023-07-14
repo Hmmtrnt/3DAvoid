@@ -46,6 +46,9 @@ namespace
 
 	// タイトルの縮小速度
 	const int kTitleShrinkSpeed = 4;
+
+	// タイトルのαブレンドのパラメータ上昇速度
+	const int kTitleAlphaSpeed = 5;
 }
 
 SceneTitle::SceneTitle() :
@@ -54,12 +57,15 @@ SceneTitle::SceneTitle() :
 	m_titlePosY(kTitleInitPosY),
 	m_titleScaleX(kTitleInitScaleX),
 	m_titleScaleY(kTitleInitScaleY),
-	m_drawflashingInterval(0),
+	m_drawFlashingInterval(0),
+	m_topNumInterval(100),
 	m_alphaParameter(0),
 	m_charPosX(0),
 	m_charPosY(0),
 	m_charScaleX(0),
-	m_charScaleY(0)
+	m_charScaleY(0),
+	m_isDraw(false),
+	m_isPush(false)
 {
 	m_titleHandle = LoadGraph(kTitleHandle);
 
@@ -130,6 +136,8 @@ SceneBase* SceneTitle::Update()
 		if (Pad::IsTrigger(PAD_INPUT_1))
 		{
 			StartFadeOut();
+			m_topNumInterval = 10;
+			m_isPush = true;
 		}
 	}
 	// 背景スクロール
@@ -143,6 +151,17 @@ SceneBase* SceneTitle::Update()
 	m_pEnemyBig->UpdateTitle();
 	
 	UpdateTitleLogo();
+
+	if (m_isPush)
+	{
+		m_isDraw = DrawPushInterval();
+	}
+	else
+	{
+		m_isDraw = DrawInterval();
+		//m_isDraw = DrawPushInterval();
+	}
+	
 
 	return this;
 }
@@ -161,7 +180,6 @@ void SceneTitle::Draw()
 	int ScaleY = 0;
 
 	// 丸影描画
-	
 	for (int i = 0; i < 4; i++)
 	{
 
@@ -204,14 +222,16 @@ void SceneTitle::Draw()
 	}
 	m_pEnemyBig->Draw();
 
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_alphaParameter);
 	DrawExtendGraph(m_titlePosX, m_titlePosY, 
 		m_titlePosX + m_titleScaleX, 
 		m_titlePosY + m_titleScaleY, 
 		m_titleHandle, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
-	if (DrawInterval())
+	// インターバルによって描画切り替えする
+	IntervalAdvance(m_topNumInterval);
+	if (m_isDraw)
 	{
 		// press any botton描画
 		DrawExtendGraph(420, 480, 850, 750, m_stringHandle, true);
@@ -240,19 +260,43 @@ void SceneTitle::UpdateTitleLogo()
 		m_titleScaleX -= kTitleShrinkSpeed * 2;
 		m_titleScaleY -= kTitleShrinkSpeed * 2;
 	}
-	
+	if (m_alphaParameter <= BlendParameter::kMaxBlendParameter)
+	{
+		m_alphaParameter += kTitleAlphaSpeed;
+	}
+	else
+	{
+		m_alphaParameter = BlendParameter::kMaxBlendParameter;
+	}
+}
+
+void SceneTitle::IntervalAdvance(int topNum)
+{
+	// インターバル進行
+	m_drawFlashingInterval++;
+
+	// topNumを超えそうになったら戻す
+	if (m_drawFlashingInterval >= topNum)
+	{
+		m_drawFlashingInterval = 0;
+	}
 }
 
 bool SceneTitle::DrawInterval()
 {
-	m_drawflashingInterval++;
-
-	if (m_drawflashingInterval == 100)
+	// インターバルが30未満だと描画できない
+	if (m_drawFlashingInterval < 30)
 	{
-		m_drawflashingInterval = 0;
+		return false;
 	}
 
-	if (m_drawflashingInterval < 30)
+	return true;
+}
+
+bool SceneTitle::DrawPushInterval()
+{
+	// インターバルが5で割り切れる数になったら描画できない
+	if (m_drawFlashingInterval < 5)
 	{
 		return false;
 	}
