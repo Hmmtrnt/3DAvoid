@@ -49,6 +49,8 @@ void BackDrop::Update()
 
 void BackDrop::Draw()
 {
+	// 描画モードをバイリニア法(拡大した時に見やすくなる)をセット
+	SetDrawMode(DX_DRAWMODE_BILINEAR);
 	DrawExtendGraph(m_first.m_width, m_first.m_height,
 		m_first.m_width + Game::kScreenWidth,
 		Game::kScreenHeight,
@@ -57,4 +59,6 @@ void BackDrop::Draw()
 		m_second.m_width + Game::kScreenWidth,
 		Game::kScreenHeight,
 		m_handle, true);
+	// 描画モードを標準に戻す
+	SetDrawMode(DX_DRAWMODE_NEAREST);
 }

@@ -11,6 +11,7 @@
 namespace
 {
 	const char* const kTitleHandle = "Data/2D/Title2.png";// タイトルロゴ
+	const char* const kStringHandle = "Data/2D/Press_any_botton.png";// 文字列の画像ハンドル
 	const char* const kRoundShadowHandle = "Data/2D/RoundShadow5.png";// 丸影
 
 	// 丸影描画座標
@@ -53,7 +54,8 @@ SceneTitle::SceneTitle() :
 	m_titlePosY(kTitleInitPosY),
 	m_titleScaleX(kTitleInitScaleX),
 	m_titleScaleY(kTitleInitScaleY),
-	m_mulaBlendParameter(100),
+	m_drawflashingInterval(0),
+	m_alphaParameter(0),
 	m_charPosX(0),
 	m_charPosY(0),
 	m_charScaleX(0),
@@ -85,14 +87,17 @@ SceneTitle::SceneTitle() :
 
 	// 丸影ハンドルロード
 	m_roundShadowHandle = LoadGraph(kRoundShadowHandle);
+
+	// 文字列の画像ハンドルロード
+	m_stringHandle = LoadGraph(kStringHandle);
 	
 }
 
 SceneTitle::~SceneTitle()
 {
 	DeleteGraph(m_titleHandle);
-
 	DeleteGraph(m_roundShadowHandle);
+	DeleteGraph(m_stringHandle);
 }
 
 void SceneTitle::Init()
@@ -199,16 +204,25 @@ void SceneTitle::Draw()
 	}
 	m_pEnemyBig->Draw();
 
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
 	DrawExtendGraph(m_titlePosX, m_titlePosY, 
 		m_titlePosX + m_titleScaleX, 
 		m_titlePosY + m_titleScaleY, 
 		m_titleHandle, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+	if (DrawInterval())
+	{
+		// press any botton描画
+		DrawExtendGraph(420, 480, 850, 750, m_stringHandle, true);
+	}
+	
 
 	// デバッグ用文字列描画
-	DrawFormatString(0, 0, Color::kRed, "m_titlePosX = %d", m_titlePosX);
+	/*DrawFormatString(0, 0, Color::kRed, "m_titlePosX = %d", m_titlePosX);
 	DrawFormatString(0, 20, Color::kRed, "m_titlePosY = %d", m_titlePosY);
 	DrawFormatString(0, 40, Color::kRed, "m_titleScaleX = %d", m_titleScaleX);
-	DrawFormatString(0, 60, Color::kRed, "m_titleScaleY = %d", m_titleScaleY);
+	DrawFormatString(0, 60, Color::kRed, "m_titleScaleY = %d", m_titleScaleY);*/
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();
@@ -227,4 +241,21 @@ void SceneTitle::UpdateTitleLogo()
 		m_titleScaleY -= kTitleShrinkSpeed * 2;
 	}
 	
+}
+
+bool SceneTitle::DrawInterval()
+{
+	m_drawflashingInterval++;
+
+	if (m_drawflashingInterval == 100)
+	{
+		m_drawflashingInterval = 0;
+	}
+
+	if (m_drawflashingInterval < 30)
+	{
+		return false;
+	}
+
+	return true;
 }

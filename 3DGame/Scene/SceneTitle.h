@@ -27,6 +27,9 @@ private:
 	// タイトルロゴの更新処理
 	void UpdateTitleLogo();
 
+	// press any bottonの点滅処理
+	bool DrawInterval();
+
 // 変数
 private:
 	// ポインタ
@@ -39,6 +42,7 @@ private:
 
 	// int
 	int m_titleHandle;// タイトルの画像ハンドル
+	int m_stringHandle;// 文字列の画像ハンドル
 	int m_enemyHandle;// エネミーハンドル
 	int m_roundShadowHandle;// 丸影ハンドル
 	// タイトル座標
@@ -48,14 +52,15 @@ private:
 	int m_titleScaleX;// 幅
 	int m_titleScaleY;// 高さ
 
-	int m_mulaBlendParameter;// αブレンドのパラメータ
+	// 点滅描画する時の時間
+	int m_drawflashingInterval;
+
+	// αブレンドのパラメータ
+	int m_alphaParameter;
 
 	// -------------------------
-	// テスト
+	// テスト変数
 	// -------------------------
-
-	int blendNum = DX_BLENDMODE_MULA;
-	int brightPal = 0;
 
 	// -------------------------
 	// ↓もしかしたら使わない
