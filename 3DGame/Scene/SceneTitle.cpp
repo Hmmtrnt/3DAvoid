@@ -60,10 +60,6 @@ SceneTitle::SceneTitle() :
 	m_drawFlashingInterval(0),
 	m_topNumInterval(100),
 	m_alphaParameter(0),
-	m_charPosX(0),
-	m_charPosY(0),
-	m_charScaleX(0),
-	m_charScaleY(0),
 	m_isDraw(false),
 	m_isPush(false)
 {
