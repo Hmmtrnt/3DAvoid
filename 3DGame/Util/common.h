@@ -3,6 +3,7 @@
 #include "Pad.h"
 #include "game.h"
 
+// 色
 namespace Color
 {
 	const int kWhite = 0xffffff;// 白
@@ -11,4 +12,9 @@ namespace Color
 	const int kCoral = 0xff7f50;// かなり薄いオレンジ
 	const int kTomato = 0xff6347;// トマトみたいな赤さ
 	const int kOrangered = 0xff4500;// オレンジ
+}
+
+namespace BlendParameter
+{
+	const int kMaxBlendParameter = 255;// ブレンドパラメータの最大値
 }

@@ -22,6 +22,12 @@ public:
 	SceneBase* Update();
 	void Draw();
 
+// 関数
+private:
+	// タイトルロゴの更新処理
+	void UpdateTitleLogo();
+
+// 変数
 private:
 	// ポインタ
 	std::shared_ptr<GameSetting> m_pSet;// 環境設定
@@ -34,6 +40,31 @@ private:
 	// int
 	int m_titleHandle;// タイトルの画像ハンドル
 	int m_enemyHandle;// エネミーハンドル
-	int m_roundShadowHandle[4];// 丸影ハンドル
+	int m_roundShadowHandle;// 丸影ハンドル
+	// タイトル座標
+	int m_titlePosX;// X
+	int m_titlePosY;// Y
+	// タイトル大きさ
+	int m_titleScaleX;// 幅
+	int m_titleScaleY;// 高さ
+
+	int m_mulaBlendParameter;// αブレンドのパラメータ
+
+	// -------------------------
+	// テスト
+	// -------------------------
+
+	int blendNum = DX_BLENDMODE_MULA;
+	int brightPal = 0;
+
+	// -------------------------
+	// ↓もしかしたら使わない
+	// -------------------------
+	// 丸影座標
+	int m_charPosX;// X
+	int m_charPosY;// Y
+	// 丸影大きさ
+	int m_charScaleX;// X
+	int m_charScaleY;// Y
 };
 

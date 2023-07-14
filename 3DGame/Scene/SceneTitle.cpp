@@ -10,7 +10,7 @@
 
 namespace
 {
-	const char* const kTitleHandle = "Data/2D/Title.png";// タイトルロゴ
+	const char* const kTitleHandle = "Data/2D/Title2.png";// タイトルロゴ
 	const char* const kRoundShadowHandle = "Data/2D/RoundShadow5.png";// 丸影
 
 	// 丸影描画座標
@@ -27,10 +27,37 @@ namespace
 	const int kRedEnemyPosX = 700;
 	const int kRedEnemyPosY = 500;
 
+	// タイトルの座標、大きさの初期値
+	// 座標
+	const int kTitleInitPosX = 200 - 200;// X
+	const int kTitleInitPosY = 100 - 200;// Y
+	// 大きさ
+	const int kTitleInitScaleX = 800 + 400;// 幅
+	const int kTitleInitScaleY = 200 + 400;// 高さ
+
+	// タイトルの座標、大きさの最終的な値
+	// 座標
+	const int kTitlePosX = 200;// X
+	const int kTitlePosY = 100;// Y
+	// 大きさ
+	const int kTitleScaleX = 800;// 幅
+	const int kTitleScaleY = 200;// 高さ
+
+	// タイトルの縮小速度
+	const int kTitleShrinkSpeed = 4;
 }
 
 SceneTitle::SceneTitle() :
-	m_titleHandle(-1)
+	m_titleHandle(-1),
+	m_titlePosX(kTitleInitPosX),
+	m_titlePosY(kTitleInitPosY),
+	m_titleScaleX(kTitleInitScaleX),
+	m_titleScaleY(kTitleInitScaleY),
+	m_mulaBlendParameter(100),
+	m_charPosX(0),
+	m_charPosY(0),
+	m_charScaleX(0),
+	m_charScaleY(0)
 {
 	m_titleHandle = LoadGraph(kTitleHandle);
 
@@ -57,10 +84,7 @@ SceneTitle::SceneTitle() :
 	m_pBackDrop = std::make_shared<BackDrop>();
 
 	// 丸影ハンドルロード
-	for (int i = 0; i < 4; i++)
-	{
-		m_roundShadowHandle[i] = LoadGraph(kRoundShadowHandle);
-	}
+	m_roundShadowHandle = LoadGraph(kRoundShadowHandle);
 	
 }
 
@@ -68,10 +92,7 @@ SceneTitle::~SceneTitle()
 {
 	DeleteGraph(m_titleHandle);
 
-	for (int i = 0; i < 4; i++)
-	{
-		DeleteGraph(m_roundShadowHandle[i]);
-	}
+	DeleteGraph(m_roundShadowHandle);
 }
 
 void SceneTitle::Init()
@@ -116,6 +137,7 @@ SceneBase* SceneTitle::Update()
 	}
 	m_pEnemyBig->UpdateTitle();
 	
+	UpdateTitleLogo();
 
 	return this;
 }
@@ -134,6 +156,7 @@ void SceneTitle::Draw()
 	int ScaleY = 0;
 
 	// 丸影描画
+	
 	for (int i = 0; i < 4; i++)
 	{
 
@@ -165,8 +188,9 @@ void SceneTitle::Draw()
 			ScaleX = posX + 300;
 			ScaleY = posY + 20;
 		}
-		DrawExtendGraph(posX, posY, ScaleX, ScaleY, m_roundShadowHandle[i], true);
+		DrawExtendGraph(posX, posY, ScaleX, ScaleY, m_roundShadowHandle, true);
 	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, BlendParameter::kMaxBlendParameter);
 
 	
 	m_pPlayer->Draw();
@@ -175,10 +199,32 @@ void SceneTitle::Draw()
 	}
 	m_pEnemyBig->Draw();
 
-	
+	DrawExtendGraph(m_titlePosX, m_titlePosY, 
+		m_titlePosX + m_titleScaleX, 
+		m_titlePosY + m_titleScaleY, 
+		m_titleHandle, true);
 
-	DrawGraph(250, 100, m_titleHandle, true);
+	// デバッグ用文字列描画
+	DrawFormatString(0, 0, Color::kRed, "m_titlePosX = %d", m_titlePosX);
+	DrawFormatString(0, 20, Color::kRed, "m_titlePosY = %d", m_titlePosY);
+	DrawFormatString(0, 40, Color::kRed, "m_titleScaleX = %d", m_titleScaleX);
+	DrawFormatString(0, 60, Color::kRed, "m_titleScaleY = %d", m_titleScaleY);
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();
+}
+
+// タイトルロゴの更新処理
+void SceneTitle::UpdateTitleLogo()
+{
+	// タイトルロゴの縮小
+	if (m_titlePosX < kTitlePosX || m_titlePosY < kTitlePosY ||
+		m_titleScaleX > kTitleScaleX || m_titleScaleY > kTitleScaleY)
+	{
+		m_titlePosX += kTitleShrinkSpeed;
+		m_titlePosY += kTitleShrinkSpeed;
+		m_titleScaleX -= kTitleShrinkSpeed * 2;
+		m_titleScaleY -= kTitleShrinkSpeed * 2;
+	}
+	
 }
