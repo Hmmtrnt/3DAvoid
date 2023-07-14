@@ -3,6 +3,7 @@
 #include "SceneMain.h"
 #include "../Util/common.h"
 #include "../Util/FontFunction.h"
+#include "../Stage/BackDrop.h"
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -14,6 +15,7 @@ SceneResult::SceneResult(int score) :
 	m_fontHandle(-1)
 {
 	m_pFont = std::make_shared<StringInit>();
+	m_pBackDrop = std::make_shared<BackDrop>();
 }
 
 SceneResult::~SceneResult()
@@ -32,9 +34,7 @@ void SceneResult::End()
 
 SceneBase* SceneResult::Update()
 {
-
-	ReadFile();
-	
+	m_pBackDrop->Update();
 	
 	// フェードインアウトしている
 	if (IsFading())
@@ -65,11 +65,12 @@ SceneBase* SceneResult::Update()
 
 void SceneResult::Draw()
 {
-	DrawString(0, 0, "Result", Color::kWhite);
+	m_pBackDrop->Draw();
 
 	// スコア描画(仮)
 	//m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE :%d", m_score);
 	DrawFormatStringToHandle(10, 50, Color::kWhite, m_fontHandle, "YOUSCORE :%d", m_score);
+	ReadFile();
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();

@@ -55,7 +55,6 @@ private:
 	struct AnimData
 	{
 		int animNo;			// アニメーション番号
-
 		int attachNo;		// アタッチ番号
 		float totalTime;	// アニメーションの総再生時間
 		bool isLoop;		//アニメーションがループするか

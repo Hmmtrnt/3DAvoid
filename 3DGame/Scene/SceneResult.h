@@ -4,6 +4,7 @@
 #include <memory>
 
 class StringInit;
+class BackDrop;
 
 class SceneResult : public SceneBase
 {
@@ -27,6 +28,7 @@ private:
 private:
 	// ポインタ
 	std::shared_ptr<StringInit> m_pFont;
+	std::shared_ptr<BackDrop> m_pBackDrop;
 
 	// int
 	int m_score;// ゲームで得たスコア
