@@ -35,6 +35,8 @@ void SceneResult::End()
 SceneBase* SceneResult::Update()
 {
 	m_pBackDrop->Update();
+	// ファイル書き込み
+	ReadFile();
 	
 	// フェードインアウトしている
 	if (IsFading())
@@ -69,8 +71,9 @@ void SceneResult::Draw()
 
 	// スコア描画(仮)
 	//m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE :%d", m_score);
-	DrawFormatStringToHandle(10, 50, Color::kWhite, m_fontHandle, "YOUSCORE :%d", m_score);
-	ReadFile();
+	DrawFormatStringToHandle(10, 50, Color::kBlack, m_fontHandle, "YOUSCORE :%d", m_score);
+	DrawFormatStringToHandle(10, 120, Color::kBlack, m_fontHandle, "HIGHSCORE:%d", m_highScore);
+	
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();
@@ -95,12 +98,7 @@ void SceneResult::ReadFile()
 	reading_file.open(filename, std::ios::in);
 	std::string reading_line_buffer;
 	while (std::getline(reading_file, reading_line_buffer)) {
-		//std::cout << reading_line_buffer << std::endl;
-		//DrawFormatString(0,120,Color::kWhite, "%d", reading_line_buffer);
 		// string型をint型へ
 		m_highScore = atoi(reading_line_buffer.c_str());
-
-		//m_pFont->DrawFormat(10, 120, Color::kWhite, "HIGHSCORE:%d", m_highScore);
-		DrawFormatStringToHandle(10, 120, Color::kWhite, m_fontHandle,"HIGHSCORE:%d", m_highScore);
 	}
 }
