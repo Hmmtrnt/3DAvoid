@@ -27,8 +27,8 @@ private:
 // 変数
 private:
 	// ポインタ
-	std::shared_ptr<StringInit> m_pFont;
-	std::shared_ptr<BackDrop> m_pBackDrop;
+	std::shared_ptr<StringInit> m_pFont;// フォント
+	std::shared_ptr<BackDrop> m_pBackDrop;// 背景
 
 	// int
 	int m_score;// ゲームで得たスコア

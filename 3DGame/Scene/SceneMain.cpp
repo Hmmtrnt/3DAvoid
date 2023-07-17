@@ -383,6 +383,7 @@ void SceneMain::UpdatePause()
 	{
 		if (!m_isNoteOpen)
 		{
+			m_pPause->UpdateOpen(m_pushPause);
 			m_pPause->Update(m_selectNum);
 		}
 	}
