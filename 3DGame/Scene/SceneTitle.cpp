@@ -109,12 +109,12 @@ SceneTitle::~SceneTitle()
 void SceneTitle::Init()
 {
 	m_pSet->InitSceneOriginPosCamera();
-	m_pSound->Start(0, 255);
+	//m_pSound->Start(0, 255);
 }
 
 void SceneTitle::End()
 {
-	m_pSound->Stop(0);
+	//m_pSound->Stop(0);
 }
 
 SceneBase* SceneTitle::Update()
