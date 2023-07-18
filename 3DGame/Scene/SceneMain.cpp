@@ -214,7 +214,8 @@ void SceneMain::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 	// プレイヤーの吹っ飛び率描画
-	DrawFormatStringToHandle(10, 90, m_hpColor, m_fontHandle,"%d%%", m_pPlayer->GetBlowRate());
+	//DrawFormatStringToHandle(10, 90, m_hpColor, m_fontHandle,"%d%%", m_pPlayer->GetBlowRate());
+	m_pPlayer->DrawUI(m_hpColor, m_fontHandle);
 
 	// スコア描画
 	DrawFormatStringToHandle(10, 120, Color::kWhite, m_fontHandle, "score:%d", m_score);

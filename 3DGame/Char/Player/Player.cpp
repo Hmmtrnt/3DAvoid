@@ -194,8 +194,49 @@ void Player::UpdateResult()
 	m_pModel->ChangeAnimation(kAnimWaveHands, true, true, 10);
 	m_pModel->Update(0.6f);
 
-
 	InitState(VGet(-150.0f, -70.0f, 0.0f), VGet(0.0f, 0.0f, 0.0f), m_scale);
+}
+
+void Player::DrawUI(int color, int fontHandle)
+{
+	// モデルのハンドル取得
+	int handle = m_pModel->GetModelHandle();
+
+	// モデル内にあるHPバーを表示する座標のデータを取得する
+	int frameNo = MV1SearchFrame(handle, "CharacterArmature");
+	// HPバーを表示する座標データのワールド座標を取得する
+	VECTOR hpPos = MV1GetFramePosition(handle, frameNo);
+	// HPバー表示位置のワールド座標をスクリーン座標に変換する
+	VECTOR screenPos = ConvWorldPosToScreenPos(hpPos);
+	if ((screenPos.z <= 0.0f) || (screenPos.z >= 1.0f))
+	{
+		// 表示範囲外の場合何も表示しない
+		return;
+	}
+
+	DrawFormatStringToHandle(screenPos.x-13, screenPos.y - 100, color, fontHandle,"%d%%", m_blowRate);
+	DrawStringToHandle(screenPos.x-13, screenPos.y - 70, "▼", Color::kRed, fontHandle);
+
+	// 最大HPに対する現在のHPの割合を計算する
+	//float hpRate = static_cast<float>(m_hp) / static_cast<float>(kMaxHp);
+	//// HPバーの長さを計算する
+	//float barWidth = kHpBarWidth * hpRate;
+
+	////HPバーの表示
+
+	//// バーの土台　赤で
+	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
+	//	screenPos.x + kHpBarWidth / 2, screenPos.y + kHpBarHeight,
+	//	0xff0000, true);
+	//// 現在のHP 緑
+	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
+	//	screenPos.x - kHpBarWidth / 2 + barWidth, screenPos.y + kHpBarHeight,
+	//	0x00ff00, true);
+
+	//// 枠線
+	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
+	//	screenPos.x + kHpBarWidth / 2, screenPos.y + kHpBarHeight,
+	//	0xffffff, false);
 }
 
 void Player::UpdateNoHitVec(bool Hitting)

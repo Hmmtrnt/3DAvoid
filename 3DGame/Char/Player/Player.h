@@ -27,6 +27,8 @@ public:
 	void UpdateTitle();// タイトル画面のプレイヤーの更新処理
 	void UpdateResult();// リザルト画面のプレイヤーの更新処理
 
+	void DrawUI(int color, int fontHandle);// プレイヤーのUIを描画
+
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }
 	VECTOR GetVec()const { return m_vec; }
