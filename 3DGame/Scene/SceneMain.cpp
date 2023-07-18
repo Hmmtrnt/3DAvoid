@@ -311,22 +311,6 @@ void SceneMain::UpdateEnemy()
 void SceneMain::UpdateColor()
 {
 	// -------------------------
-	// ボツの可能性あり
-	// -------------------------
-	// ダメージによって色を変更
-	//m_hpColor = GetColor(m_red, m_decreaseColor, m_decreaseColor);
-
-	//// 体力表記の色バグを防ぐ
-	//if (m_decreaseColor < 0)
-	//{
-	//	m_decreaseColor = 0;
-	//}
-	//else if(m_decreaseColor != 0)
-	//{
-	//	m_decreaseColor = 255 - (m_pPlayer->GetBlowRate() * 2);
-	//}
-
-	// -------------------------
 	// 新しい色表記
 	// -------------------------
 	// ダメージによって色を変更

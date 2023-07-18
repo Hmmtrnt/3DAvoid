@@ -67,7 +67,7 @@ private:
 
 	// bool
 	bool m_isDraw;// 描画されるかどうか
-	bool m_isPush;// ボタンが押されたかどうか
+	bool m_isPush;// press any bottonが押されたかどうか
 
 	// -------------------------
 	// テスト変数

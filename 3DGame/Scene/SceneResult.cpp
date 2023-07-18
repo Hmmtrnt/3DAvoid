@@ -93,10 +93,14 @@ void SceneResult::Draw()
 	m_pBackDrop->Draw();
 	m_pPlayer->Draw();
 
+	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
+	DrawBox(Game::kScreenWidth / 2, 100, (Game::kScreenWidth / 2) + 500, 600, Color::kBlack, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
 	// スコア描画(仮)
 	//m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE :%d", m_score);
-	DrawFormatStringToHandle(10, 50, Color::kBlack, m_fontHandle, "YOUSCORE :%d", m_score);
-	DrawFormatStringToHandle(10, 120, Color::kBlack, m_fontHandle, "HIGHSCORE:%d", m_highScore);
+	DrawFormatStringToHandle(Game::kScreenWidth / 2, 100, Color::kBlack, m_fontHandle, "YOUSCORE\n%d", m_score);
+	DrawFormatStringToHandle(Game::kScreenWidth / 2, 340, Color::kBlack, m_fontHandle, "HIGHSCORE\n%d", m_highScore);
 	
 
 	// フェードインアウトのフィルター

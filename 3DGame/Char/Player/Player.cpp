@@ -192,10 +192,10 @@ void Player::UpdateResult()
 {
 	// プレイヤーのタイトルでのアニメーション
 	m_pModel->ChangeAnimation(kAnimWaveHands, true, true, 10);
-	m_pModel->Update(0.7f);
+	m_pModel->Update(0.6f);
 
 
-	InitState(VGet(0.0f, 0.0f, 0.0f), VGet(0.0f, 0.0f, 0.0f), m_scale);
+	InitState(VGet(-150.0f, -70.0f, 0.0f), VGet(0.0f, 0.0f, 0.0f), m_scale);
 }
 
 void Player::UpdateNoHitVec(bool Hitting)
