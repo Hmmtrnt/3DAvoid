@@ -5,14 +5,14 @@ namespace
 {
 	const int kUpPos = 100;// 一番上の座標
 
-	const int kDownPos = 500;// 一番下の座標
+	const int kDownPos = 400;// 一番下の座標
 }
 
 Pause::Pause() :
 	m_posx(200),
 	m_posy(kUpPos),
 	m_selectNum(0),
-	m_selectPosX(-200),
+	m_selectPosX(Game::kScreenWidth),
 	m_selectPosY(0)
 {
 }
@@ -28,7 +28,7 @@ void Pause::Update(int& selectNum)
 		
 		if (m_posy != kUpPos)
 		{
-			m_posy -= 200;
+			m_posy -= 100;
 			selectNum -= 1;
 		}
 		else
@@ -41,7 +41,7 @@ void Pause::Update(int& selectNum)
 	{
 		if (m_posy != kDownPos)
 		{
-			m_posy += 200;
+			m_posy += 100;
 			selectNum += 1;
 		}
 		else
@@ -59,22 +59,25 @@ void Pause::DrawPause()
 	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
 
 	m_selectPosY = 100;
-	for (int i = 0; i < 3; i++)
-	{
-		DrawBox(m_selectPosX, m_selectPosY, m_selectPosX + 200, m_selectPosY + 100, Color::kBlack, true);// 選択肢
-		m_selectPosY += 200;
-	}
+	//for (int i = 0; i < 3; i++)
+	//{
+	//	DrawBox(m_selectPosX, m_selectPosY, m_selectPosX + 200, m_selectPosY + 100, Color::kBlack, true);// 選択肢
+	//	m_selectPosY += 200;
+	//}
 
-	//DrawBox(200, 100, 400, 200, Color::kBlack, true);// 選択肢一
-	//DrawBox(200, 300, 400, 400, Color::kBlack, true);// 選択肢二
-	//DrawBox(200, 500, 400, 600, Color::kBlack, true);// 選択肢三
+	DrawBox(m_selectPosX, 100, m_selectPosX + 300, 500, Color::kBlack, true);// 選択肢一
+
+	
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-	DrawBox(m_selectPosX, m_posy, m_selectPosX + 200, m_posy + 100, Color::kWhite, true);// カーソル
+	DrawBox(m_selectPosX, m_posy, m_selectPosX + 300, m_posy + 100, Color::kWhite, true);// カーソル
 
 	// 選択肢の仮テキスト
-	DrawString(200, 200, "続ける", Color::kRed);
-	DrawString(200, 400, "やり直し", Color::kRed);
-	DrawString(200, 600, "あきらめる", Color::kRed);
+	DrawString(Game::kScreenWidth - 250, 150, "再開", Color::kRed);
+	DrawString(Game::kScreenWidth - 250, 250, "設定", Color::kRed);
+	DrawString(Game::kScreenWidth - 250, 350, "やり直し", Color::kRed);
+	DrawString(Game::kScreenWidth - 250, 450, "あきらめる", Color::kRed);
+
+	DrawFormatString(0, 0, Color::kBlack, "%d", m_selectPosX);
 }
 
 void Pause::DrawNote()
@@ -96,18 +99,18 @@ void Pause::DrawNote()
 void Pause::UpdateOpen(bool isOpen)
 {
 	// 定位置まで移動する
-	if (m_selectPosX < 200)
+	if (m_selectPosX > Game::kScreenWidth - 300)
 	{
-		m_selectPosX += 20;
+		m_selectPosX -= 50;
 	}
 	// 定位置に来たら座標を固定
-	else if (m_selectPosX >= 200)
+	else if (m_selectPosX <= Game::kScreenWidth - 300)
 	{
-		m_selectPosX = 200;
+		m_selectPosX = Game::kScreenWidth - 300;
 	}
 
 	if (!isOpen)
 	{
-		m_selectPosX = -200;
+		m_selectPosX = Game::kScreenWidth;
 	}
 }
