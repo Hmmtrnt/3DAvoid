@@ -124,7 +124,7 @@ void Enemy::Draw()
 
 void Enemy::UpdateMove()
 {
-	m_pModel->Update();
+	m_pModel->Update(1.0f);
 
 	// Œ»Ý“G‚ªŒü‚¢‚Ä‚¢‚é•ûŒü‚ÌƒxƒNƒgƒ‹‚ð¶¬‚·‚é
 	EnemyBase::EnemyMove();
@@ -170,7 +170,7 @@ void Enemy::UpdateMove()
 void Enemy::UpdateTitle()
 {
 
-	m_pModel->Update();
+	m_pModel->Update(1.0f);
 
 	//m_pModel->SetPos(VGet(150.0f,-130.0f,100.0f));	// À•W
 	//m_pModel->SetRot(VGet(0.0f, 1.0f, 0.0f));		// ‰ñ“]

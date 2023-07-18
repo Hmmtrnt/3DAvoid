@@ -16,7 +16,7 @@ public:
 	// “–‚½‚è”»’èİ’è
 	void SetUseCollision(bool isUse, bool isNeedUpdate);
 
-	void Update();
+	void Update(float animTime);
 
 	void Draw();
 

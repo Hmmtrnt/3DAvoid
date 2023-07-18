@@ -104,7 +104,7 @@ SceneTitle::~SceneTitle()
 
 void SceneTitle::Init()
 {
-	m_pSet->InitSceneTitleCamera();
+	m_pSet->InitSceneOriginPosCamera();
 }
 
 void SceneTitle::End()

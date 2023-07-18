@@ -3,7 +3,9 @@
 #include "SceneMain.h"
 #include "../Util/common.h"
 #include "../Util/FontFunction.h"
+#include "../Util/GameSetting.h"
 #include "../Stage/BackDrop.h"
+#include "../Char/Player/Player.h"
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -12,10 +14,13 @@ SceneResult::SceneResult(int score) :
 	m_score(score),
 	m_scoreWriting(0),
 	m_highScore(0),
-	m_fontHandle(-1)
+	m_fontHandle(-1),
+	m_oneMore(false)
 {
+	m_pSet = std::make_shared<GameSetting>();
 	m_pFont = std::make_shared<StringInit>();
 	m_pBackDrop = std::make_shared<BackDrop>();
+	m_pPlayer = std::make_shared<Player>();
 }
 
 SceneResult::~SceneResult()
@@ -24,6 +29,7 @@ SceneResult::~SceneResult()
 
 void SceneResult::Init()
 {
+	m_pSet->InitSceneOriginPosCamera();
 	m_pFont->Init(m_fontHandle, 80, 0, -1);
 }
 
@@ -35,6 +41,7 @@ void SceneResult::End()
 SceneBase* SceneResult::Update()
 {
 	m_pBackDrop->Update();
+	m_pPlayer->UpdateResult();
 	// ファイル書き込み
 	ReadFile();
 	
@@ -44,13 +51,21 @@ SceneBase* SceneResult::Update()
 		m_isFadeOut = IsFadingOut();
 		SceneBase::UpdateFade();
 		// フェードアウト終了時
-		if (!IsFading() && m_isFadeOut && !m_isBackScene)
+		if (!IsFading() && m_isFadeOut && !m_isBackScene && m_oneMore)
 		{
 			if (m_score > m_highScore)
 			{
 				GenerationFile();
 			}
-			return (new SceneMain);
+			return new SceneMain;
+		}
+		else if (!IsFading() && m_isFadeOut && !m_isBackScene && !m_oneMore)
+		{
+			if (m_score > m_highScore)
+			{
+				GenerationFile();
+			}
+			return new SceneTitle;
 		}
 	}
 
@@ -59,8 +74,16 @@ SceneBase* SceneResult::Update()
 		if (Pad::IsTrigger(PAD_INPUT_1))
 		{
 			StartFadeOut();
+			m_oneMore = true;
+		}
+		if (Pad::IsTrigger(PAD_INPUT_2))
+		{
+			StartFadeOut();
+			m_oneMore = false;
 		}
 	}
+
+	
 
 	return this;
 }
@@ -68,6 +91,7 @@ SceneBase* SceneResult::Update()
 void SceneResult::Draw()
 {
 	m_pBackDrop->Draw();
+	m_pPlayer->Draw();
 
 	// スコア描画(仮)
 	//m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE :%d", m_score);

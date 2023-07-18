@@ -25,6 +25,7 @@ public:
 	void RoundShadow();// プレイヤーの丸影
 
 	void UpdateTitle();// タイトル画面のプレイヤーの更新処理
+	void UpdateResult();// リザルト画面のプレイヤーの更新処理
 
 	// プレイヤーの座標取得
 	VECTOR GetPos()const { return m_pos; }

@@ -20,6 +20,7 @@ namespace
 	constexpr int kAnimRun = 11;// 走る状態
 	constexpr int kAnimJump = 7;// ジャンプアイドル状態
 	constexpr int kAnimDamage = 2;// 敵に当たった時の状態
+	constexpr int kAnimWaveHands = 16;// リザルト画面の状態
 
 	// プレイヤーの移動
 	// 加速度
@@ -181,10 +182,20 @@ void Player::UpdateTitle()
 {
 	// プレイヤーのタイトルでのアニメーション
 	m_pModel->ChangeAnimation(kAnimJump, true, true, 10);
-	m_pModel->Update();
+	m_pModel->Update(1.0f);
 
 
 	InitState(VGet(-200.0f, -170.0f, 0.0f), VGet(0.0f, 0.2f, 0.0f), m_scale);
+}
+
+void Player::UpdateResult()
+{
+	// プレイヤーのタイトルでのアニメーション
+	m_pModel->ChangeAnimation(kAnimWaveHands, true, true, 10);
+	m_pModel->Update(0.7f);
+
+
+	InitState(VGet(0.0f, 0.0f, 0.0f), VGet(0.0f, 0.0f, 0.0f), m_scale);
 }
 
 void Player::UpdateNoHitVec(bool Hitting)
@@ -262,7 +273,7 @@ void Player::UpdateMove(bool Hitting)
 {
 	// パッドの入力状態取得
 	PadInputState();
-	m_pModel->Update();
+	m_pModel->Update(1.0f);
 
 	// ジャンプ処理
 	m_isJump = true;

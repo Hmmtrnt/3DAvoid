@@ -50,7 +50,7 @@ SceneMain::~SceneMain()
 
 void SceneMain::Init()
 {
-	m_pSet->InitSceneMainCamera();
+	m_pSet->InitScenePlayPosCamera();
 	m_pPlayer->Init();
 	m_pField->Init();
 	m_pFont->Init(m_fontHandle, 30, 0, -1);

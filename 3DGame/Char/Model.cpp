@@ -89,10 +89,10 @@ void Model::SetUseCollision(bool isUse, bool isNeedUpdate)
 	m_isUpdateCollision = isNeedUpdate;
 }
 
-void Model::Update()
+void Model::Update(float animSpeed)
 {
-	UpdateAnim(m_animPrev);
-	UpdateAnim(m_animNext);
+	UpdateAnim(m_animPrev, animSpeed);
+	UpdateAnim(m_animNext, animSpeed);
 
 	// 指定フレームかけてアニメーションを変更する
 	m_animChangeFrame++;

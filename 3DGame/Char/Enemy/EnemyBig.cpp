@@ -117,7 +117,7 @@ void EnemyBig::Draw()
 
 void EnemyBig::UpdateMove(int score)
 {
-	m_pModel->Update();
+	m_pModel->Update(1.0f);
 
 	// スコアが上がるたびにエネミーの速度は上がる
 	if (score % 1000 == 0)
@@ -185,7 +185,7 @@ void EnemyBig::UpdateMove(int score)
 
 void EnemyBig::UpdateTitle()
 {
-	m_pModel->Update();
+	m_pModel->Update(1.0f);
 
 	//m_pModel->SetPos(VGet(150.0f,-130.0f,100.0f));	// 座標
 	//m_pModel->SetRot(VGet(0.0f, 1.0f, 0.0f));		// 回転

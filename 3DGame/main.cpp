@@ -31,7 +31,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	pSet->Init3D();// zバッファ有効
 	
-	pScene->Init();
+	pScene->Init();// シーンの初期化
 
 	while (ProcessMessage() == 0)
 	{
@@ -39,8 +39,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 		// 画面のクリア
 		ClearDrawScreen();
 
-		pScene->Update();
-		pScene->Draw();
+		pScene->Update();// 更新処理
+		pScene->Draw();// 描画処理
 
 		// 裏画面を表画面を入れ替える
 		ScreenFlip();

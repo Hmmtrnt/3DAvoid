@@ -34,7 +34,7 @@ void Pause::Update(int& selectNum)
 		else
 		{
 			m_posy = kDownPos;
-			selectNum = 2;
+			selectNum = 3;
 		}
 	}
 	else if (Pad::IsTrigger(PAD_INPUT_DOWN))
@@ -77,7 +77,7 @@ void Pause::DrawPause()
 	DrawString(Game::kScreenWidth - 250, 350, "‚â‚è’¼‚µ", Color::kRed);
 	DrawString(Game::kScreenWidth - 250, 450, "‚ ‚«‚ç‚ß‚é", Color::kRed);
 
-	DrawFormatString(0, 0, Color::kBlack, "%d", m_selectPosX);
+	//DrawFormatString(0, 0, Color::kBlack, "%d", m_selectPosX);
 }
 
 void Pause::DrawNote()

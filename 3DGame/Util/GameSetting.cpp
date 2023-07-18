@@ -12,7 +12,7 @@ void GameSetting::Init3D()
 }
 
 //ƒJƒƒ‰‚Ìİ’è
-void GameSetting::InitSceneMainCamera()
+void GameSetting::InitScenePlayPosCamera()
 {
 	// near,far
 	SetCameraNearFar(5.0f, 2800.0f);
@@ -22,7 +22,7 @@ void GameSetting::InitSceneMainCamera()
 	SetCameraPositionAndTarget_UpVecY(VGet(0, 1700, -400), VGet(0.0f, 0.0f, -100.0f));
 }
 
-void GameSetting::InitSceneTitleCamera()
+void GameSetting::InitSceneOriginPosCamera()
 {
 	// near,far
 	SetCameraNearFar(5.0f, 2000.0f);
