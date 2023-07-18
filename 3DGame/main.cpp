@@ -1,7 +1,8 @@
 #include "DxLib.h"
-
 #include "Util/game.h"
 #include "Scene/SceneManager.h"
+#include "Util/GameSetting.h"
+#include <memory>
 
 // プログラムは WinMain から始まります
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
@@ -22,7 +23,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	// ダブルバッファモード
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	SceneManager* pScene = new SceneManager;
+	// ポインタ
+	std::shared_ptr<SceneManager> pScene;// シーン
+	pScene = std::make_shared<SceneManager>();
+	std::shared_ptr<GameSetting> pSet;// ゲームの3D設定
+	pSet = std::make_shared<GameSetting>();
+
+	pSet->Init3D();// zバッファ有効
+	
 	pScene->Init();
 
 	while (ProcessMessage() == 0)

@@ -104,7 +104,6 @@ SceneTitle::~SceneTitle()
 
 void SceneTitle::Init()
 {
-	m_pSet->Init3D();
 	m_pSet->InitSceneTitleCamera();
 }
 

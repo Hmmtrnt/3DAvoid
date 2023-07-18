@@ -50,7 +50,6 @@ SceneMain::~SceneMain()
 
 void SceneMain::Init()
 {
-	m_pSet->Init3D();
 	m_pSet->InitSceneMainCamera();
 	m_pPlayer->Init();
 	m_pField->Init();
