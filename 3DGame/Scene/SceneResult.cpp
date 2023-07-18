@@ -14,7 +14,7 @@ SceneResult::SceneResult(int score) :
 	m_score(score),
 	m_scoreWriting(0),
 	m_highScore(0),
-	m_fontHandle(-1),
+	m_fontHpHandle(-1),
 	m_oneMore(false)
 {
 	m_pSet = std::make_shared<GameSetting>();
@@ -30,12 +30,12 @@ SceneResult::~SceneResult()
 void SceneResult::Init()
 {
 	m_pSet->InitSceneOriginPosCamera();
-	m_pFont->Init(m_fontHandle, 80, 0, -1);
+	m_pFont->Init(m_fontHpHandle, 80, 0, -1);
 }
 
 void SceneResult::End()
 {
-	m_pFont->End(m_fontHandle);
+	m_pFont->End(m_fontHpHandle);
 }
 
 SceneBase* SceneResult::Update()
@@ -99,8 +99,8 @@ void SceneResult::Draw()
 
 	// スコア描画(仮)
 	//m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE :%d", m_score);
-	DrawFormatStringToHandle(Game::kScreenWidth / 2, 100, Color::kBlack, m_fontHandle, "YOUSCORE\n%d", m_score);
-	DrawFormatStringToHandle(Game::kScreenWidth / 2, 340, Color::kBlack, m_fontHandle, "HIGHSCORE\n%d", m_highScore);
+	DrawFormatStringToHandle(Game::kScreenWidth / 2, 100, Color::kBlack, m_fontHpHandle, "YOUSCORE\n%d", m_score);
+	DrawFormatStringToHandle(Game::kScreenWidth / 2, 340, Color::kBlack, m_fontHpHandle, "HIGHSCORE\n%d", m_highScore);
 	
 
 	// フェードインアウトのフィルター

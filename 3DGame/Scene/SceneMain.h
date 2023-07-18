@@ -64,7 +64,8 @@ private:
 	// 複製するためのコピー
 	int m_enemyModelHandle;// エネミー
 	int m_shadowHandle;// 丸影
-	int m_fontHandle;// フォントハンドル
+	int m_fontHpHandle;// HPのフォントハンドル
+	int m_fontScoreHnadle;// スコアのフォントハンドル
 	int m_selectNum;// ポーズ画面の選択番号
 
 	// bool

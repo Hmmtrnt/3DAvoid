@@ -214,29 +214,9 @@ void Player::DrawUI(int color, int fontHandle)
 		return;
 	}
 
+	// HP表示
 	DrawFormatStringToHandle(screenPos.x-13, screenPos.y - 100, color, fontHandle,"%d%%", m_blowRate);
 	DrawStringToHandle(screenPos.x-13, screenPos.y - 70, "▼", Color::kRed, fontHandle);
-
-	// 最大HPに対する現在のHPの割合を計算する
-	//float hpRate = static_cast<float>(m_hp) / static_cast<float>(kMaxHp);
-	//// HPバーの長さを計算する
-	//float barWidth = kHpBarWidth * hpRate;
-
-	////HPバーの表示
-
-	//// バーの土台　赤で
-	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
-	//	screenPos.x + kHpBarWidth / 2, screenPos.y + kHpBarHeight,
-	//	0xff0000, true);
-	//// 現在のHP 緑
-	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
-	//	screenPos.x - kHpBarWidth / 2 + barWidth, screenPos.y + kHpBarHeight,
-	//	0x00ff00, true);
-
-	//// 枠線
-	//DrawBoxAA(screenPos.x - kHpBarWidth / 2, screenPos.y,
-	//	screenPos.x + kHpBarWidth / 2, screenPos.y + kHpBarHeight,
-	//	0xffffff, false);
 }
 
 void Player::UpdateNoHitVec(bool Hitting)

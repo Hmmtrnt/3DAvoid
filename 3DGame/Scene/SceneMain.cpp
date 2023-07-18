@@ -24,7 +24,8 @@ SceneMain::SceneMain() :
 	m_score(0),
 	m_enemyModelHandle(-1),
 	m_shadowHandle(-1),
-	m_fontHandle(-1),
+	m_fontHpHandle(-1),
+	m_fontScoreHnadle(-1),
 	m_selectNum(0),
 	m_hit(false),
 	m_hitting(false),
@@ -53,7 +54,8 @@ void SceneMain::Init()
 	m_pSet->InitScenePlayPosCamera();
 	m_pPlayer->Init();
 	m_pField->Init();
-	m_pFont->Init(m_fontHandle, 30, 0, -1);
+	m_pFont->Init(m_fontHpHandle, 30, 0, -1);
+	m_pFont->Init(m_fontScoreHnadle, 50, 0, -1);
 
 	m_hpColor = Color::kWhite;
 
@@ -83,7 +85,7 @@ void SceneMain::Init()
 void SceneMain::End()
 {
 	m_pPlayer->End();
-	m_pFont->End(m_fontHandle);
+	m_pFont->End(m_fontHpHandle);
 	// シャドウマップの削除
 	DeleteShadowMap(m_shadowMap);
 }
@@ -210,15 +212,15 @@ void SceneMain::Draw()
 
 	// 文字を見やすくする
 	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
-	DrawBox(0, 85, 300, 250, Color::kBlack, true);
+	DrawBox(0, 50, 300, 120, Color::kBlack, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 	// プレイヤーの吹っ飛び率描画
 	//DrawFormatStringToHandle(10, 90, m_hpColor, m_fontHandle,"%d%%", m_pPlayer->GetBlowRate());
-	m_pPlayer->DrawUI(m_hpColor, m_fontHandle);
+	m_pPlayer->DrawUI(m_hpColor, m_fontHpHandle);
 
 	// スコア描画
-	DrawFormatStringToHandle(10, 120, Color::kWhite, m_fontHandle, "score:%d", m_score);
+	DrawFormatStringToHandle(10, 60, Color::kWhite, m_fontScoreHnadle, "score:%d", m_score);
 
 	// ゲームオーバーになった時の処理(デバッグ用)
 	/*if (m_pPlayer->GetPos().y < -100.0f)
@@ -348,8 +350,8 @@ void SceneMain::UpdatePauseNo()
 	if (!m_pPlayer->GetIsFall())
 	{
 #ifdef _DEBUG
-		m_score++;
-		//m_score+=10;
+		//m_score++;
+		m_score+=10;
 #else
 		m_score++;
 #endif
