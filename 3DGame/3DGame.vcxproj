@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="System\SoundManager.cpp" />
     <ClCompile Include="Stage\BackDrop.cpp" />
     <ClCompile Include="Char\Player\Player.cpp" />
     <ClCompile Include="Char\Model.cpp" />
@@ -172,7 +172,7 @@
     <ClCompile Include="Util\Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="System\SoundManager.h" />
     <ClInclude Include="Stage\BackDrop.h" />
     <ClInclude Include="Char\Player\Player.h" />
     <ClInclude Include="Char\Model.h" />

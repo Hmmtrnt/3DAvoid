@@ -7,6 +7,7 @@
 #include "../Char/Enemy/EnemyBase.h"
 #include "../Stage/Field.h"
 #include "../Stage/BackDrop.h"
+#include "../System/SoundManager.h"
 
 namespace
 {
@@ -87,6 +88,9 @@ SceneTitle::SceneTitle() :
 	// îwåi
 	m_pBackDrop = std::make_shared<BackDrop>();
 
+	// âπ
+	m_pSound = std::make_shared<SoundManager>();
+
 	// ä€âeÉnÉìÉhÉãÉçÅ[Éh
 	m_roundShadowHandle = LoadGraph(kRoundShadowHandle);
 
@@ -105,10 +109,12 @@ SceneTitle::~SceneTitle()
 void SceneTitle::Init()
 {
 	m_pSet->InitSceneOriginPosCamera();
+	m_pSound->Start(0, 255);
 }
 
 void SceneTitle::End()
 {
+	m_pSound->Stop(0);
 }
 
 SceneBase* SceneTitle::Update()

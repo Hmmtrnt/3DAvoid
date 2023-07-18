@@ -215,8 +215,8 @@ void Player::DrawUI(int color, int fontHandle)
 	}
 
 	// HPï\é¶
-	DrawFormatStringToHandle(screenPos.x-13, screenPos.y - 100, color, fontHandle,"%d%%", m_blowRate);
-	DrawStringToHandle(screenPos.x-13, screenPos.y - 70, "Å•", Color::kRed, fontHandle);
+	DrawFormatStringToHandle(static_cast<int>(screenPos.x) - 13, static_cast<int>(screenPos.y) - 100, color, fontHandle,"%d%%", m_blowRate);
+	DrawStringToHandle(static_cast<int>(screenPos.x) - 13, static_cast<int>(screenPos.y) - 70, "Å•", Color::kRed, fontHandle);
 }
 
 void Player::UpdateNoHitVec(bool Hitting)
