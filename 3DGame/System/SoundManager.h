@@ -1,18 +1,14 @@
 #pragma once
-#include <vector>
 
-class SoundManager
+namespace Sound
 {
-public:
-	enum class BgmId
+	enum BgmId
 	{
 		Title,// タイトル
 		Main,// メイン
-		Result// リザルト
+		Result,// リザルト
+		BgmNum// BGMの数
 	};
-
-	SoundManager();
-	virtual ~SoundManager();
 
 	// ロード
 	void Load();
@@ -20,15 +16,42 @@ public:
 	void Unload();
 
 	// 再生
-	void Start(int id, int volume);
+	void Start(BgmId id, int volume);
 	// 終了
-	void Stop(int id);
-	// ループ
-	void Loop(int id);
+	void Stop(BgmId id);
+}
 
-private:
-	
+//class SoundManager
+//{
+//public:
+//	enum class BgmId
+//	{
+//		Title,// タイトル
+//		Main,// メイン
+//		Result,// リザルト
+//		BgmNum// BGMの数
+//	};
+//
+//	SoundManager();
+//	virtual ~SoundManager();
+//
+//	// ロード
+//	void Load();
+//	// アンロード
+//	void Unload();
+//
+//	// 再生
+//	void Start(int id, int volume);
+//	// 終了
+//	void Stop(int id);
+//	// ループ
+//	void Loop(int id);
+//
+//private:
+//	
+//
+//	std::vector<int> m_BgmHandle;// BGMのハンドル
+//};
 
-	std::vector<int> m_BgmHandle;// BGMのハンドル
-};
+
 

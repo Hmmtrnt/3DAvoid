@@ -10,7 +10,6 @@ class Enemy;
 class EnemyBig;
 class Field;
 class BackDrop;
-class SoundManager;
 
 class SceneTitle : public SceneBase
 {
@@ -46,7 +45,6 @@ private:
 	std::shared_ptr<EnemyBig> m_pEnemyBig;// 大きいエネミー
 	std::shared_ptr<Field> m_pField;// ステージ
 	std::shared_ptr<BackDrop> m_pBackDrop;// 背景
-	std::shared_ptr<SoundManager> m_pSound;// 音
 
 	// int
 	int m_titleHandle;// タイトルの画像ハンドル

@@ -88,9 +88,6 @@ SceneTitle::SceneTitle() :
 	// ”wŒi
 	m_pBackDrop = std::make_shared<BackDrop>();
 
-	// ‰¹
-	m_pSound = std::make_shared<SoundManager>();
-
 	// ŠÛ‰eƒnƒ“ƒhƒ‹ƒ[ƒh
 	m_roundShadowHandle = LoadGraph(kRoundShadowHandle);
 

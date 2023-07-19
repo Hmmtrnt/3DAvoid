@@ -29,12 +29,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	pScene = std::make_shared<SceneManager>();
 	std::shared_ptr<GameSetting> pSet;// ゲームの3D設定
 	pSet = std::make_shared<GameSetting>();
-	std::shared_ptr<SoundManager> pBgm;// Bgmマネージャー
-	pBgm = std::make_shared<SoundManager>();
 
 	pSet->Init3D();// zバッファ有効
 	pScene->Init();// シーンの初期化
-	pBgm->Load();// データを読み込み
+
+	Sound::Load();
 
 	while (ProcessMessage() == 0)
 	{
@@ -57,7 +56,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	}
 
 	pScene->End();
-	pBgm->Unload();// データを解放
+
+	Sound::Unload();
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 
