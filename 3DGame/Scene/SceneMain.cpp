@@ -350,8 +350,8 @@ void SceneMain::UpdatePauseNo()
 	if (!m_pPlayer->GetIsFall())
 	{
 #ifdef _DEBUG
-		//m_score++;
-		m_score+=10;
+		m_score++;
+		//m_score+=10;
 #else
 		m_score++;
 #endif
