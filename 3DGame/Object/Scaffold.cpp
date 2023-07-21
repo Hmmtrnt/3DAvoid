@@ -27,8 +27,8 @@ Scaffold::~Scaffold()
 
 void Scaffold::Update()
 {
-	m_pModel->SetPos(VGet(-50.0f,50.0f,0.0f));
-	m_pModel->SetRot(VGet(-0.3f, 0.0f, 0.0f));
+	m_pModel->SetPos(VGet(-140.0f,-80.0f,0.0f));
+	m_pModel->SetRot(VGet(-0.1f, 0.0f, 0.0f));
 	m_pModel->SetScale(kScale);
 }
 

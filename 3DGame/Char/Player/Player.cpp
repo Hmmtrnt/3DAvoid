@@ -194,7 +194,7 @@ void Player::UpdateResult()
 	m_pModel->ChangeAnimation(kAnimWaveHands, true, true, 10);
 	m_pModel->Update(0.6f);
 
-	InitState(VGet(-150.0f, -70.0f, 0.0f), VGet(0.0f, 0.0f, 0.0f), m_scale);
+	InitState(VGet(-150.0f, -50.0f, 0.0f), VGet(0.0f, 0.0f, 0.0f), m_scale);
 }
 
 void Player::DrawUI(int color, int fontHandle)
