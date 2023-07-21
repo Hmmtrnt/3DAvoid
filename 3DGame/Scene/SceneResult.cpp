@@ -6,6 +6,7 @@
 #include "../Util/GameSetting.h"
 #include "../Stage/BackDrop.h"
 #include "../Char/Player/Player.h"
+#include "../Object/Scaffold.h"
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -21,6 +22,7 @@ SceneResult::SceneResult(int score) :
 	m_pFont = std::make_shared<StringInit>();
 	m_pBackDrop = std::make_shared<BackDrop>();
 	m_pPlayer = std::make_shared<Player>();
+	m_pScaffold = std::make_shared<Scaffold>();
 }
 
 SceneResult::~SceneResult()
@@ -42,6 +44,7 @@ SceneBase* SceneResult::Update()
 {
 	m_pBackDrop->Update();
 	m_pPlayer->UpdateResult();
+	m_pScaffold->Update();
 	// ƒtƒ@ƒCƒ‹‘‚«ž‚Ý
 	ReadFile();
 	
@@ -92,6 +95,7 @@ void SceneResult::Draw()
 {
 	m_pBackDrop->Draw();
 	m_pPlayer->Draw();
+	m_pScaffold->Draw();
 
 	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
 	DrawBox(Game::kScreenWidth / 2, 100, (Game::kScreenWidth / 2) + 500, 600, Color::kBlack, true);
