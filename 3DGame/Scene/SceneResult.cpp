@@ -106,16 +106,11 @@ void SceneResult::Draw()
 	m_pPlayer->Draw();
 	m_pScaffold->Draw();
 
-	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
-	DrawBox(Game::kScreenWidth / 2, 100, (Game::kScreenWidth / 2) + 500, 600, Color::kBlack, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-	DrawGraph(Game::kScreenWidth / 2, 100, m_resultHandle, true);
+	DrawExtendGraph(Game::kScreenWidth / 2, 100, (Game::kScreenWidth / 2) + 500, 600, m_resultHandle, true);
 
 	// スコア描画(仮)
-	//m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE :%d", m_score);
-	DrawFormatStringToHandle(Game::kScreenWidth / 2, 100, Color::kBlack, m_fontHpHandle, "YOUSCORE\n%d", m_score);
-	DrawFormatStringToHandle(Game::kScreenWidth / 2, 340, Color::kBlack, m_fontHpHandle, "HIGHSCORE\n%d", m_highScore);
+	DrawFormatStringToHandle(Game::kScreenWidth / 2 + 150, 250, Color::kBlack, m_fontHpHandle, "%d", m_score);
+	DrawFormatStringToHandle(Game::kScreenWidth / 2 + 150, 470, Color::kBlack, m_fontHpHandle, "%d", m_highScore);
 	
 
 	// フェードインアウトのフィルター
