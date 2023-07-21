@@ -11,11 +11,17 @@
 #include <string>
 #include <iostream>
 
+namespace
+{
+	const char* const kResultBoard = "Data/2D/Result.png";
+}
+
 SceneResult::SceneResult(int score) :
 	m_score(score),
 	m_scoreWriting(0),
 	m_highScore(0),
 	m_fontHpHandle(-1),
+	m_resultHandle(-1),
 	m_oneMore(false)
 {
 	m_pSet = std::make_shared<GameSetting>();
@@ -23,10 +29,13 @@ SceneResult::SceneResult(int score) :
 	m_pBackDrop = std::make_shared<BackDrop>();
 	m_pPlayer = std::make_shared<Player>();
 	m_pScaffold = std::make_shared<Scaffold>();
+
+	m_resultHandle = LoadGraph(kResultBoard);
 }
 
 SceneResult::~SceneResult()
 {
+	DeleteGraph(m_resultHandle);
 }
 
 void SceneResult::Init()
@@ -100,6 +109,8 @@ void SceneResult::Draw()
 	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
 	DrawBox(Game::kScreenWidth / 2, 100, (Game::kScreenWidth / 2) + 500, 600, Color::kBlack, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+	DrawGraph(Game::kScreenWidth / 2, 100, m_resultHandle, true);
 
 	// ƒXƒRƒA•`‰æ(‰¼)
 	//m_pFont->DrawFormat(10, 50, Color::kWhite, "YOUSCORE :%d", m_score);

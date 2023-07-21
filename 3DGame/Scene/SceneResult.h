@@ -41,6 +41,7 @@ private:
 	int m_scoreWriting;// 高得点のスコアを書き込む
 	int m_highScore;// ファイルの中にあるハイスコア
 	int m_fontHpHandle;// フォントハンドル
+	int m_resultHandle;// リザルト画面の結果表示のハンドル
 
 
 // -------------------------
