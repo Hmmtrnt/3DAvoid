@@ -95,7 +95,7 @@ SceneTitle::SceneTitle() :
 	// 文字列の画像ハンドルロード
 	m_stringHandle = LoadGraph(kStringHandle);
 
-	Sound::Start(Sound::Title, 255);
+	//Sound::Start(Sound::Title, 255);
 	
 }
 
@@ -115,12 +115,12 @@ void SceneTitle::Init()
 void SceneTitle::End()
 {
 	//m_pSound->Stop(0);
-	Sound::Stop(Sound::Title);
+	//Sound::Stop(Sound::Title);
 }
 
 SceneBase* SceneTitle::Update()
 {
-	Sound::Loop(Sound::Title);
+	//Sound::Loop(Sound::Title);
 
 	// フェードインアウトしている
 	if (IsFading())

@@ -43,7 +43,7 @@ SceneResult::~SceneResult()
 
 void SceneResult::Init()
 {
-	Sound::Start(Sound::Result, 255);
+	//Sound::Start(Sound::Result, 255);
 	m_pSet->InitSceneOriginPosCamera();
 	m_pFont->Init(m_fontHpHandle, 80, 0, -1);
 	
@@ -52,12 +52,12 @@ void SceneResult::Init()
 void SceneResult::End()
 {
 	m_pFont->End(m_fontHpHandle);
-	Sound::Stop(Sound::Result);
+	//Sound::Stop(Sound::Result);
 }
 
 SceneBase* SceneResult::Update()
 {
-	Sound::Loop(Sound::Result);
+	//Sound::Loop(Sound::Result);
 	m_pBackDrop->Update();
 	m_pPlayer->UpdateResult();
 	m_pScaffold->Update();
