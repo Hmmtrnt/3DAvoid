@@ -26,6 +26,7 @@ SceneMain::SceneMain() :
 	m_shadowHandle(-1),
 	m_fontHpHandle(-1),
 	m_fontScoreHnadle(-1),
+	m_scoreHandle(-1),
 	m_selectNum(0),
 	m_hit(false),
 	m_hitting(false),
@@ -43,10 +44,13 @@ SceneMain::SceneMain() :
 	m_red = 255;
 
 	m_decreaseColor = 255 - (m_pPlayer->GetBlowRate() * 2);
+
+	m_scoreHandle = LoadGraph("Data/2D/Score.png");
 }
 
 SceneMain::~SceneMain()
 {
+	DeleteGraph(m_scoreHandle);
 }
 
 void SceneMain::Init()
@@ -71,10 +75,6 @@ void SceneMain::Init()
 		m_pEnemy.push_back(std::make_shared<Enemy>(m_enemyModelHandle, m_shadowHandle,m_pPlayer));
 		m_pEnemy.back()->Init();
 	}
-
-	// でかいエネミー生成(デバッグ用)
-	/*m_pEnemyBig.push_back(std::make_shared<EnemyBig>(m_pPlayer));
-	m_pEnemyBig.back()->Init();*/
 
 	// シャドウマップの生成
 	m_shadowMap = MakeShadowMap(1024, 1024);
@@ -133,7 +133,7 @@ SceneBase* SceneMain::Update()
 	if (m_score != 0)
 	{
 		// スコアが千を超えるたびに敵が増える　(パッドは敵を増やすデバッグ用)
-		if (m_score % 1000 == 0 && m_score <= 6000 /*Pad::IsTrigger(PAD_INPUT_7)*/)
+		if (m_score % 1000 == 0 && m_score <= 6000)
 		{
 			for (int i = 0; i < 10; i++)
 			{
@@ -211,24 +211,13 @@ void SceneMain::Draw()
 	UpdateColor();
 
 	// 文字を見やすくする
-	SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
-	DrawBox(0, 50, 300, 120, Color::kBlack, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	DrawExtendGraph(0, 100, 300, 200, m_scoreHandle, true);
 
 	// プレイヤーの吹っ飛び率描画
-	//DrawFormatStringToHandle(10, 90, m_hpColor, m_fontHandle,"%d%%", m_pPlayer->GetBlowRate());
 	m_pPlayer->DrawUI(m_hpColor, m_fontHpHandle);
 
 	// スコア描画
-	DrawFormatStringToHandle(10, 60, Color::kWhite, m_fontScoreHnadle, "score:%d", m_score);
-
-	// ゲームオーバーになった時の処理(デバッグ用)
-	/*if (m_pPlayer->GetPos().y < -100.0f)
-	{
-		DrawStringToHandle(0, 150, "ゲームオーバー", Color::kWhite, m_fontHandle);
-		DrawStringToHandle(0, 180, "リザルト:PAD_INPUT_1", Color::kWhite, m_fontHandle);
-
-	}*/
+	DrawFormatStringToHandle(10, 120, Color::kWhite, m_fontScoreHnadle, "score:%d", m_score);
 
 	// ポーズ画面描画
 	if (m_pushPause)
@@ -384,6 +373,4 @@ void SceneMain::UpdatePause()
 		m_pushPause = false;
 	}
 
-	// 選択肢がどこを選んでいるか確認
-	//printfDx("%d", m_selectNum);
 }

@@ -66,6 +66,7 @@ private:
 	int m_shadowHandle;// 丸影
 	int m_fontHpHandle;// HPのフォントハンドル
 	int m_fontScoreHnadle;// スコアのフォントハンドル
+	int m_scoreHandle;// スコアを見やすくするハンドル
 	int m_selectNum;// ポーズ画面の選択番号
 
 	// bool
@@ -74,6 +75,4 @@ private:
 	bool m_pushPause;// ポーズボタンを押したかどうか
 	bool m_isNoteOpen;// 注意書きを開いているかどうか
 
-
-	XINPUT_STATE  input;// パッド状態取得変数
 };

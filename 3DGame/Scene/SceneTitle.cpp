@@ -8,6 +8,7 @@
 #include "../Stage/Field.h"
 #include "../Stage/BackDrop.h"
 #include "../System/SoundManager.h"
+#include "../System/SoundManager.h"
 
 namespace
 {
