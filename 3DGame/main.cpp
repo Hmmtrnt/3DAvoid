@@ -33,7 +33,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	pSet->Init3D();// zバッファ有効
 	pScene->Init();// シーンの初期化
 
-	Sound::Load();
+	Sound::Load();// サウンドを読み込む
 
 	while (ProcessMessage() == 0)
 	{
@@ -57,7 +57,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	pScene->End();
 
-	Sound::Unload();
+	Sound::UnLoad();
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 

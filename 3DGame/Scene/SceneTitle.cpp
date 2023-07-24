@@ -94,6 +94,8 @@ SceneTitle::SceneTitle() :
 
 	// 文字列の画像ハンドルロード
 	m_stringHandle = LoadGraph(kStringHandle);
+
+	Sound::Start(Sound::Title, 255);
 	
 }
 
@@ -107,16 +109,19 @@ SceneTitle::~SceneTitle()
 void SceneTitle::Init()
 {
 	m_pSet->InitSceneOriginPosCamera();
-	//m_pSound->Start(0, 255);
+	
 }
 
 void SceneTitle::End()
 {
 	//m_pSound->Stop(0);
+	Sound::Stop(Sound::Title);
 }
 
 SceneBase* SceneTitle::Update()
 {
+	Sound::Loop(Sound::Title);
+
 	// フェードインアウトしている
 	if (IsFading())
 	{

@@ -10,6 +10,7 @@
 #include <cassert>
 #include "../Util/FontFunction.h"
 #include "../System/Pause.h"
+#include "../System/SoundManager.h"
 
 namespace
 {
@@ -46,6 +47,8 @@ SceneMain::SceneMain() :
 	m_decreaseColor = 255 - (m_pPlayer->GetBlowRate() * 2);
 
 	m_scoreHandle = LoadGraph("Data/2D/Score.png");
+
+	Sound::Start(Sound::Main, 255);
 }
 
 SceneMain::~SceneMain()
@@ -79,7 +82,7 @@ void SceneMain::Init()
 	// シャドウマップの生成
 	m_shadowMap = MakeShadowMap(1024, 1024);
 	SetShadowMapLightDirection(m_shadowMap, GetLightDirection());
-
+	Sound::Start(Sound::Main, 255);
 }
 
 void SceneMain::End()
@@ -88,11 +91,13 @@ void SceneMain::End()
 	m_pFont->End(m_fontHpHandle);
 	// シャドウマップの削除
 	DeleteShadowMap(m_shadowMap);
+	Sound::Stop(Sound::Main);
 }
 
 // 更新処理
 SceneBase* SceneMain::Update()
 {
+	Sound::Loop(Sound::Main);
 	// フェードインアウトしている
 	if (IsFading())
 	{

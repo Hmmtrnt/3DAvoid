@@ -7,6 +7,7 @@
 #include "../Stage/BackDrop.h"
 #include "../Char/Player/Player.h"
 #include "../Object/Scaffold.h"
+#include "../System/SoundManager.h"
 #include <fstream>
 #include <string>
 #include <iostream>
@@ -31,6 +32,8 @@ SceneResult::SceneResult(int score) :
 	m_pScaffold = std::make_shared<Scaffold>();
 
 	m_resultHandle = LoadGraph(kResultBoard);
+
+	
 }
 
 SceneResult::~SceneResult()
@@ -40,17 +43,21 @@ SceneResult::~SceneResult()
 
 void SceneResult::Init()
 {
+	Sound::Start(Sound::Result, 255);
 	m_pSet->InitSceneOriginPosCamera();
 	m_pFont->Init(m_fontHpHandle, 80, 0, -1);
+	
 }
 
 void SceneResult::End()
 {
 	m_pFont->End(m_fontHpHandle);
+	Sound::Stop(Sound::Result);
 }
 
 SceneBase* SceneResult::Update()
 {
+	Sound::Loop(Sound::Result);
 	m_pBackDrop->Update();
 	m_pPlayer->UpdateResult();
 	m_pScaffold->Update();
