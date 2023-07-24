@@ -1,6 +1,5 @@
 #pragma once
 // ポーズ処理
-// TODO:デバッグ状態なので見た目をしっかりする
 
 class Pause
 {
@@ -27,5 +26,8 @@ private:
 	// 選択肢の座標
 	int m_selectPosX;
 	int m_selectPosY;
+
+	// ポーズ画面のハンドル
+	int m_pauseHandle[4];
 
 };
