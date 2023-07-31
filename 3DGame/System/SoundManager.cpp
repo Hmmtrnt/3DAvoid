@@ -13,6 +13,9 @@ namespace
 		"Data/Sound/BGM/Result.mp3",
 		"Data/Sound/SE/TitleClick.mp3",
 		"Data/Sound/SE/Jump.mp3",
+		"Data/Sound/SE/WeakHit.mp3",
+		"Data/Sound/SE/MediumHit.mp3",
+		"Data/Sound/SE/StrongHit.mp3",
 	};
 }
 

@@ -283,6 +283,23 @@ void SceneMain::UpdateEnemy()
 		}
 	}
 
+	// 敵に当たった時の処理
+	if (m_invincibleTime == 120)
+	{
+		if (m_pPlayer->GetBlowRate() < 31)
+		{
+			m_pSound->Start(Sound::LowHit, DX_PLAYTYPE_BACK, 255);
+		}
+		else if (m_pPlayer->GetBlowRate() < 61)
+		{
+			m_pSound->Start(Sound::MediumHit, DX_PLAYTYPE_BACK, 255);
+		}
+		else if (m_pPlayer->GetBlowRate() > 61)
+		{
+			m_pSound->Start(Sound::StrongHit, DX_PLAYTYPE_BACK, 255);
+		}
+	}
+
 	// 当たった時のプレイヤーの座標処理
 	if(m_invincibleTime >= 110)
 	{
