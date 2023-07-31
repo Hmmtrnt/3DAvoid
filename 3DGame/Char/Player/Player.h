@@ -4,6 +4,7 @@
 
 class Model;
 class Enemy;
+class SoundManager;
 
 class Player
 {
@@ -60,6 +61,7 @@ private:
 	std::shared_ptr<Model> m_pModel;
 	std::shared_ptr<Enemy> m_pEnemy;
 	std::shared_ptr<Player> m_pPlayer;
+	std::shared_ptr<SoundManager> m_pSound;// 音楽
 
 	// VECTOR
 	VECTOR m_pos;		// プレイヤー座標

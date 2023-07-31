@@ -12,6 +12,7 @@ namespace
 		"Data/Sound/BGM/Main.mp3",
 		"Data/Sound/BGM/Result.mp3",
 		"Data/Sound/SE/TitleClick.mp3",
+		"Data/Sound/SE/Jump.mp3",
 	};
 }
 

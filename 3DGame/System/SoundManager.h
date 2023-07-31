@@ -13,6 +13,7 @@ namespace Sound
 
 		// SE
 		TitleClick,// タイトル画面でボタン入力時
+		Jump,// ジャンプした時
 
 		SoundNum
 	};

@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../Model.h"
 #include "../Enemy/Enemy.h"
+#include "../../System/SoundManager.h"
 
 namespace
 {
@@ -86,6 +87,7 @@ Player::Player() :
 	// メモリ確保
 	m_pModel = std::make_shared<Model>(kPlayerHandle);// モデル
 	m_pEnemy = std::make_shared<Enemy>(m_pPlayer);// エネミー
+	m_pSound = std::make_shared<SoundManager>();
 	m_roundShadowHandle = LoadGraph(kRoundShadowHandle);// 丸影画像ロード
 	m_pModel->SetAnimation(m_animNum, true, true);// アニメーション設定
 }
@@ -316,6 +318,7 @@ void Player::UpdateMove(bool Hitting)
 	{
 		if (Pad::IsTrigger(PAD_INPUT_1) || Pad::IsTrigger(PAD_INPUT_2))
 		{
+			m_pSound->Start(Sound::Jump, DX_PLAYTYPE_BACK, 255);
 			m_jumpAcc = kJumpPower;
 		}
 	}
