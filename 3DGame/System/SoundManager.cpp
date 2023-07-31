@@ -1,5 +1,4 @@
 #include "SoundManager.h"
-#include <vector>
 #include "DxLib.h"
 
 namespace
@@ -12,58 +11,62 @@ namespace
 		"Data/Sound/BGM/Title.mp3",
 		"Data/Sound/BGM/Main.mp3",
 		"Data/Sound/BGM/Result.mp3",
+		"Data/Sound/SE/TitleClick.mp3",
 	};
 }
 
-namespace Sound
+SoundManager::SoundManager()
 {
-	void Sound::Load()
+	for (auto& fileName : kFileName)
 	{
-		// サウンドデータの読み込み
-		for (auto& fileName : kFileName)
-		{
-			int handle = LoadSoundMem(fileName);
-			kHandle.push_back(handle);
-		}
+		int handle = LoadSoundMem(fileName);
+		m_Handle.push_back(handle);
 	}
 
-	void Sound::UnLoad()
+	/*m_Handle[0] = LoadSoundMem("Data/Sound/BGM/Title.mp3");
+	m_Handle[1] = LoadSoundMem("Data/Sound/BGM/Main.mp3");
+	m_Handle[2] = LoadSoundMem("Data/Sound/BGM/Result.mp3");*/
+}
+
+SoundManager::~SoundManager()
+{
+	for (int i = 0; i < 3; i++)
 	{
-		// サウンドデータの解放
-		for (auto& handle : kHandle)
-		{
-			DeleteSoundMem(handle);
-			handle = -1;
-		}
+		DeleteSoundMem(m_Handle[i]);
 	}
 
-	void Sound::Start(SoundId id, int volume)
+	for (auto& handle : m_Handle)
 	{
-		PlaySoundMem(kHandle[id], DX_PLAYTYPE_BACK, true);
-		SetVolume(id, volume);
-	}
-
-	void Sound::Stop(SoundId id)
-	{
-		StopSoundMem(kHandle[id]);
-	}
-
-	void Sound::Loop(SoundId id)
-	{
-		if (CheckSoundMem(kHandle[id]) != 1)
-		{
-			PlaySoundMem(kHandle[id], DX_PLAYTYPE_BACK, true);
-		}
-	}
-
-	void Sound::Play(SoundId id)
-	{
-		PlaySoundMem(kHandle[id], DX_PLAYTYPE_BACK, true);
-	}
-
-	void Sound::SetVolume(SoundId id, int volume)
-	{
-		ChangeVolumeSoundMem(volume, kHandle[id]);
+		DeleteSoundMem(handle);
 	}
 }
 
+void SoundManager::Load()
+{
+	
+}
+
+void SoundManager::UnLoad()
+{
+	
+}
+
+void SoundManager::Start(Sound::SoundId id, int playType, int volume)
+{
+	ChangeVolumeSoundMem(volume, m_Handle[id]);
+	PlaySoundMem(m_Handle[id], playType, true);
+}
+
+void SoundManager::Loop(Sound::SoundId id)
+{
+}
+
+void SoundManager::Stop(Sound::SoundId id)
+{
+	StopSoundMem(m_Handle[id]);
+}
+
+void SoundManager::SetVolume(int volume, Sound::SoundId id)
+{
+	
+}

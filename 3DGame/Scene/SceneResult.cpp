@@ -30,6 +30,7 @@ SceneResult::SceneResult(int score) :
 	m_pBackDrop = std::make_shared<BackDrop>();
 	m_pPlayer = std::make_shared<Player>();
 	m_pScaffold = std::make_shared<Scaffold>();
+	m_pSound = std::make_shared<SoundManager>();
 
 	m_resultHandle = LoadGraph(kResultBoard);
 
@@ -46,13 +47,15 @@ void SceneResult::Init()
 	//Sound::Start(Sound::Result, 255);
 	m_pSet->InitSceneOriginPosCamera();
 	m_pFont->Init(m_fontHpHandle, 80, 0, -1);
-	
+
+	m_pSound->Start(Sound::Result, DX_PLAYTYPE_LOOP, 255);
 }
 
 void SceneResult::End()
 {
 	m_pFont->End(m_fontHpHandle);
 	//Sound::Stop(Sound::Result);
+	m_pSound->Stop(Sound::Result);
 }
 
 SceneBase* SceneResult::Update()

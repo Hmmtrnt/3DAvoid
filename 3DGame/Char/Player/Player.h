@@ -71,7 +71,7 @@ private:
 
 	// MATRIX
 	MATRIX m_cameraRotMtx;	// 水平移動の行列取得
-	MATRIX m_playerRotMtx;	// プレイヤーの進行方向
+	MATRIX m_playerRotMtx;	// プレイヤーの進行方向の行列
 
 	// int
 	int m_playerHandle;		// キャラクターハンドル

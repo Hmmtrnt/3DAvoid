@@ -2,7 +2,6 @@
 #include "Util/game.h"
 #include "Scene/SceneManager.h"
 #include "Util/GameSetting.h"
-#include "System/SoundManager.h"
 #include <memory>
 
 // プログラムは WinMain から始まります
@@ -33,8 +32,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	pSet->Init3D();// zバッファ有効
 	pScene->Init();// シーンの初期化
 
-	Sound::Load();// サウンドを読み込む
-
 	while (ProcessMessage() == 0)
 	{
 		LONGLONG time = GetNowHiPerformanceCount();
@@ -56,8 +53,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 	}
 
 	pScene->End();
-
-	Sound::UnLoad();
 
 	DxLib_End();				// ＤＸライブラリ使用の終了処理
 

@@ -1,29 +1,41 @@
 #pragma once
+#include <vector>
 
 // サウンド関連
 namespace Sound
 {
-	typedef enum SoundId
+	enum SoundId
 	{
 		// BGM
 		Title,// タイトル
 		Main,// メイン
 		Result,// リザルト
 
-		SoundNum
-	}SoundId;
+		// SE
+		TitleClick,// タイトル画面でボタン入力時
 
-	// ロード、アンロード
+		SoundNum
+	};
+}
+
+class SoundManager
+{
+public:
+	SoundManager();
+	virtual ~SoundManager();
+
 	void Load();
 	void UnLoad();
 
-	// BGM再生
-	void Start(SoundId id, int volume);
+	// 音楽再生
+	void Start(Sound::SoundId id, int playType, int volume);
+	void Loop(Sound::SoundId id);
+	// 音楽停止
+	void Stop(Sound::SoundId id);
+	// 音量設定
+	void SetVolume(int volume, Sound::SoundId id);
 
-	void Stop(SoundId id);
-	void Loop(SoundId id);
+private:
+	std::vector<int> m_Handle;
 
-	void Play(SoundId id);
-
-	void SetVolume(SoundId id, int volume);
-}
+};

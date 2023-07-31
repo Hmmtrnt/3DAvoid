@@ -88,14 +88,16 @@ SceneTitle::SceneTitle() :
 	// 背景
 	m_pBackDrop = std::make_shared<BackDrop>();
 
+	m_pSound = std::make_shared<SoundManager>();
+
 	// 丸影ハンドルロード
 	m_roundShadowHandle = LoadGraph(kRoundShadowHandle);
 
 	// 文字列の画像ハンドルロード
 	m_stringHandle = LoadGraph(kStringHandle);
 
-	Sound::Start(Sound::Title, 255);
-	
+	//Sound::Start(Sound::Title, 255);
+	//m_pSound->Start(Sound::Title, DX_PLAYTYPE_LOOP, 255);
 }
 
 SceneTitle::~SceneTitle()
@@ -108,17 +110,18 @@ SceneTitle::~SceneTitle()
 void SceneTitle::Init()
 {
 	m_pSet->InitSceneOriginPosCamera();
-	
+	m_pSound->Start(Sound::Title, DX_PLAYTYPE_LOOP, 255);
 }
 
 void SceneTitle::End()
 {
-	Sound::Stop(Sound::Title);
+	//Sound::Stop(Sound::Title);
+	m_pSound->Stop(Sound::Title);
 }
 
 SceneBase* SceneTitle::Update()
 {
-	Sound::Loop(Sound::Title);
+	//Sound::Loop(Sound::Title);
 
 	// フェードインアウトしている
 	if (IsFading())
@@ -137,6 +140,7 @@ SceneBase* SceneTitle::Update()
 		// フェードアウト開始
 		if (Pad::IsTrigger(PAD_INPUT_1))
 		{
+			m_pSound->Start(Sound::TitleClick, DX_PLAYTYPE_BACK, 255);
 			StartFadeOut();
 			m_topNumInterval = 10;
 			m_isPush = true;

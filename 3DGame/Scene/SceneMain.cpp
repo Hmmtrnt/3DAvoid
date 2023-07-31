@@ -41,6 +41,7 @@ SceneMain::SceneMain() :
 	m_pBackDrop = std::make_shared<BackDrop>();
 	m_pFont = std::make_shared<StringInit>();
 	m_pPause = std::make_shared<Pause>();
+	m_pSound = std::make_shared<SoundManager>();
 
 	m_red = 255;
 
@@ -83,6 +84,7 @@ void SceneMain::Init()
 	m_shadowMap = MakeShadowMap(1024, 1024);
 	SetShadowMapLightDirection(m_shadowMap, GetLightDirection());
 	//Sound::Start(Sound::Main, 255);
+	m_pSound->Start(Sound::Main, DX_PLAYTYPE_LOOP, 255);
 }
 
 void SceneMain::End()
@@ -92,6 +94,7 @@ void SceneMain::End()
 	// シャドウマップの削除
 	DeleteShadowMap(m_shadowMap);
 	//Sound::Stop(Sound::Main);
+	m_pSound->Stop(Sound::Main);
 }
 
 // 更新処理
@@ -344,8 +347,8 @@ void SceneMain::UpdatePauseNo()
 	if (!m_pPlayer->GetIsFall())
 	{
 #ifdef _DEBUG
-		m_score++;
-		//m_score+=10;
+		//m_score++;
+		m_score+=10;
 #else
 		m_score++;
 #endif

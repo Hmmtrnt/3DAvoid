@@ -8,6 +8,7 @@ class StringInit;
 class BackDrop;
 class Player;
 class Scaffold;
+class SoundManager;
 
 class SceneResult : public SceneBase
 {
@@ -35,6 +36,7 @@ private:
 	std::shared_ptr<BackDrop> m_pBackDrop;// 背景
 	std::shared_ptr<Player> m_pPlayer;// プレイヤー
 	std::shared_ptr<Scaffold> m_pScaffold;// 足場
+	std::shared_ptr<SoundManager> m_pSound;// 音楽
 
 	// int
 	int m_score;// ゲームで得たスコア

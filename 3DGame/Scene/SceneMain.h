@@ -13,6 +13,7 @@ class Field;
 class BackDrop;
 class StringInit;
 class Pause;
+class SoundManager;
 
 class SceneMain : public SceneBase
 {
@@ -52,6 +53,7 @@ private:
 	std::vector<std::shared_ptr<EnemyBig>> m_pEnemyBig;// 大きいエネミー
 	std::shared_ptr<StringInit> m_pFont;// フォント
 	std::shared_ptr<Pause> m_pPause;// ポーズ画面
+	std::shared_ptr<SoundManager> m_pSound;// 音楽
 
 	// int
 	int m_shadowMap; // シャドウマップ
