@@ -18,6 +18,7 @@ namespace Sound
 		LowHit,// ‘Ì—Í‚ª’á‚¢‚Æ‚«
 		MediumHit,// ‘Ì—Í‚ª­‚µ‘½‚¢‚Æ‚«
 		StrongHit,// ‘Ì—Í‚ª‘½‚¢‚Æ‚«
+		Falling,// —‚¿‚Ä‚¢‚é‚Æ‚«
 
 		SoundNum
 	};

@@ -16,6 +16,7 @@ namespace
 		"Data/Sound/SE/WeakHit.mp3",
 		"Data/Sound/SE/MediumHit.mp3",
 		"Data/Sound/SE/StrongHit.mp3",
+		"Data/Sound/SE/Falling.mp3",
 	};
 }
 

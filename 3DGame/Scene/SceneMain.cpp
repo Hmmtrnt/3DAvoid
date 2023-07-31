@@ -129,6 +129,7 @@ SceneBase* SceneMain::Update()
 		if (m_pPlayer->GetIsFall() || (Pad::IsTrigger(PAD_INPUT_1) && m_isNoteOpen) || (Pad::IsTrigger(PAD_INPUT_1) && m_selectNum == 2))
 		{
 			//return new SceneMain;// デバッグ用シーン遷移
+			m_pSound->Start(Sound::Falling, DX_PLAYTYPE_BACK, 255);
 
 			StartFadeOut();// シーン遷移
 		}
