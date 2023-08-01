@@ -111,6 +111,7 @@ void Player::Update(bool Hitting)
 {
 	UpdateMove(Hitting);
 
+#ifdef _DEBUG
 	// デバッグ確認用ダメージ
 	if (Pad::IsTrigger(PAD_INPUT_3))
 	{
@@ -123,6 +124,8 @@ void Player::Update(bool Hitting)
 			m_blowRate -= 10;
 		}
 	}
+#else
+#endif
 }
 
 // プレイヤー描画

@@ -1,5 +1,4 @@
 #include "SceneMain.h"
-#include "SceneTitle.h"// デバッグ用
 #include "SceneResult.h"
 #include "../Util/GameSetting.h"
 #include "../Char/Player/Player.h"
@@ -48,8 +47,6 @@ SceneMain::SceneMain() :
 	m_decreaseColor = 255 - (m_pPlayer->GetBlowRate() * 2);
 
 	m_scoreHandle = LoadGraph("Data/2D/Score.png");
-
-	//Sound::Start(Sound::Main, 255);
 }
 
 SceneMain::~SceneMain()
@@ -150,7 +147,7 @@ SceneBase* SceneMain::Update()
 
 	if (m_score != 0)
 	{
-		// スコアが千を超えるたびに敵が増える　(パッドは敵を増やすデバッグ用)
+		// スコアが千を超えるたびに敵が増える　
 		if (m_score % 1000 == 0 && m_score <= 6000 && !m_pushPause)
 		{
 			for (int i = 0; i < 10; i++)
