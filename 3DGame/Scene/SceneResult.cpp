@@ -14,7 +14,15 @@
 
 namespace
 {
+	// 画像ID
 	const char* const kResultBoard = "Data/2D/Result.png";
+	const char* const kAbuttonGuide = "Data/2D/AGuide.png";
+	const char* const kBbuttonGuide = "Data/2D/BGuide.png";
+
+	// ガイドの座標
+	const int kAGuidePosX = 600;
+	const int kBGuidePosX = 900;
+	const int kGuidePosY = 600;
 }
 
 SceneResult::SceneResult(int score) :
@@ -34,12 +42,15 @@ SceneResult::SceneResult(int score) :
 
 	m_resultHandle = LoadGraph(kResultBoard);
 
-	
+	m_guideHandle[0] = LoadGraph(kAbuttonGuide);
+	m_guideHandle[1] = LoadGraph(kBbuttonGuide);
 }
 
 SceneResult::~SceneResult()
 {
 	DeleteGraph(m_resultHandle);
+	DeleteGraph(m_guideHandle[0]);
+	DeleteGraph(m_guideHandle[1]);
 }
 
 void SceneResult::Init()
@@ -47,7 +58,6 @@ void SceneResult::Init()
 	//Sound::Start(Sound::Result, 255);
 	m_pSet->InitSceneOriginPosCamera();
 	m_pFont->Init(m_fontHpHandle, 80, 0, -1);
-
 	m_pSound->Start(Sound::Result, DX_PLAYTYPE_LOOP, 255);
 }
 
@@ -95,11 +105,13 @@ SceneBase* SceneResult::Update()
 	{
 		if (Pad::IsTrigger(PAD_INPUT_1))
 		{
+			m_pSound->Start(Sound::ButtonPush, DX_PLAYTYPE_BACK, 255);
 			StartFadeOut();
 			m_oneMore = true;
 		}
 		if (Pad::IsTrigger(PAD_INPUT_2))
 		{
+			m_pSound->Start(Sound::ButtonPush, DX_PLAYTYPE_BACK, 255);
 			StartFadeOut();
 			m_oneMore = false;
 		}
@@ -116,7 +128,11 @@ void SceneResult::Draw()
 	m_pPlayer->Draw();
 	m_pScaffold->Draw();
 
+	// リザルト
 	DrawExtendGraph(Game::kScreenWidth / 2, 100, (Game::kScreenWidth / 2) + 500, 600, m_resultHandle, true);
+	// 次のシーンのガイド
+	DrawExtendGraph(kAGuidePosX, kGuidePosY, kAGuidePosX +250, kGuidePosY +70, m_guideHandle[0], true);
+	DrawExtendGraph(kBGuidePosX, kGuidePosY, kBGuidePosX +280, kGuidePosY +70, m_guideHandle[1], true);
 
 	// スコア描画(仮)
 	DrawFormatStringToHandle(Game::kScreenWidth / 2 + 150, 250, Color::kBlack, m_fontHpHandle, "%d", m_score);

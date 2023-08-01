@@ -12,13 +12,15 @@ namespace Sound
 		Result,// リザルト
 
 		// SE
-		TitleClick,// タイトル画面でボタン入力時
+		ButtonPush,// タイトル画面でボタン入力時
 		Jump,// ジャンプした時
 		// 敵に当たった時
 		LowHit,// 体力が低いとき
 		MediumHit,// 体力が少し多いとき
 		StrongHit,// 体力が多いとき
 		Falling,// 落ちているとき
+		Cursor,// カーソル移動するとき
+		Decide,// 決定した時
 
 		SoundNum
 	};

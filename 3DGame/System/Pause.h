@@ -1,5 +1,8 @@
 #pragma once
 // ポーズ処理
+#include <memory>
+
+class SoundManager;
 
 class Pause
 {
@@ -18,6 +21,9 @@ public:
 	void UpdateOpen(bool isOpen);
 
 private:
+	// ポインタ
+	std::shared_ptr<SoundManager> m_pSound;
+
 	// テスト変数
 	int m_posx;// カーソル座標X
 	int m_posy;// カーソル座標Y

@@ -44,6 +44,7 @@ private:
 	int m_highScore;// ファイルの中にあるハイスコア
 	int m_fontHpHandle;// フォントハンドル
 	int m_resultHandle;// リザルト画面の結果表示のハンドル
+	int m_guideHandle[2];// 次のシーンのガイドハンドル
 
 
 // -------------------------

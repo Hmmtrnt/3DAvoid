@@ -102,7 +102,6 @@ private:
 	bool m_isMove;			// 動いているかどうか
 	bool m_isFall;			// ステージ外に出たかどうか
 
-	// テスト
 	XINPUT_STATE m_input;// パッド状態取得変数
 };
 

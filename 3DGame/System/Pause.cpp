@@ -1,5 +1,6 @@
 #include "Pause.h"
 #include "../Util/common.h"
+#include "../System/SoundManager.h"
 #include <cassert>
 
 namespace
@@ -30,7 +31,7 @@ Pause::Pause() :
 		m_pauseHandle[i] = LoadGraph(kPauseId[i]);
 		assert(m_pauseHandle[i] != -1);
 	}
-	
+	m_pSound = std::make_shared<SoundManager>();
 }
 
 Pause::~Pause()
@@ -48,26 +49,18 @@ void Pause::Update(int& selectNum)
 		
 		if (selectNum > 0)
 		{
+			m_pSound->Start(Sound::Cursor, DX_PLAYTYPE_BACK, 255);
 			m_posy -= 100;
 			selectNum -= 1;
-		}
-		else
-		{
-			/*m_posy = kDownPos;
-			selectNum = 3;*/
 		}
 	}
 	else if (Pad::IsTrigger(PAD_INPUT_DOWN))
 	{
 		if (selectNum < 2)
 		{
+			m_pSound->Start(Sound::Cursor, DX_PLAYTYPE_BACK, 255);
 			m_posy += 100;
 			selectNum += 1;
-		}
-		else
-		{
-			/*m_posy = kUpPos;
-			selectNum = 0;*/
 		}
 	}
 	

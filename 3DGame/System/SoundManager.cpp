@@ -17,6 +17,8 @@ namespace
 		"Data/Sound/SE/MediumHit.mp3",
 		"Data/Sound/SE/StrongHit.mp3",
 		"Data/Sound/SE/Falling.mp3",
+		"Data/Sound/SE/Cursor.mp3",
+		"Data/Sound/SE/Decide.mp3",
 	};
 }
 
@@ -27,10 +29,6 @@ SoundManager::SoundManager()
 		int handle = LoadSoundMem(fileName);
 		m_Handle.push_back(handle);
 	}
-
-	/*m_Handle[0] = LoadSoundMem("Data/Sound/BGM/Title.mp3");
-	m_Handle[1] = LoadSoundMem("Data/Sound/BGM/Main.mp3");
-	m_Handle[2] = LoadSoundMem("Data/Sound/BGM/Result.mp3");*/
 }
 
 SoundManager::~SoundManager()

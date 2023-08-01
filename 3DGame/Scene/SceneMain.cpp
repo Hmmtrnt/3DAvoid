@@ -128,8 +128,17 @@ SceneBase* SceneMain::Update()
 		// キャラが落ちたらまたは注意書きではいを押したらシーン遷移
 		if (m_pPlayer->GetIsFall() || (Pad::IsTrigger(PAD_INPUT_1) && m_isNoteOpen) || (Pad::IsTrigger(PAD_INPUT_1) && m_selectNum == 2))
 		{
+			
 			//return new SceneMain;// デバッグ用シーン遷移
-			m_pSound->Start(Sound::Falling, DX_PLAYTYPE_BACK, 255);
+			if (!m_pushPause)
+			{
+				m_pSound->Start(Sound::Falling, DX_PLAYTYPE_BACK, 255);
+			}
+			else
+			{
+				m_pSound->Start(Sound::Decide, DX_PLAYTYPE_BACK, 255);
+			}
+			
 
 			StartFadeOut();// シーン遷移
 		}
@@ -142,7 +151,7 @@ SceneBase* SceneMain::Update()
 	if (m_score != 0)
 	{
 		// スコアが千を超えるたびに敵が増える　(パッドは敵を増やすデバッグ用)
-		if (m_score % 1000 == 0 && m_score <= 6000)
+		if (m_score % 1000 == 0 && m_score <= 6000 && !m_pushPause)
 		{
 			for (int i = 0; i < 10; i++)
 			{
@@ -150,7 +159,7 @@ SceneBase* SceneMain::Update()
 				m_pEnemy.back()->Init();
 			}
 		}
-		else if (m_score % 1000 == 0 && m_score <= 8000 /*Pad::IsTrigger(PAD_INPUT_7)*/)
+		else if (m_score % 1000 == 0 && m_score <= 8000 && !m_pushPause)
 		{
 			// でかいエネミー生成
 			m_pEnemyBig.push_back(std::make_shared<EnemyBig>(m_pPlayer));
@@ -162,15 +171,20 @@ SceneBase* SceneMain::Update()
 	// ポーズボタンを押したときの処理
 	if (Pad::IsTrigger(PAD_INPUT_8))
 	{
+		if (!m_pushPause)
+		{
+			m_pSound->Start(Sound::ButtonPush, DX_PLAYTYPE_BACK, 255);
+		}
 		m_pushPause = true;
 	}
 	// やり直すを押したときの処理
 	if (m_selectNum == 1 && Pad::IsTrigger(PAD_INPUT_1))
 	{
+		m_pSound->Start(Sound::Decide, DX_PLAYTYPE_BACK, 255);
 		m_isNoteOpen = true;
 		
 	}
-
+	// 注意書きを閉じる
 	if (m_isNoteOpen)
 	{
 		if (Pad::IsTrigger(PAD_INPUT_2))
@@ -396,6 +410,7 @@ void SceneMain::UpdatePause()
 
 	if (m_selectNum == 0 && Pad::IsTrigger(PAD_INPUT_1))
 	{
+		m_pSound->Start(Sound::ButtonPush, DX_PLAYTYPE_BACK, 255);
 		m_pushPause = false;
 	}
 

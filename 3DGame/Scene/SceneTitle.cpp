@@ -138,9 +138,13 @@ SceneBase* SceneTitle::Update()
 	if (!IsFading())
 	{
 		// フェードアウト開始
-		if (Pad::IsTrigger(PAD_INPUT_1))
+		if (Pad::IsTrigger(PAD_INPUT_1) || Pad::IsTrigger(PAD_INPUT_2) ||
+			Pad::IsTrigger(PAD_INPUT_3) || Pad::IsTrigger(PAD_INPUT_4) || 
+			Pad::IsTrigger(PAD_INPUT_5) || Pad::IsTrigger(PAD_INPUT_6) || 
+			Pad::IsTrigger(PAD_INPUT_7) || Pad::IsTrigger(PAD_INPUT_8) || 
+			Pad::IsTrigger(PAD_INPUT_9) || Pad::IsTrigger(PAD_INPUT_10))
 		{
-			m_pSound->Start(Sound::TitleClick, DX_PLAYTYPE_BACK, 255);
+			m_pSound->Start(Sound::ButtonPush, DX_PLAYTYPE_BACK, 255);
 			StartFadeOut();
 			m_topNumInterval = 10;
 			m_isPush = true;
