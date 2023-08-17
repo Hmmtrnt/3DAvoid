@@ -118,7 +118,7 @@ void Enemy::Update()
 
 void Enemy::Draw()
 {
-	RoundShadow(120.0f);
+	RoundShadow(20.0f, 120.0f);
 	m_pModel->Draw();
 }
 

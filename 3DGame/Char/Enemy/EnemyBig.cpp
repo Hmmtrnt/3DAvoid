@@ -111,7 +111,7 @@ void EnemyBig::Update(int score)
 
 void EnemyBig::Draw()
 {
-	RoundShadow(500.0f);
+	RoundShadow(20.0f, 500.0f);
 	m_pModel->Draw();
 }
 

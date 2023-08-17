@@ -22,7 +22,7 @@ public:
 
 	// 丸影描画
 
-	void RoundShadow(float scale);
+	void RoundShadow(float y, float scale);
 
 	// モデルの取得
 	int GetModelHandle()const;// エネミー
