@@ -21,7 +21,6 @@ public:
 	void EnemyMove();
 
 	// ŠÛ‰e•`‰æ
-
 	void RoundShadow(float y, float scale);
 
 	// ƒ‚ƒfƒ‹‚ÌŽæ“¾
