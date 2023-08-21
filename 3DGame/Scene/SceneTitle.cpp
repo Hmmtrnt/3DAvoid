@@ -8,6 +8,7 @@
 #include "../Stage/Field.h"
 #include "../Stage/BackDrop.h"
 #include "../System/SoundManager.h"
+#include "SceneExplanation.h"
 
 namespace
 {
@@ -131,7 +132,7 @@ SceneBase* SceneTitle::Update()
 		// フェードアウト終了時
 		if (!IsFading() && m_isFadeOut && !m_isBackScene)
 		{
-			return (new SceneMain);
+			return (new SceneExplanation);
 		}
 	}
 

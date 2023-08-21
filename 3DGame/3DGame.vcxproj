@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Object\Scaffold.cpp" />
+    <ClCompile Include="Scene\SceneExplanation.cpp" />
     <ClCompile Include="System\SoundManager.cpp" />
     <ClCompile Include="Stage\BackDrop.cpp" />
     <ClCompile Include="Char\Player\Player.cpp" />
@@ -174,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Object\Scaffold.h" />
+    <ClInclude Include="Scene\SceneExplanation.h" />
     <ClInclude Include="System\SoundManager.h" />
     <ClInclude Include="Stage\BackDrop.h" />
     <ClInclude Include="Char\Player\Player.h" />

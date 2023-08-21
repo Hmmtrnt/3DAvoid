@@ -1,6 +1,7 @@
 #include <cassert>
 #include "SceneManager.h"
 #include "SceneTitle.h"
+#include "SceneExplanation.h"
 #include "SceneMain.h"
 #include "SceneResult.h"
 #include "../Util/Pad.h"
@@ -13,7 +14,8 @@ SceneManager::SceneManager()
 void SceneManager::Init()
 {
 #ifdef _DEBUG
-	m_pScene = new SceneTitle;
+	//m_pScene = new SceneTitle;
+	m_pScene = new SceneExplanation;
 	//m_pScene = new SceneMain;
 	//m_pScene = new SceneResult;
 #else
