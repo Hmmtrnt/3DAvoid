@@ -237,8 +237,6 @@ void Player::UpdateNoHitVec(bool Hitting)
 			m_pos = VAdd(m_pos, m_move);
 			m_isMove = true;
 
-			// ƒƒ‚360 = 91, 180 = 182;
-
 			// 180“x‰ñ“]
 			if (m_input.ThumbLY > 0)
 			{
