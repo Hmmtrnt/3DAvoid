@@ -1,3 +1,4 @@
+// ステージ
 #pragma once
 #include <vector>
 #include <memory>
@@ -10,11 +11,8 @@ public:
 	Field();
 	virtual ~Field();
 
-	void Init();
-	void End();
-	void Update();
-	void DrawMain();
-	void DrawTitle();
+	void DrawMain();	// メインシーンの描画
+	void DrawTitle();	// タイトルシーンの描画
 
 private:
 	// ポインタ

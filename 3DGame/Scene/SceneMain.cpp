@@ -53,7 +53,6 @@ void SceneMain::Init()
 {
 	m_pSet->InitScenePlayPosCamera();
 	m_pPlayer->Init();
-	m_pField->Init();
 	m_pFont->Init(m_fontHpHandle, 30, 0, -1);
 	m_pFont->Init(m_fontScoreHnadle, 50, 0, -1);
 
