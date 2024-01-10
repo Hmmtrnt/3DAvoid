@@ -1,4 +1,4 @@
-// ‹¤’Ê•Ï”
+// ‹¤’Ê•Ï”@
 #pragma once
 #include "DxLib.h"
 #include "Pad.h"
