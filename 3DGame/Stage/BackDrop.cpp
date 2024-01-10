@@ -4,53 +4,38 @@
 
 namespace
 {
-	const char* const kImgName = "Data/2D/BackGround/BackDrop1.png";// ”wŒi
+	const char* const kImgName = "Data/2D/BackGround/BackDrop1.png";// ”wŒi‰æ‘œ‚ÌƒpƒX
 }
 
 BackDrop::BackDrop() :
-	m_handlePosX(0),
-	m_handlePosY(0),
-	m_handlePosX2(-Game::kScreenWidth),
-	m_handlePosY2(0),
 	m_scrollSpeed(1)
-
 {
+	// ‰Šú‰»
+	// 1–‡–Ú‚Ì‰æ‘œ
 	m_first.m_width = 0;
 	m_first.m_height = 0;
-
+	// 2–‡–Ú‚Ì‰æ‘œ
 	m_second.m_width = -Game::kScreenWidth;
 	m_second.m_height = 0;
 
 	m_handle = LoadGraph(kImgName);
-	
-
 }
 
 BackDrop::~BackDrop()
 {
 	DeleteGraph(m_handle);
-	
 }
 
 void BackDrop::Update()
 {
-	m_first.m_width += m_scrollSpeed;
-	m_second.m_width += m_scrollSpeed;
-
-	if (m_first.m_width >= Game::kScreenWidth)
-	{
-		m_first.m_width = -Game::kScreenWidth;
-	}
-	if (m_second.m_width >= Game::kScreenWidth)
-	{
-		m_second.m_width = -Game::kScreenWidth;
-	}
+	MoveImage();
 }
 
 void BackDrop::Draw()
 {
 	// •`‰æƒ‚[ƒh‚ðƒoƒCƒŠƒjƒA–@(Šg‘å‚µ‚½Žž‚ÉŒ©‚â‚·‚­‚È‚é)‚ðƒZƒbƒg
 	SetDrawMode(DX_DRAWMODE_BILINEAR);
+	// ”wŒi‰æ‘œ•`‰æ
 	DrawExtendGraph(m_first.m_width, m_first.m_height,
 		m_first.m_width + Game::kScreenWidth,
 		Game::kScreenHeight,
@@ -61,4 +46,21 @@ void BackDrop::Draw()
 		m_handle, true);
 	// •`‰æƒ‚[ƒh‚ð•W€‚É–ß‚·
 	SetDrawMode(DX_DRAWMODE_NEAREST);
+}
+
+// ‰æ‘œ‚ÌˆÚ“®
+void BackDrop::MoveImage()
+{
+	m_first.m_width += m_scrollSpeed;
+	m_second.m_width += m_scrollSpeed;
+
+	// ‰æ‘œ‚ª’[‚Ü‚Ås‚­‚ÆÀ•W‚ð‰Šú‰»
+	if (m_first.m_width >= Game::kScreenWidth)
+	{
+		m_first.m_width = -Game::kScreenWidth;
+	}
+	if (m_second.m_width >= Game::kScreenWidth)
+	{
+		m_second.m_width = -Game::kScreenWidth;
+	}
 }
