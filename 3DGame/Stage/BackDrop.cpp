@@ -12,7 +12,7 @@ BackDrop::BackDrop() :
 	m_handlePosY(0),
 	m_handlePosX2(-Game::kScreenWidth),
 	m_handlePosY2(0),
-	m_scrollPower(1)
+	m_scrollSpeed(1)
 
 {
 	m_first.m_width = 0;
@@ -34,8 +34,8 @@ BackDrop::~BackDrop()
 
 void BackDrop::Update()
 {
-	m_first.m_width += m_scrollPower;
-	m_second.m_width += m_scrollPower;
+	m_first.m_width += m_scrollSpeed;
+	m_second.m_width += m_scrollSpeed;
 
 	if (m_first.m_width >= Game::kScreenWidth)
 	{
