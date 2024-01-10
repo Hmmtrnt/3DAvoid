@@ -8,11 +8,10 @@ namespace
 	// 大きさ
 	constexpr VECTOR kScale{ 0.5f,0.5f,0.5f };
 
-	// キャラクターハンドル
+	// キャラクターパス
 	const char* const kEnemyHandle = "Data/3D/Char/Enemy/Enemy2(toonType2).mv1";
-	// 丸影ハンドル
+	// 丸影パス
 	const char* const kRoundShadowHandle = "Data/2D/RoundShadow5.png";
-
 
 	// エネミーの最大スピード
 	constexpr int kSpeed = 5;
@@ -34,10 +33,6 @@ Enemy::Enemy(std::shared_ptr<Player> pPlayer) :
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 
-	/*m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
-
 	m_scale = kScale;
 
 	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
@@ -56,10 +51,6 @@ Enemy::Enemy(int orgModel, int roundShadow, std::shared_ptr<Player> pPlayer) :
 	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
-
-	//m_pModel->SetPos(m_pos);						// 座標
-	//m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));	// 回転
-	//m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));		// 大きさ
 
 	m_scale = kScale;
 
@@ -80,13 +71,8 @@ Enemy::Enemy()
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 
-	/*m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
-
 	m_scale = kScale;
 	InitState(VGet(250.0f, -130.0f, 100.0f), VGet(0.0f, 0.8f, 0.0f), m_scale);
-	
 }
 
 Enemy::Enemy(int orgModel)
@@ -98,11 +84,7 @@ Enemy::Enemy(int orgModel)
 	// 敵の向きの初期化
 	m_angle = GetRand(360) * DX_PI_F / 180;
 	m_speed = static_cast<float>(GetRand(kSpeed) + 2);
-
-	/*m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
-
+	
 	m_scale = kScale;
 	InitState(VGet(80.0f, -130.0f, 100.0f), VGet(0.0f, 0.4f, 0.0f), m_scale);
 }
@@ -159,26 +141,13 @@ void Enemy::UpdateMove()
 		m_speed = static_cast<float>(GetRand(kSpeed) + 2);
 	}
 
-	/*m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.5f,m_angle,0.0f));
-	m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));*/
-
 	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 
 }
 
 void Enemy::UpdateTitle()
 {
-
 	m_pModel->Update(1.0f);
-
-	//m_pModel->SetPos(VGet(150.0f,-130.0f,100.0f));	// 座標
-	//m_pModel->SetRot(VGet(0.0f, 1.0f, 0.0f));		// 回転
-	//m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));		// 大きさ
-
-	//InitState(VGet(200.0f, -130.0f, 100.0f), VGet(0.0f, 0.8f, 0.0f), m_scale);
-	//InitState(VGet(0.0f, -130.0f, 100.0f), VGet(0.0f, 0.4f, 0.0f), m_scale);
-	
 }
 
 // タイトル画面に描画
@@ -187,7 +156,7 @@ void Enemy::DrawTitle()
 	m_pModel->Draw();
 }
 
-// 球どうし当たり判定
+// 球の当たり判定
 bool Enemy::ColFlag()
 {
 	float colx = m_pPlayer->GetPos().x - m_pos.x;

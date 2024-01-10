@@ -1,5 +1,5 @@
-#pragma once
 // エネミーの処理
+#pragma once
 #include "EnemyBase.h"
 #include "../../Util/common.h"
 #include <memory>
@@ -25,16 +25,15 @@ public:
 
 	void Update();
 	void Draw();
-
-	void UpdateMove();	// エネミーの動き
+	
 	void UpdateTitle();	// タイトルの動き
-
 	void DrawTitle();	// エネミーのタイトル画面の描画
 
 	bool ColFlag();		// 当たり判定のテスト
 
 // 関数
 private:
+	void UpdateMove();	// エネミーの動き
 	/// <summary>
 	/// 座標、回転、大きさ設定
 	/// </summary>
@@ -48,8 +47,5 @@ private:
 	// ポインタ
 	std::shared_ptr<Model> m_pModel;	// モデル
 	std::shared_ptr<Player> m_pPlayer;	// プレイヤー
-
-	
-
 };
 
