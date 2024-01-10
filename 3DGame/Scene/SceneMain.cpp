@@ -11,10 +11,6 @@
 #include "../System/Pause.h"
 #include "../System/SoundManager.h"
 
-namespace
-{
-}
-
 SceneMain::SceneMain() :
 	m_updateFunc(&SceneMain::UpdatePauseNo),
 	m_shadowMap(0),
@@ -33,7 +29,6 @@ SceneMain::SceneMain() :
 	m_pushPause(false),
 	m_isNoteOpen(false)
 {
-	// ポインタのメモリ確保後で自動的に解放される
 	m_pSet = std::make_shared<GameSetting>();
 	m_pPlayer = std::make_shared<Player>();
 	m_pField = std::make_shared<Field>();

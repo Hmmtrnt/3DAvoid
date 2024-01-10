@@ -30,12 +30,8 @@ EnemyBase::EnemyBase() :
 {
 	// “G‚Ì‰ŠúˆÊ’u
 	m_pos.x = 1000;
-	//m_pos.x = 500.0f;
 	m_pos.y = 0.0f;
 	m_pos.z = static_cast<float>(GetRand(2000) - 1000);
-	//m_pos.z = 0;
-
-	//m_roundShadowHandle = LoadGraph(kRoundShadowHandle);// ŠÛ‰e‰æ‘œƒ[ƒh
 }
 
 EnemyBase::~EnemyBase()
@@ -59,6 +55,7 @@ void EnemyBase::EnemyMove()
 
 void EnemyBase::RoundShadow(float y, float scale)
 {
+	// ŠÛ‰e•`‰æ
 	DrawBillboard3D(
 		VGet(m_pos.x, y, m_pos.z),
 		0.5f, 0.5f,
