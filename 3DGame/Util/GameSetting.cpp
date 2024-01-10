@@ -11,7 +11,7 @@ void GameSetting::Init3D()
 	SetUseBackCulling(true);
 }
 
-//カメラの設定
+// メインシーンのカメラの設定
 void GameSetting::InitScenePlayPosCamera()
 {
 	// near,far
@@ -22,6 +22,7 @@ void GameSetting::InitScenePlayPosCamera()
 	SetCameraPositionAndTarget_UpVecY(VGet(0, 1700, -400), VGet(0.0f, 0.0f, -100.0f));
 }
 
+// タイトル画面のカメラ
 void GameSetting::InitSceneOriginPosCamera()
 {
 	// near,far
