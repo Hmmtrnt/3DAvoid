@@ -1,3 +1,4 @@
+// プレイヤー
 #pragma once
 #include "../../Util/common.h"
 #include <memory>
@@ -44,7 +45,7 @@ public:
 private:
 	void UpdateNoHitVec(bool Hitting);// 移動処理
 	void UpdateMotion(bool hit);
-	void UpdateMove(bool Hitting);// キャラクターの動き+α
+	void UpdateMove(bool Hitting);// キャラクターの動き
 	void PadInputState();// パッドの入力状態取得
 
 	/// <summary>

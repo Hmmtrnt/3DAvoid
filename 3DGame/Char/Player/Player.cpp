@@ -110,28 +110,11 @@ void Player::End()
 void Player::Update(bool Hitting)
 {
 	UpdateMove(Hitting);
-
-#ifdef _DEBUG
-	// デバッグ確認用ダメージ
-	if (Pad::IsTrigger(PAD_INPUT_3))
-	{
-		m_blowRate += 10;
-	}
-	if (Pad::IsTrigger(PAD_INPUT_4))
-	{
-		if (m_blowRate > 0)
-		{
-			m_blowRate -= 10;
-		}
-	}
-#else
-#endif
 }
 
 // プレイヤー描画
 void Player::Draw()
 {
-	//RoundShadow();
 	m_pModel->Draw();
 }
 
