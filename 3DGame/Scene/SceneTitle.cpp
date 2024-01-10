@@ -96,9 +96,6 @@ SceneTitle::SceneTitle() :
 
 	// 文字列の画像ハンドルロード
 	m_stringHandle = LoadGraph(kStringHandle);
-
-	//Sound::Start(Sound::Title, 255);
-	//m_pSound->Start(Sound::Title, DX_PLAYTYPE_LOOP, 255);
 }
 
 SceneTitle::~SceneTitle()
@@ -116,14 +113,11 @@ void SceneTitle::Init()
 
 void SceneTitle::End()
 {
-	//Sound::Stop(Sound::Title);
 	m_pSound->Stop(Sound::Title);
 }
 
 SceneBase* SceneTitle::Update()
 {
-	//Sound::Loop(Sound::Title);
-
 	// フェードインアウトしている
 	if (IsFading())
 	{
@@ -170,9 +164,7 @@ SceneBase* SceneTitle::Update()
 	else
 	{
 		m_isDraw = DrawInterval();
-		//m_isDraw = DrawPushInterval();
 	}
-	
 
 	return this;
 }
@@ -193,7 +185,6 @@ void SceneTitle::Draw()
 	// 丸影描画
 	for (int i = 0; i < 4; i++)
 	{
-
 		if (i == 0)
 		{
 			posX = kPlayerPosX;
@@ -247,13 +238,6 @@ void SceneTitle::Draw()
 		// press any botton描画
 		DrawExtendGraph(420, 480, 850, 750, m_stringHandle, true);
 	}
-	
-
-	// デバッグ用文字列描画
-	/*DrawFormatString(0, 0, Color::kRed, "m_titlePosX = %d", m_titlePosX);
-	DrawFormatString(0, 20, Color::kRed, "m_titlePosY = %d", m_titlePosY);
-	DrawFormatString(0, 40, Color::kRed, "m_titleScaleX = %d", m_titleScaleX);
-	DrawFormatString(0, 60, Color::kRed, "m_titleScaleY = %d", m_titleScaleY);*/
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();

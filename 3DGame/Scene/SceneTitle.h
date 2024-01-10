@@ -1,3 +1,4 @@
+// タイトルシーン
 #pragma once
 #include "SceneBase.h"
 #include "../Util/common.h"
@@ -25,13 +26,11 @@ public:
 
 // 関数
 private:
-	// void
 	// タイトルロゴの更新処理
 	void UpdateTitleLogo();
 	// インターバルを進める
 	void IntervalAdvance(int topNum);
 
-	// bool
 	// press any bottonの点滅処理
 	bool DrawInterval();
 	// ボタンを押したときのインターバル
@@ -53,10 +52,10 @@ private:
 	int m_stringHandle;// 文字列の画像ハンドル
 	int m_enemyHandle;// エネミーハンドル
 	int m_roundShadowHandle;// 丸影ハンドル
-	// タイトル座標
+	// タイトル画像座標
 	int m_titlePosX;// X
 	int m_titlePosY;// Y
-	// タイトル大きさ
+	// タイトル画像大きさ
 	int m_titleScaleX;// 幅
 	int m_titleScaleY;// 高さ
 
@@ -70,11 +69,5 @@ private:
 	// bool
 	bool m_isDraw;// 描画されるかどうか
 	bool m_isPush;// press any bottonが押されたかどうか
-
-	// -------------------------
-	// テスト変数
-	// -------------------------
-
-	
 };
 
