@@ -39,12 +39,8 @@ EnemyBig::EnemyBig(std::shared_ptr<Player> pPlayer) :
 	m_pModel->SetAnimation(m_animMove, true, true);
 	// 敵の向きの初期化
 	m_angle = kAngleLeft;
+
 	m_speed = kSpeed;
-
-	/*m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));*/
-
 	m_scale = kScale;
 
 	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
@@ -62,14 +58,8 @@ EnemyBig::EnemyBig(int orgModel, std::shared_ptr<Player> pPlayer) :
 	m_pModel = std::make_shared<Model>(m_modelHandle);
 	// 敵のアニメーション設定
 	m_pModel->SetAnimation(m_animMove, true, true);
-	// 敵の向きの初期化
-	//m_angle = GetRand(360) * DX_PI_F / 180;
+
 	m_speed = kSpeed;
-
-	/*m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));*/
-
 	m_scale = kScale;
 
 	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
@@ -89,12 +79,8 @@ EnemyBig::EnemyBig() :
 	m_pModel->SetAnimation(m_animMove, true, true);
 	// 敵の向きの初期化
 	m_angle = kAngleLeft;
+
 	m_speed = kSpeed;
-
-	/*m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.0f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));*/
-
 	m_scale = kScale;
 
 	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
@@ -144,7 +130,6 @@ void EnemyBig::UpdateMove(int score)
 			m_pos.x = static_cast<float>(GetRand(2000) - 1000);
 			m_pos.z = -1200.0f;
 			m_angle = kAngleUp;
-			//m_speed = GetRand(kSpeed) + 2;
 			m_initPos = true;
 		}
 		// ステージの上
@@ -153,7 +138,6 @@ void EnemyBig::UpdateMove(int score)
 			m_pos.x = static_cast<float>(GetRand(2000) - 1000);
 			m_pos.z = 1200.0f;
 			m_angle = kAngleDown;
-			//m_speed = GetRand(kSpeed) + 2;
 			m_initPos = true;
 		}
 		// ステージの左
@@ -162,7 +146,6 @@ void EnemyBig::UpdateMove(int score)
 			m_pos.x = 1200.0f;
 			m_pos.z = static_cast<float>(GetRand(2000) - 1000);
 			m_angle = kAngleLeft;
-			//m_speed = GetRand(kSpeed) + 2;
 			m_initPos = true;
 		}
 		// ステージの右
@@ -171,25 +154,16 @@ void EnemyBig::UpdateMove(int score)
 			m_pos.x = -1200.0f;
 			m_pos.z = static_cast<float>(GetRand(2000) - 1000);
 			m_angle = kAngleRight;
-			//m_speed = GetRand(kSpeed) + 2;
 			m_initPos = true;
 		}
 	}
 	
-
-	/*m_pModel->SetPos(m_pos);
-	m_pModel->SetRot(VGet(0.5f, m_angle, 0.0f));
-	m_pModel->SetScale(VGet(3.0f, 3.0f, 3.0f));*/
 	InitState(m_pos, VGet(0.5f, m_angle, 0.0f), m_scale);
 }
 
 void EnemyBig::UpdateTitle()
 {
 	m_pModel->Update(1.0f);
-
-	//m_pModel->SetPos(VGet(150.0f,-130.0f,100.0f));	// 座標
-	//m_pModel->SetRot(VGet(0.0f, 1.0f, 0.0f));		// 回転
-	//m_pModel->SetScale(VGet(0.5f, 0.5f, 0.5f));		// 大きさ
 
 	m_scale = VGet(2.0f, 2.0f, 2.0f);
 
