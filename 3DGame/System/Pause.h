@@ -1,5 +1,5 @@
-#pragma once
 // ƒ|[ƒYˆ—
+#pragma once
 #include <memory>
 
 class SoundManager;

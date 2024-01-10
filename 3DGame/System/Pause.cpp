@@ -5,6 +5,7 @@
 
 namespace
 {
+	// ポーズ画像のパス
 	const char* const kPauseId[4] = {
 		"Data/2D/Pause/Note.png",
 		"Data/2D/Pause/Pause.png",
@@ -44,9 +45,9 @@ Pause::~Pause()
 
 void Pause::Update(int& selectNum)
 {
+	// ポーズ画面の選択
 	if (Pad::IsTrigger(PAD_INPUT_UP))
 	{
-		
 		if (selectNum > 0)
 		{
 			m_pSound->Start(Sound::Cursor, DX_PLAYTYPE_BACK, 255);
@@ -68,49 +69,15 @@ void Pause::Update(int& selectNum)
 
 void Pause::DrawPause()
 {
-	// デバッグ用
-	//SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
-
-	//m_selectPosY = 100;
-	////for (int i = 0; i < 3; i++)
-	////{
-	////	DrawBox(m_selectPosX, m_selectPosY, m_selectPosX + 200, m_selectPosY + 100, Color::kBlack, true);// 選択肢
-	////	m_selectPosY += 200;
-	////}
-
-	//DrawBox(m_selectPosX, 100, m_selectPosX + 300, 500, Color::kBlack, true);// 選択肢一
-
-	//
-	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	DrawExtendGraph(0, 0, 200, 100, m_pauseHandle[1], true);// ポーズ中描画
 
 	DrawExtendGraph(m_selectPosX, 100, m_selectPosX + 300, 500, m_pauseHandle[2], true);// ポーズメニュー
 
-	//DrawBox(m_selectPosX, m_posy, m_selectPosX + 300, m_posy + 100, Color::kWhite, true);// カーソル
 	DrawExtendGraph(m_selectPosX + 50, m_posy, m_selectPosX + 1000, m_posy + 100, m_pauseHandle[3], true);// カーソル
-	//DrawGraph(m_selectPosX, m_posy, m_pauseHandle[4], true);
-
-	// 選択肢の仮テキスト
-	/*DrawString(Game::kScreenWidth - 250, 150, "再開", Color::kRed);
-	DrawString(Game::kScreenWidth - 250, 250, "設定", Color::kRed);
-	DrawString(Game::kScreenWidth - 250, 350, "やり直し", Color::kRed);
-	DrawString(Game::kScreenWidth - 250, 450, "あきらめる", Color::kRed);*/
-
-	//DrawFormatString(0, 0, Color::kBlack, "%d", m_selectPosX);
 }
 
 void Pause::DrawNote()
 {
-	//SetDrawBlendMode(DX_BLENDMODE_MULA, 155);
-	//// 注意書き仮置き
-	//DrawBox(Game::kScreenWidth / 2 - 100, Game::kScreenHeight / 2 - 100, 
-	//	Game::kScreenHeight / 2 + 500, Game::kScreenHeight / 2 + 100, Color::kBlack, true);// 選択肢一
-	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-	//// 注意書きの仮テキスト
-	//DrawString(Game::kScreenWidth / 2 - 100, Game::kScreenHeight / 2 - 100, "注意書き(やり直しを押したときのみ描画)", Color::kRed);
-	//DrawString(Game::kScreenWidth / 2 - 100, Game::kScreenHeight / 2 - 70, "記録は保存されません", Color::kRed);
-
-	//DrawGraph(0, 0, m_pauseHandle[0], true);
 	DrawExtendGraph(Game::kScreenWidth / 2 - 170, Game::kScreenHeight / 2 - 160,
 		Game::kScreenHeight / 2 + 490, Game::kScreenHeight / 2 + 100, m_pauseHandle[0], true);
 }
