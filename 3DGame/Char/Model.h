@@ -1,3 +1,5 @@
+// モデルのロード、アニメーション管理
+// 授業のコードサンプルを参考
 #pragma once
 #include"DxLib.h"
 
@@ -32,10 +34,7 @@ public:
 	// モデルの拡大値
 	void SetScale(VECTOR scale);
 
-	// アニメーションの制御
-	
-	// アニメーションを設定する（ぱっと切り替える）
-	
+	/*アニメーションの制御*/ 
 	/// <summary>
 	/// アニメーションを設定する(ぱっと切り替える)
 	/// </summary>
@@ -44,7 +43,13 @@ public:
 	/// <param name="isForceChenge">既に指定されたアニメが再生されている場合も変更するか</param>
 	void SetAnimation(int animNo,bool isLoop,bool isForceChenge);
 	
-	// アニメーションを変化させる（changeFrameフレームかけて切り替える）
+	/// <summary>
+	/// アニメーションを変化させる（changeFrameフレームかけて切り替える）
+	/// </summary>
+	/// <param name="animNo">変更先アニメーション変更</param>
+	/// <param name="isLoop">アニメーションをループさせるか</param>
+	/// <param name="isForceChenge">既に指定されたアニメが再生されている場合も変更するか</param>
+	/// <param name="changeFrame">アニメーションブレンドを行うフレーム数</param>
 	void ChangeAnimation(int animNo, bool isLoop, bool isForceChenge,int changeFrame);
 
 	// 現在のアニメーションが終了しているかどうかを取得する（Loopアニメの場合は取得できない falseをかえす）
