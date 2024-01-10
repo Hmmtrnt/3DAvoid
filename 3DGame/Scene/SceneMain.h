@@ -26,7 +26,6 @@ public:
 	SceneBase* Update();
 	void Draw();
 
-	// DOTO:ŠÖ”–¼•ÏX
 	void UpdateEnemy();// “G‚É“–‚½‚Á‚½‚ÌXVˆ—
 
 // ŠÖ”

@@ -56,6 +56,7 @@ void SceneMain::Init()
 	m_pFont->Init(m_fontHpHandle, 30, 0, -1);
 	m_pFont->Init(m_fontScoreHnadle, 50, 0, -1);
 
+	// 体力の色を代入.
 	m_hpColor = Color::kWhite;
 
 	// 一体目のエネミー生成
@@ -74,7 +75,7 @@ void SceneMain::Init()
 	// シャドウマップの生成
 	m_shadowMap = MakeShadowMap(1024, 1024);
 	SetShadowMapLightDirection(m_shadowMap, GetLightDirection());
-	//Sound::Start(Sound::Main, 255);
+	// 音再生
 	m_pSound->Start(Sound::Main, DX_PLAYTYPE_LOOP, 255);
 }
 
@@ -84,14 +85,12 @@ void SceneMain::End()
 	m_pFont->End(m_fontHpHandle);
 	// シャドウマップの削除
 	DeleteShadowMap(m_shadowMap);
-	//Sound::Stop(Sound::Main);
 	m_pSound->Stop(Sound::Main);
 }
 
 // 更新処理
 SceneBase* SceneMain::Update()
 {
-	//Sound::Loop(Sound::Main);
 	// フェードインアウトしている
 	if (IsFading())
 	{
@@ -103,7 +102,6 @@ SceneBase* SceneMain::Update()
 		{
 			// リトライ
 			return (new SceneMain());
-			// ポーズ画面の項目が増える予定
 		}
 		// ゲームをあきらめる時
 		else if (!IsFading() && m_isFadeOut && !m_isBackScene && (m_selectNum == 2 || m_pPlayer->GetIsFall()))
@@ -119,7 +117,6 @@ SceneBase* SceneMain::Update()
 		// キャラが落ちたらまたは注意書きではいを押したらシーン遷移
 		if (m_pPlayer->GetIsFall() || (Pad::IsTrigger(PAD_INPUT_1) && m_isNoteOpen) || (Pad::IsTrigger(PAD_INPUT_1) && m_selectNum == 2))
 		{
-			
 			//return new SceneMain;// デバッグ用シーン遷移
 			if (!m_pushPause)
 			{
@@ -129,8 +126,6 @@ SceneBase* SceneMain::Update()
 			{
 				m_pSound->Start(Sound::Decide, DX_PLAYTYPE_BACK, 255);
 			}
-			
-
 			StartFadeOut();// シーン遷移
 		}
 	}
@@ -157,7 +152,6 @@ SceneBase* SceneMain::Update()
 			m_pEnemyBig.back()->Init();
 		}
 	}
-	
 
 	// ポーズボタンを押したときの処理
 	if (Pad::IsTrigger(PAD_INPUT_8))
@@ -183,9 +177,6 @@ SceneBase* SceneMain::Update()
 			m_isNoteOpen = false;
 		}
 	}
-	
-
-	
 
 	return this;
 }
@@ -220,7 +211,6 @@ void SceneMain::Draw()
 		enemies->Draw();
 	}
 	
-	
 	// 受けたダメージによって色変更
 	UpdateColor();
 
@@ -242,13 +232,10 @@ void SceneMain::Draw()
 		{
 			m_pPause->DrawNote();
 		}
-
-		
 	}
 
 	// フェードインアウトのフィルター
 	SceneBase::DrawFade();
-
 }
 
 void SceneMain::UpdateEnemy()
@@ -333,9 +320,6 @@ void SceneMain::UpdateEnemy()
 
 void SceneMain::UpdateColor()
 {
-	// -------------------------
-	// 新しい色表記
-	// -------------------------
 	// ダメージによって色を変更
 	if (m_pPlayer->GetBlowRate() < 11)
 	{
@@ -357,8 +341,6 @@ void SceneMain::UpdateColor()
 	{
 		m_hpColor = Color::kRed;
 	}
-	
-
 }
 
 void SceneMain::UpdatePauseNo()
@@ -369,12 +351,7 @@ void SceneMain::UpdatePauseNo()
 	// ゲームが進んでいる間スコアを増やす
 	if (!m_pPlayer->GetIsFall())
 	{
-#ifdef _DEBUG
-		//m_score++;
-		m_score+=10;
-#else
 		m_score++;
-#endif
 	}
 	if (m_pushPause)
 	{
@@ -404,5 +381,4 @@ void SceneMain::UpdatePause()
 		m_pSound->Start(Sound::ButtonPush, DX_PLAYTYPE_BACK, 255);
 		m_pushPause = false;
 	}
-
 }
