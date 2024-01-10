@@ -13,14 +13,7 @@ SceneManager::SceneManager()
 // ‰Šú‰»
 void SceneManager::Init()
 {
-#ifdef _DEBUG
 	m_pScene = new SceneTitle;
-	//m_pScene = new SceneExplanation;
-	//m_pScene = new SceneMain;
-	//m_pScene = new SceneResult;
-#else
-	m_pScene = new SceneTitle;
-#endif
 	m_pScene->Init();
 }
 // I—¹
