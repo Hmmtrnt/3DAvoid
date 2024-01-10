@@ -1,4 +1,5 @@
 // コントローラー
+// 授業のコードサンプルを参考
 #pragma once
 #include "DxLib.h"
 
