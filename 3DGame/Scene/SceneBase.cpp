@@ -19,6 +19,7 @@ SceneBase::SceneBase() :
 
 void SceneBase::UpdateFade()
 {
+	// フェードインアウト
 	m_fadeBright += m_fadeSpeed;
 	if (m_fadeBright >= 255)
 	{

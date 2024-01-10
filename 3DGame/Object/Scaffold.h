@@ -1,3 +1,4 @@
+// リザルト画面の台座
 #pragma once
 #include <memory>
 
@@ -17,7 +18,5 @@ private:
 
 	// int
 	int m_modelHandle;// モデルハンドル
-
-
 };
 

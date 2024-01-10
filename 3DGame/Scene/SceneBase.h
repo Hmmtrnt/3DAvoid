@@ -16,7 +16,6 @@ public:
 	bool IsFadingIn() const;// フェードイン中
 	bool IsFadingOut() const;// フェードアウト中
 	bool IsFading() const { return IsFadingIn() || IsFadingOut(); }// フェードインorアウト中
-
 	void StartFadeOut();// フェードアウト開始
 
 protected:
