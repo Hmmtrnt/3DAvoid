@@ -1,3 +1,4 @@
+// シーンリザルト
 #pragma once
 #include "SceneBase.h"
 #include "../Util/common.h"
@@ -13,8 +14,8 @@ class SoundManager;
 class SceneResult : public SceneBase
 {
 public:
-	SceneResult(int score);// コンストラクタ
-	virtual ~SceneResult();// デストラクタ
+	SceneResult(int score);
+	virtual ~SceneResult();
 
 	void Init();
 	void End();
@@ -46,10 +47,6 @@ private:
 	int m_resultHandle;// リザルト画面の結果表示のハンドル
 	int m_guideHandle[2];// 次のシーンのガイドハンドル
 
-
-// -------------------------
-// テスト変数
-// -------------------------
 	bool m_oneMore;// もう一度プレイするかどうか
 
 };
